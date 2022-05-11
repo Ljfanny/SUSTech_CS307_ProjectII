@@ -1,0 +1,36 @@
+#logging:
+#  level:
+#    root: info
+#
+#enterprise:
+#  name: sustech
+#  age: 10
+#  tel: 123456789
+#  subjects:
+#    - Jave
+#    - C++
+#    - Python
+#    - Go
+#    - Kotlin
+
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/projectII
+    username: postgres
+    password: 216122
+
+
+#spring:
+#  profiles:
+#    active: dev
+#
+#---
+#spring:
+#  config:
+#    activate:
+#      on-profile: dev
+#
+#server:
+#  port: 8080
