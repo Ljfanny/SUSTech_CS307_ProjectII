@@ -20,13 +20,13 @@ public class ContractServiceImpl {
     @Autowired
     private OrderMapper orderMapper;
 
-    public long selectContractCount(){
+    public Object selectContractCount(){
         QueryWrapper<Order> queryWrapper = new QueryWrapper<>();
-        queryWrapper.select("count(distinct contract_number) as cnt");
-        long result = orderMapper.selectCount(queryWrapper);
-        QueryWrapper<Contract> contractQueryWrapper = new QueryWrapper<>();
-        queryWrapper.select("count(*) as cnt");
-        result += contractMapper.selectCount(contractQueryWrapper);
+        queryWrapper.select("count(distinct contract_number)");
+        Object result = orderMapper.selectObjs(queryWrapper);
+//        QueryWrapper<Contract> contractQueryWrapper = new QueryWrapper<>();
+//        contractQueryWrapper.select("count(*) as cnt");
+//        result += contractMapper.selectCount(contractQueryWrapper);
         return result;
     }
 

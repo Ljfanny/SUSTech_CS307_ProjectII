@@ -39,8 +39,7 @@ public class ContractController {
 
     @GetMapping("/getContractCount")
     public Data getContractCount() {
-        long result = contractServiceImpl.selectContractCount();
+        Object result = contractServiceImpl.selectContractCount();
         return new Data(result, Message.SUCCESS);
     }
-
 }
