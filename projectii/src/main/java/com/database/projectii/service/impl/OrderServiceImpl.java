@@ -219,10 +219,10 @@ public class OrderServiceImpl implements OrderService {
         return inventoryMapper.selectList(queryWrapper);
     }
 
-    public long selectOrderCount() {
+    public Object selectOrderCount() {
         QueryWrapper<Order> queryWrapper = new QueryWrapper<>();
-        queryWrapper.select("count(*) as cnt");
-        return orderMapper.selectCount(queryWrapper);
+        queryWrapper.select("count(*)");
+        return orderMapper.selectObjs(queryWrapper);
     }
 
     public List<Map<String, Object>> selectFavoriteProductModel() {

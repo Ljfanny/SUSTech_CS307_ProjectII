@@ -30,7 +30,7 @@ public class OrderController {
 
     @GetMapping("/getOrderCount")
     public Data getOrderCount() {
-        long result = orderServiceImpl.selectOrderCount();
+        Object result = orderServiceImpl.selectOrderCount();
         return new Data(result, Message.SUCCESS);
     }
 
