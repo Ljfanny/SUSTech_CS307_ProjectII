@@ -1,9 +1,13 @@
 package com.database.projectii.model;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.stereotype.Component;
 
 @Component
+@Data
+@AllArgsConstructor
 @TableName("staffs")
 public class Staff {
     private Integer id;
@@ -14,6 +18,8 @@ public class Staff {
     private String supplyCenter;
     private String mobileNumber;
     private String type;
+
+    public Staff() {}
 
     @Override
     public String toString() {

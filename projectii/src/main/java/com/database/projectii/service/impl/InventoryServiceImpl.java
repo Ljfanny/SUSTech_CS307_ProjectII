@@ -7,6 +7,7 @@ import com.database.projectii.mapper.InventoryMapper;
 import com.database.projectii.mapper.ModelMapper;
 import com.database.projectii.mapper.StaffMapper;
 import com.database.projectii.model.Center;
+import com.database.projectii.model.Enterprise;
 import com.database.projectii.model.Inventory;
 import com.database.projectii.model.Model;
 import com.database.projectii.model.Staff;
@@ -67,5 +68,11 @@ public class InventoryServiceImpl implements InventoryService {
 
     public List<Map<String, Object>> selectProductByNumber(String productNumber) {
         return inventoryMapper.selectProductByNumber(productNumber);
+    }
+
+    public List<Map<String, Object>> selectAll() {
+        QueryWrapper<Inventory> inventoryQueryWrapper = new QueryWrapper<>();
+        inventoryQueryWrapper.select("*");
+        return inventoryMapper.selectMaps(inventoryQueryWrapper);
     }
 }

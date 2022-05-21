@@ -3,10 +3,14 @@ package com.database.projectii.model;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.sql.Date;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
 @Component
+@Data
+@AllArgsConstructor
 @TableName("inventories")
 public class Inventory {
     private Integer id;
@@ -18,6 +22,8 @@ public class Inventory {
     private Integer purchasePrice;
     private Integer surplusQuantity;
     private Integer totalQuantity;
+
+    public Inventory(){}
 
     @Override
     public String toString() {

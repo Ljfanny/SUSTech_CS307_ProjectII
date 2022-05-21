@@ -3,9 +3,13 @@ package com.database.projectii.model;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.sql.Date;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.stereotype.Component;
 
 @Component
+@Data
+@AllArgsConstructor
 @TableName("orders")
 public class Order implements Comparable<Order>{
     private String contractNumber;
@@ -21,6 +25,8 @@ public class Order implements Comparable<Order>{
     private Date lodgementDate;
     private String salesmanNumber;
     private String contractType;
+
+    public Order(){}
 
     @Override
     public String toString() {

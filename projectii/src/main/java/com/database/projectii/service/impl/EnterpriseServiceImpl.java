@@ -5,7 +5,10 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.database.projectii.mapper.EnterpriseMapper;
 import com.database.projectii.model.Center;
 import com.database.projectii.model.Enterprise;
+import com.database.projectii.model.Staff;
 import com.database.projectii.service.EnterpriseService;
+import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,5 +50,11 @@ public class EnterpriseServiceImpl implements EnterpriseService {
         }
         enterpriseMapper.insert(enterprise);
         return true;
+    }
+
+    public List<Map<String, Object>> selectAll() {
+        QueryWrapper<Enterprise> enterpriseQueryWrapper = new QueryWrapper<>();
+        enterpriseQueryWrapper.select("*");
+        return enterpriseMapper.selectMaps(enterpriseQueryWrapper);
     }
 }

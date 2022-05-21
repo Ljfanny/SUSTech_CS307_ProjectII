@@ -4,8 +4,11 @@ package com.database.projectii.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.database.projectii.mapper.ModelMapper;
 import com.database.projectii.model.Enterprise;
+import com.database.projectii.model.Inventory;
 import com.database.projectii.model.Model;
 import com.database.projectii.service.ModelService;
+import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,5 +50,11 @@ public class ModelServiceImpl implements ModelService {
         }
         modelMapper.insert(model);
         return true;
+    }
+
+    public List<Map<String, Object>> selectAll() {
+        QueryWrapper<Model> modelQueryWrapper = new QueryWrapper<>();
+        modelQueryWrapper.select("*");
+        return modelMapper.selectMaps(modelQueryWrapper);
     }
 }

@@ -5,10 +5,16 @@ import com.database.projectii.controller.transmission.Data;
 import com.database.projectii.controller.transmission.Message;
 import com.database.projectii.model.Center;
 import com.database.projectii.model.Enterprise;
+import com.database.projectii.model.Inventory;
 import com.database.projectii.model.Model;
 import com.database.projectii.model.Staff;
 import com.database.projectii.service.impl.ModelServiceImpl;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/models")
 public class ModelController {
 
@@ -31,9 +38,19 @@ public class ModelController {
         if (model == null) {
             return new Data(null, Message.NOT_SUCCESS);
         }
-        String[] result = new String[] {String.valueOf(model.getId()), model.getNumber(),
-            model.getModel(), model.getName(), String.valueOf(model.getUnitPrice())};
-        return new Data(result, Message.SUCCESS);
+        return new Data(model, Message.SUCCESS);
+    }
+
+    @GetMapping("/all")
+    public Data getAllModel() {
+        ArrayList<Model> modelArrayList = new ArrayList<>();
+        List<Map<String, Object>> res = modelServiceImpl.selectAll();
+        for (Map<String, Object> map : res) {
+            modelArrayList.add(new Model((Integer) map.get("id"),
+                (String) map.get("number"), (String) map.get("model"),
+                (String) map.get("name"), (Integer) map.get("unit_price")));
+        }
+        return new Data(modelArrayList, Message.SUCCESS);
     }
 
     @DeleteMapping("/{id}")

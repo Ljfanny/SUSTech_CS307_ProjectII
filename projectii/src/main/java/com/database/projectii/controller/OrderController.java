@@ -2,12 +2,15 @@ package com.database.projectii.controller;
 
 import com.database.projectii.controller.transmission.Data;
 import com.database.projectii.controller.transmission.Message;
+import com.database.projectii.model.Inventory;
 import com.database.projectii.service.impl.OrderServiceImpl;
 import com.database.projectii.model.Order;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/orders")
 public class OrderController {
 
@@ -83,14 +87,29 @@ public class OrderController {
         if (orderList == null) {
             return new Data(infos, Message.SUCCESS);
         }
-        List<String[]> result = new ArrayList<>();
+        List<Order> result = new ArrayList<>();
         for (Order order : orderList) {
-            result.add(new String[] {order.getProductModel(), order.getSalesmanNumber(),
-                String.valueOf(order.getQuantity())
-                , String.valueOf(order.getEstimatedDeliveryDate())
-                , String.valueOf(order.getLodgementDate())});
+            result.add(
+                new Order(null, null, order.getProductModel(), order.getQuantity(), null,
+                    null, order.getEstimatedDeliveryDate()
+                    , order.getLodgementDate(), order.getSalesmanNumber(), null));
         }
         return new Data(result, Message.SUCCESS);
+    }
+
+    @GetMapping("/all")
+    public Data getAllOrders() {
+        ArrayList<Order> orderArrayList = new ArrayList<>();
+        List<Map<String, Object>> res = orderServiceImpl.selectAll();
+        for (Map<String, Object> map : res) {
+            orderArrayList.add(new Order((String) map.get("contract_number"),
+                (String) map.get("enterprise"), (String) map.get("product_model"),
+                (Integer) map.get("quantity"), (String) map.get("contract_manager"),
+                (Date) map.get("contract_date"), (Date) map.get("estimated_delivery_date"),
+                (Date) map.get("lodgement_date"), (String) map.get("salesman_number"),
+                (String) map.get("contract_type")));
+        }
+        return new Data(orderArrayList, Message.SUCCESS);
     }
 
 }

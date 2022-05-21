@@ -3,8 +3,13 @@ package com.database.projectii.controller;
 import com.database.projectii.controller.transmission.Data;
 import com.database.projectii.controller.transmission.Message;
 import com.database.projectii.model.Center;
+import com.database.projectii.model.Staff;
 import com.database.projectii.service.impl.CenterServiceImpl;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/centers")
 public class CenterController {
 
@@ -27,9 +33,19 @@ public class CenterController {
         if (center == null) {
             return new Data(null, Message.SUCCESS);
         }
-        String[] result = new String[] {String.valueOf(center.getId()), center.getName()};
-        return new Data(result, Message.SUCCESS);
+        return new Data(center, Message.SUCCESS);
     }
+
+    @GetMapping("/all")
+    public Data getAllCenters() {
+        ArrayList<Center> centerArrayList = new ArrayList<>();
+        List<Map<String, Object>> res = centerServiceImpl.selectAll();
+        for (Map<String, Object> map : res) {
+            centerArrayList.add(new Center((Integer) map.get("id"), (String) map.get("name")));
+        }
+        return new Data(centerArrayList, Message.SUCCESS);
+    }
+
 
     @DeleteMapping("/{id}")
     public Data DeleteById(@PathVariable Integer id) {

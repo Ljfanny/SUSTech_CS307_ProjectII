@@ -15,8 +15,14 @@ public class StaffServiceImpl implements StaffService {
     @Autowired
     private StaffMapper staffMapper;
 
-    public Staff selectOrderById(Integer id) {
+    public Staff selectStaffById(Integer id) {
         return staffMapper.selectById(id);
+    }
+
+    public List<Map<String,Object>> selectAll() {
+        QueryWrapper<Staff> staffQueryWrapper = new QueryWrapper<>();
+        staffQueryWrapper.select("*");
+        return staffMapper.selectMaps(staffQueryWrapper);
     }
 
     public List<Map<String, Object>> selectAllTypeStaffCount() {

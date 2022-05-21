@@ -1,9 +1,13 @@
 package com.database.projectii.model;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.stereotype.Component;
 
 @Component
+@Data
+@AllArgsConstructor
 @TableName("enterprises")
 //@ConfigurationProperties(prefix = "enterprise")
 public class Enterprise {
@@ -13,6 +17,8 @@ public class Enterprise {
     private String city;
     private String supplyCenter;
     private String industry;
+
+    public Enterprise(){}
 
     @Override
     public String toString() {

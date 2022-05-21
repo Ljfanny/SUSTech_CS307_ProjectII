@@ -4,12 +4,16 @@ package com.database.projectii.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.database.projectii.mapper.CenterMapper;
 import com.database.projectii.model.Center;
+import com.database.projectii.model.Staff;
 import com.database.projectii.service.CenterService;
+import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CenterServiceImpl implements CenterService {
+
     @Autowired
     private CenterMapper centerMapper;
 
@@ -43,5 +47,11 @@ public class CenterServiceImpl implements CenterService {
             return false;
         centerMapper.insert(center);
         return true;
+    }
+
+    public List<Map<String,Object>> selectAll() {
+        QueryWrapper<Center> centerQueryWrapper = new QueryWrapper<>();
+        centerQueryWrapper.select("*");
+        return centerMapper.selectMaps(centerQueryWrapper);
     }
 }

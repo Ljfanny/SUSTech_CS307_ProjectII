@@ -8,6 +8,7 @@ import com.database.projectii.mapper.OrderMapper;
 import com.database.projectii.mapper.StaffMapper;
 import com.database.projectii.model.Contract;
 import com.database.projectii.model.Inventory;
+import com.database.projectii.model.Model;
 import com.database.projectii.model.Order;
 import com.database.projectii.model.Staff;
 import com.database.projectii.service.OrderService;
@@ -252,5 +253,11 @@ public class OrderServiceImpl implements OrderService {
             queryWrapper.eq("contract_number", contractNumber);
             return orderMapper.selectList(queryWrapper);
         }
+    }
+
+    public List<Map<String, Object>> selectAll() {
+        QueryWrapper<Order> orderQueryWrapper = new QueryWrapper<>();
+        orderQueryWrapper.select("*");
+        return orderMapper.selectMaps(orderQueryWrapper);
     }
 }

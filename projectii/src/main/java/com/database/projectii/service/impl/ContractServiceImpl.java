@@ -5,6 +5,9 @@ import com.database.projectii.mapper.ContractMapper;
 import com.database.projectii.mapper.OrderMapper;
 import com.database.projectii.model.Contract;
 import com.database.projectii.model.Order;
+import com.database.projectii.model.Staff;
+import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,5 +28,11 @@ public class ContractServiceImpl {
         queryWrapper.select("count(*) as cnt");
         result += contractMapper.selectCount(contractQueryWrapper);
         return result;
+    }
+
+    public List<Map<String,Object>> selectAll() {
+        QueryWrapper<Contract> contractQueryWrapper = new QueryWrapper<>();
+        contractQueryWrapper.select("*");
+        return contractMapper.selectMaps(contractQueryWrapper);
     }
 }
