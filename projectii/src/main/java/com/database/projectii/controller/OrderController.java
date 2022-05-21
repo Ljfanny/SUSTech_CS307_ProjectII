@@ -58,13 +58,65 @@ public class OrderController {
         return new Data(result, result ? Message.SUCCESS : Message.NOT_SUCCESS);
     }
 
+    static class FavoriteProduct {
+        private String productModel;
+        private Long sum;
+
+        public FavoriteProduct(String productModel, Long sum) {
+            this.productModel = productModel;
+            this.sum = sum;
+        }
+
+        public String getProductModel() {
+            return productModel;
+        }
+
+        public void setProductModel(String productModel) {
+            this.productModel = productModel;
+        }
+
+        public Long getSum() {
+            return sum;
+        }
+
+        public void setSum(Long sum) {
+            this.sum = sum;
+        }
+    }
+
+    static class CenterAve {
+        private String supplyCenter;
+        private String average;
+
+        public CenterAve(String supplyCenter, String average) {
+            this.supplyCenter = supplyCenter;
+            this.average = average;
+        }
+
+        public String getSupplyCenter() {
+            return supplyCenter;
+        }
+
+        public void setSupplyCenter(String supplyCenter) {
+            this.supplyCenter = supplyCenter;
+        }
+
+        public String getAverage() {
+            return average;
+        }
+
+        public void setAverage(String average) {
+            this.average = average;
+        }
+    }
+
     @GetMapping("/getFavoriteProductModel")
     public Data getFavoriteProductModel() {
         List<Map<String, Object>> maps = orderServiceImpl.selectFavoriteProductModel();
-        List<String[]> result = new ArrayList<>();
+        List<FavoriteProduct> result = new ArrayList<>();
         for (Map<String, Object> map : maps) {
-            result.add(new String[] {String.valueOf(map.get("product_model")),
-                String.valueOf(map.get("sum"))});
+            result.add(new FavoriteProduct(String.valueOf(map.get("product_model")),
+                (Long) map.get("sum")));
         }
         return new Data(result, Message.SUCCESS);
     }
@@ -72,10 +124,10 @@ public class OrderController {
     @GetMapping("/getAvgStockByCenter")
     public Data getAvgStockByCenter() {
         List<Map<String, Object>> maps = orderServiceImpl.selectAvgStockByCenter();
-        List<String[]> result = new ArrayList<>();
+        List<CenterAve> result = new ArrayList<>();
         for (Map<String, Object> map : maps) {
-            result.add(new String[] {String.valueOf(map.get("supply_center")),
-                String.valueOf(map.get("avg"))});
+            result.add(new CenterAve(String.valueOf(map.get("supply_center")),
+                String.valueOf(map.get("avg"))));
         }
         return new Data(result, Message.SUCCESS);
     }
