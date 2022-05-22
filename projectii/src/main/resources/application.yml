@@ -7,7 +7,7 @@
 #  age: 10
 #  tel: 123456789
 #  subjects:
-#    - Jave
+#    - Java
 #    - C++
 #    - Python
 #    - Go
@@ -17,9 +17,9 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/projectII
+    url: jdbc:postgresql://localhost:5432/proj2
     username: postgres
-    password: 216122
+    password: 12011906
 
 
 #spring:
@@ -32,5 +32,5 @@ spring:
 #    activate:
 #      on-profile: dev
 #
-#server:
-#  port: 8090
+server:
+  port: 8088
