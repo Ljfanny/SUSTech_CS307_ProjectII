@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -26,7 +27,15 @@ public class StaffController {
     private StaffServiceImpl staffServiceImpl;
 
     @GetMapping
-    public Data getByAny(@RequestBody Staff staff) {
+    public Data getByAny(@RequestParam("id") Integer id,
+                         @RequestParam("name") String name,
+                         @RequestParam("age") Integer age,
+                         @RequestParam("gender") String gender,
+                         @RequestParam("number") String number,
+                         @RequestParam("supplyCenter") String supplyCenter,
+                         @RequestParam("mobileNumber") String mobileNumber,
+                         @RequestParam("type") String type) {
+        Staff staff = new Staff(id, name, age, gender, number, supplyCenter, mobileNumber, type);
         List<Map<String, Object>> mapList = staffServiceImpl.selectStaffByAny(staff);
         if (mapList.isEmpty()) {
             return new Data(null, Message.NOT_SUCCESS);
