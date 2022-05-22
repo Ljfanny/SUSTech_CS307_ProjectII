@@ -213,7 +213,7 @@ public class OrderController {
         return new Data(orders, Message.SUCCESS);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/diy")
     public Data DeleteByAny(
         @RequestParam(value = "contractNumber", required = false, defaultValue = "")
             String contractNumber,

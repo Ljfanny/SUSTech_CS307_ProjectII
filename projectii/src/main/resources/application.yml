@@ -33,4 +33,4 @@ spring:
 #      on-profile: dev
 #
 server:
-  port: 8088
+  port: 8080
