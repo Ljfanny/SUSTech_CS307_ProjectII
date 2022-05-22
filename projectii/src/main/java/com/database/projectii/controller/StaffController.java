@@ -7,6 +7,7 @@ import com.database.projectii.service.impl.StaffServiceImpl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import org.apache.ibatis.jdbc.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,16 +27,22 @@ public class StaffController {
     @Autowired
     private StaffServiceImpl staffServiceImpl;
 
-    @GetMapping
-    public Data getByAny(@RequestParam("id") Integer id,
-                         @RequestParam("name") String name,
-                         @RequestParam("age") Integer age,
-                         @RequestParam("gender") String gender,
-                         @RequestParam("number") String number,
-                         @RequestParam("supplyCenter") String supplyCenter,
-                         @RequestParam("mobileNumber") String mobileNumber,
-                         @RequestParam("type") String type) {
-        Staff staff = new Staff(id, name, age, gender, number, supplyCenter, mobileNumber, type);
+    @GetMapping("")
+    public Data getByAny(
+        @RequestParam(value = "id", required = false, defaultValue = "") Integer id,
+        @RequestParam(value = "name", required = false, defaultValue = "") String name,
+        @RequestParam(value = "age", required = false, defaultValue = "") Integer age,
+        @RequestParam(value = "gender", required = false, defaultValue = "") String gender,
+        @RequestParam(value = "number", required = false, defaultValue = "") String number,
+        @RequestParam(value = "supplyCenter", required = false, defaultValue = "")
+            String supplyCenter,
+        @RequestParam(value = "mobileNumber", required = false, defaultValue = "")
+            String mobileNumber,
+        @RequestParam(value = "type", required = false, defaultValue = "") String type) {
+        Staff staff =
+            new Staff(id, name.equals("") ? null : name, age, gender.equals("") ? null : gender,
+                number.equals("") ? null : number, supplyCenter.equals("") ? null : supplyCenter,
+                mobileNumber.equals("") ? null : mobileNumber, type.equals("") ? null : type);
         List<Map<String, Object>> mapList = staffServiceImpl.selectStaffByAny(staff);
         if (mapList.isEmpty()) {
             return new Data(null, Message.NOT_SUCCESS);
