@@ -34,6 +34,7 @@ public class InventoryServiceImpl implements InventoryService {
     private ModelMapper modelMapper;
 
     public boolean insert(Inventory inventory) {
+        inventory.setSurplusQuantity(inventory.getTotalQuantity());
         QueryWrapper<Staff> wrapperStaff = new QueryWrapper<>();
         QueryWrapper<Center> wrapperCenter = new QueryWrapper<>();
         QueryWrapper<Model> wrapperModel = new QueryWrapper<>();
@@ -58,7 +59,6 @@ public class InventoryServiceImpl implements InventoryService {
         if (!inventory.getSupplyCenter().equals(staff.getSupplyCenter())) {
             return false;
         }
-        inventory.setSurplusQuantity(inventory.getTotalQuantity());
         inventoryMapper.insert(inventory);
         return true;
     }

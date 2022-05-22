@@ -43,14 +43,14 @@ public class OrderController {
 
     @PostMapping
     public Data placeOrder(@RequestBody Order order) {
-        System.out.println(order);
+//        System.out.println(order);
         boolean result = orderServiceImpl.insert(order);
         return new Data(result, result ? Message.SUCCESS : Message.NOT_SUCCESS);
     }
 
     @PutMapping
     public Data updateOrder(@RequestBody Order order) {
-        boolean result = orderServiceImpl.updateQuantitEstLod(order);
+        boolean result = orderServiceImpl.updateQuantityEstLod(order);
         return new Data(result, result ? Message.SUCCESS : Message.NOT_SUCCESS);
     }
 
