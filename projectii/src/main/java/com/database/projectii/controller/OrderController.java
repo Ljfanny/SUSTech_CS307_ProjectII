@@ -2,10 +2,9 @@ package com.database.projectii.controller;
 
 import com.database.projectii.controller.transmission.Data;
 import com.database.projectii.controller.transmission.Message;
-import com.database.projectii.model.Inventory;
 import com.database.projectii.service.impl.OrderServiceImpl;
 import com.database.projectii.model.Order;
-import com.sun.org.apache.xpath.internal.operations.Or;
+
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,22 +41,35 @@ public class OrderController {
      */
 
     @PostMapping
-    public Data placeOrder(@RequestBody Order order) {
+    public Data placeOrder(@RequestBody Order[] orders) {
 //        System.out.println(order);
-        boolean result = orderServiceImpl.insert(order);
-        return new Data(result, result ? Message.SUCCESS : Message.NOT_SUCCESS);
+//        boolean result = orderServiceImpl.insert(order);
+//        return new Data(result, result ? Message.SUCCESS : Message.NOT_SUCCESS);
+        for (Order order : orders) {
+            orderServiceImpl.insert(order);
+        }
+        return new Data(true, Message.SUCCESS);
     }
 
     @PutMapping
-    public Data updateOrder(@RequestBody Order order) {
-        boolean result = orderServiceImpl.updateQuantityEstLod(order);
-        return new Data(result, result ? Message.SUCCESS : Message.NOT_SUCCESS);
+    public Data updateOrder(@RequestBody Order[] orders) {
+        boolean isFir = true;
+        for (Order order : orders) {
+            if (isFir){
+                isFir = false;
+                continue;
+            }
+            orderServiceImpl.updateQuantityEstLod(order);
+        }
+        return new Data(true, Message.SUCCESS);
     }
 
     @DeleteMapping
-    public Data deleteOrder(String contract, String salesman, Integer seq) {
-        boolean result = orderServiceImpl.deleteByContractSalesmanSeq(contract, salesman, seq);
-        return new Data(result, result ? Message.SUCCESS : Message.NOT_SUCCESS);
+    public Data deleteOrder(@RequestParam("contract") String contract,
+                            @RequestParam("salesman") String salesman,
+                            @RequestParam("seq") Integer seq) {
+        orderServiceImpl.deleteByContractSalesmanSeq(contract, salesman, seq);
+        return new Data(true, Message.SUCCESS);
     }
 
     static class FavoriteProduct {

@@ -7,6 +7,7 @@ import com.database.projectii.model.*;
 import com.database.projectii.service.OrderService;
 import com.database.projectii.service.property.StaffType;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,6 +83,7 @@ public class OrderServiceImpl implements OrderService {
         Order orderPrev = orderMapper.selectOne(queryWrapper);
         Staff staff = selectStaffBySalesmanNumber(order);
         Staff manager = selectStaffByManagerNumber(order);
+        order.setEnterprise(orderPrev.getEnterprise());
         List<Inventory> inventoryList = selectInventoriesByModelAndCenter(order);
         if (order.getQuantity() == 0) {
             QueryWrapper<Order> queryContract = new QueryWrapper<>();
@@ -161,7 +163,18 @@ public class OrderServiceImpl implements OrderService {
         for (int i = 0; i < orderList.size(); i++) {
             if (seq - 1 == i) {
                 num = i;
-                orderMapper.deleteById(orderList.get(i));
+                Map<String ,Object> columnMap = new HashMap<String, Object>();
+                columnMap.put("contract_number", orderList.get(i).getContractNumber());
+                columnMap.put("enterprise", orderList.get(i).getEnterprise());
+                columnMap.put("product_model", orderList.get(i).getProductModel());
+                columnMap.put("quantity", orderList.get(i).getQuantity());
+                columnMap.put("contract_manager", orderList.get(i).getContractManager());
+                columnMap.put("contract_date", orderList.get(i).getContractDate());
+                columnMap.put("estimated_delivery_date", orderList.get(i).getEstimatedDeliveryDate());
+                columnMap.put("lodgement_date", orderList.get(i).getLodgementDate());
+                columnMap.put("salesman_number", orderList.get(i).getSalesmanNumber());
+                columnMap.put("contract_type", orderList.get(i).getContractType());
+                orderMapper.deleteByMap(columnMap);
                 break;
             }
         }

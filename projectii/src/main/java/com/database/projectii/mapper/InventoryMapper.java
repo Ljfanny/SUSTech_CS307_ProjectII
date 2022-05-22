@@ -13,7 +13,7 @@ public interface InventoryMapper extends BaseMapper<Inventory> {
 
     @Select("select count(distinct product_model) as cnt from inventories " +
         "where surplus_quantity = total_quantity and surplus_quantity > 0")
-    long selectNeverSoldProductCount();
+    Object selectNeverSoldProductCount();
 
 
     @Select(

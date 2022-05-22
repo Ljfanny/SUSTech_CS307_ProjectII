@@ -107,7 +107,7 @@ public class InventoryController {
 
     @GetMapping("/getNeverSoldProductCount")
     public Data getNeverSoldProductCount() {
-        long result = inventoryServiceImpl.selectNeverSoldProductCount();
+        Object result = inventoryServiceImpl.selectNeverSoldProductCount();
         return new Data(result, Message.SUCCESS);
     }
 
