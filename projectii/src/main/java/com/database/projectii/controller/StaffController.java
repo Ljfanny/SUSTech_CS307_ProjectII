@@ -26,7 +26,7 @@ public class StaffController {
     private StaffServiceImpl staffServiceImpl;
 
     @GetMapping
-    public Data getByAny(Staff staff) {
+    public Data getByAny(@RequestBody Staff staff) {
         List<Map<String, Object>> mapList = staffServiceImpl.selectStaffByAny(staff);
         if (mapList.isEmpty()) {
             return new Data(null, Message.NOT_SUCCESS);
