@@ -6,6 +6,7 @@ import com.database.projectii.controller.transmission.Message;
 import com.database.projectii.model.Center;
 import com.database.projectii.model.Contract;
 import com.database.projectii.model.Enterprise;
+import com.database.projectii.model.Staff;
 import com.database.projectii.service.impl.EnterpriseServiceImpl;
 import java.sql.Date;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -38,8 +40,20 @@ public class EnterpriseController {
     private Enterprise enterprise;
 
     @GetMapping
-    public Data getByAny(@RequestBody Enterprise enterprise) {
-        List<Map<String, Object>> enterprises = enterpriseServiceImpl.selectEnterpriseByAny(enterprise);
+    public Data getByAny(
+        @RequestParam(value = "id", required = false, defaultValue = "") Integer id,
+        @RequestParam(value = "name", required = false, defaultValue = "") String name,
+        @RequestParam(value = "country", required = false, defaultValue = "") String country,
+        @RequestParam(value = "city", required = false, defaultValue = "") String city,
+        @RequestParam(value = "supplyCenter", required = false, defaultValue = "")
+            String supplyCenter,
+        @RequestParam(value = "industry", required = false, defaultValue = "") String industry) {
+        Enterprise enterprise =
+            new Enterprise(id, name.equals("") ? null : name, country.equals("") ? null : country,
+                city.equals("") ? null : city, supplyCenter.equals("") ? null : supplyCenter,
+                industry.equals("") ? null : industry);
+        List<Map<String, Object>> enterprises =
+            enterpriseServiceImpl.selectEnterpriseByAny(enterprise);
         if (enterprises.isEmpty()) {
             return new Data(null, Message.NOT_SUCCESS);
         }
@@ -65,7 +79,18 @@ public class EnterpriseController {
     }
 
     @DeleteMapping
-    public Data DeleteById(@RequestBody Enterprise enterprise) {
+    public Data DeleteById(
+        @RequestParam(value = "id", required = false, defaultValue = "") Integer id,
+        @RequestParam(value = "name", required = false, defaultValue = "") String name,
+        @RequestParam(value = "country", required = false, defaultValue = "") String country,
+        @RequestParam(value = "city", required = false, defaultValue = "") String city,
+        @RequestParam(value = "supplyCenter", required = false, defaultValue = "")
+            String supplyCenter,
+        @RequestParam(value = "industry", required = false, defaultValue = "") String industry) {
+        Enterprise enterprise =
+            new Enterprise(id, name.equals("") ? null : name, country.equals("") ? null : country,
+                city.equals("") ? null : city, supplyCenter.equals("") ? null : supplyCenter,
+                industry.equals("") ? null : industry);
         boolean result = enterpriseServiceImpl.deleteEnterpriseByAny(enterprise);
         String msg = result ? Message.SUCCESS : Message.NOT_SUCCESS;
         return new Data(result, msg);

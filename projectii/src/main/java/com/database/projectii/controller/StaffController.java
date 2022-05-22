@@ -87,7 +87,21 @@ public class StaffController {
     }
 
     @DeleteMapping
-    public Data DeleteByAny(@RequestBody Staff staff) {
+    public Data DeleteByAny(
+        @RequestParam(value = "id", required = false, defaultValue = "") Integer id,
+        @RequestParam(value = "name", required = false, defaultValue = "") String name,
+        @RequestParam(value = "age", required = false, defaultValue = "") Integer age,
+        @RequestParam(value = "gender", required = false, defaultValue = "") String gender,
+        @RequestParam(value = "number", required = false, defaultValue = "") String number,
+        @RequestParam(value = "supplyCenter", required = false, defaultValue = "")
+            String supplyCenter,
+        @RequestParam(value = "mobileNumber", required = false, defaultValue = "")
+            String mobileNumber,
+        @RequestParam(value = "type", required = false, defaultValue = "") String type) {
+        Staff staff =
+            new Staff(id, name.equals("") ? null : name, age, gender.equals("") ? null : gender,
+                number.equals("") ? null : number, supplyCenter.equals("") ? null : supplyCenter,
+                mobileNumber.equals("") ? null : mobileNumber, type.equals("") ? null : type);
         boolean result = staffServiceImpl.deleteStaffByAny(staff);
         String msg = result ? Message.SUCCESS : Message.NOT_SUCCESS;
         return new Data(result, msg);
