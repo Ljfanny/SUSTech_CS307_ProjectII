@@ -3,8 +3,6 @@ package com.database.projectii.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.database.projectii.mapper.ModelMapper;
-import com.database.projectii.model.Enterprise;
-import com.database.projectii.model.Inventory;
 import com.database.projectii.model.Model;
 import com.database.projectii.service.ModelService;
 import java.util.List;
@@ -17,10 +15,6 @@ public class ModelServiceImpl implements ModelService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public Model selectModelById(Integer id) {
-        return modelMapper.selectById(id);
-    }
-
     public boolean updateModel(Model model) {
         QueryWrapper<Model> modelQueryWrapper = new QueryWrapper<>();
         modelQueryWrapper.eq("id", model.getId());
@@ -32,12 +26,47 @@ public class ModelServiceImpl implements ModelService {
         return true;
     }
 
-    public boolean deleteModel(Integer id) {
-        Model mdl = modelMapper.selectById(id);
-        if (mdl == null) {
-            return false;
+    public List<Map<String, Object>> selectModelByAny(Model model) {
+        QueryWrapper<Model> modelQueryWrapper = new QueryWrapper<>();
+        if (model.getId() != null) {
+            modelQueryWrapper.eq("id", model.getId());
         }
-        modelMapper.deleteById(id);
+        if (model.getNumber() != null) {
+            modelQueryWrapper.eq("number", model.getNumber());
+        }
+        if (model.getModel() != null) {
+            modelQueryWrapper.eq("model", model.getModel());
+        }
+        if (model.getName() != null) {
+            modelQueryWrapper.eq("name", model.getName());
+        }
+        if (model.getUnitPrice() != null) {
+            modelQueryWrapper.eq("unit_price", model.getUnitPrice());
+        }
+        return modelMapper.selectMaps(modelQueryWrapper);
+    }
+
+    public boolean deleteModelByAny(Model model) {
+        QueryWrapper<Model> modelQueryWrapper = new QueryWrapper<>();
+        if (model.getId() != null) {
+            modelQueryWrapper.eq("id", model.getId());
+        }
+        if (model.getNumber() != null) {
+            modelQueryWrapper.eq("number", model.getNumber());
+        }
+        if (model.getModel() != null) {
+            modelQueryWrapper.eq("model", model.getModel());
+        }
+        if (model.getName() != null) {
+            modelQueryWrapper.eq("name", model.getName());
+        }
+        if (model.getUnitPrice() != null) {
+            modelQueryWrapper.eq("unit_price", model.getUnitPrice());
+        }
+        List<Map<String, Object>> models = modelMapper.selectMaps(modelQueryWrapper);
+        for (Map<String, Object> map : models) {
+            modelMapper.deleteById((int) map.get("id"));
+        }
         return true;
     }
 

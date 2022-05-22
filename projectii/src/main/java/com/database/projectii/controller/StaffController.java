@@ -4,7 +4,6 @@ import com.database.projectii.controller.transmission.Data;
 import com.database.projectii.controller.transmission.Message;
 import com.database.projectii.model.Staff;
 import com.database.projectii.service.impl.StaffServiceImpl;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,13 +25,22 @@ public class StaffController {
     @Autowired
     private StaffServiceImpl staffServiceImpl;
 
-    @GetMapping("/{id}")
-    public Data getById(@PathVariable Integer id) {
-        Staff staff = staffServiceImpl.selectStaffById(id);
-        if (staff == null) {
+    @GetMapping
+    public Data getByAny(Staff staff) {
+        List<Map<String, Object>> mapList = staffServiceImpl.selectStaffByAny(staff);
+        if (mapList.isEmpty()) {
             return new Data(null, Message.NOT_SUCCESS);
         }
-        return new Data(staff, Message.SUCCESS);
+        ArrayList<Staff> staffs = new ArrayList<>();
+        for (Map<String, Object> map : mapList) {
+            staffs.add(
+                new Staff((Integer) map.get("id"), (String) map.get("name"),
+                    (Integer) map.get("age"), (String) map.get("gender")
+                    , (String) map.get("number"), (String) map.get("supply_center"),
+                    (String) map.get("mobile_number"),
+                    (String) map.get("type")));
+        }
+        return new Data(staffs, Message.SUCCESS);
     }
 
     @GetMapping("/all")
@@ -63,9 +70,9 @@ public class StaffController {
         return new Data(result, Message.SUCCESS);
     }
 
-    @DeleteMapping("/{id}")
-    public Data DeleteById(@PathVariable Integer id) {
-        boolean result = staffServiceImpl.deleteStaff(id);
+    @DeleteMapping
+    public Data DeleteByAny(@RequestBody Staff staff) {
+        boolean result = staffServiceImpl.deleteStaffByAny(staff);
         String msg = result ? Message.SUCCESS : Message.NOT_SUCCESS;
         return new Data(result, msg);
     }

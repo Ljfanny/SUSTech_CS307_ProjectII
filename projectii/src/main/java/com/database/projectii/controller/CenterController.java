@@ -27,13 +27,19 @@ public class CenterController {
     @Autowired
     private CenterServiceImpl centerServiceImpl;
 
-    @GetMapping("/{id}")
-    public Data getById(@PathVariable Integer id) {
-        Center center = centerServiceImpl.selectCenterById(id);
-        if (center == null) {
+    // 用任何属性都可以进行查询
+    @GetMapping
+    public Data getByAny(@RequestBody Center center) {
+        List<Map<String, Object>> mapList = centerServiceImpl.selectCenterByAny(center);
+        ArrayList<Center> centers = new ArrayList<>();
+        if (mapList.isEmpty()) {
             return new Data(null, Message.SUCCESS);
+        } else {
+            for (Map<String, Object> map : mapList) {
+                centers.add(new Center((Integer) map.get("id"), (String) map.get("name")));
+            }
         }
-        return new Data(center, Message.SUCCESS);
+        return new Data(centers, Message.SUCCESS);
     }
 
     @GetMapping("/all")
@@ -47,9 +53,9 @@ public class CenterController {
     }
 
 
-    @DeleteMapping("/{id}")
-    public Data DeleteById(@PathVariable Integer id) {
-        boolean result = centerServiceImpl.deleteCenter(id);
+    @DeleteMapping
+    public Data DeleteById(@RequestBody Center center) {
+        boolean result = centerServiceImpl.deleteCenterByAny(center);
         String msg = result ? Message.SUCCESS : Message.NOT_SUCCESS;
         return new Data(result, msg);
     }

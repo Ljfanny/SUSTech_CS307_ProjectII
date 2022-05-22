@@ -37,13 +37,19 @@ public class EnterpriseController {
     @Autowired
     private Enterprise enterprise;
 
-    @GetMapping("/{id}")
-    public Data getById(@PathVariable Integer id) {
-        Enterprise enterprise = enterpriseServiceImpl.selectEnterpriseById(id);
-        if (enterprise == null) {
+    @GetMapping
+    public Data getByAny(@RequestBody Enterprise enterprise) {
+        List<Map<String, Object>> enterprises = enterpriseServiceImpl.selectEnterpriseByAny(enterprise);
+        if (enterprises.isEmpty()) {
             return new Data(null, Message.NOT_SUCCESS);
         }
-        return new Data(enterprise, Message.SUCCESS);
+        ArrayList<Enterprise> enterpriseArrayList = new ArrayList<>();
+        for (Map<String, Object> map : enterprises) {
+            enterpriseArrayList.add(new Enterprise((Integer) map.get("id"),
+                (String) map.get("name"), (String) map.get("country"), (String) map.get("city"),
+                (String) map.get("supply_center"), (String) map.get("industry")));
+        }
+        return new Data(enterpriseArrayList, Message.SUCCESS);
     }
 
     @GetMapping("/all")
@@ -58,9 +64,9 @@ public class EnterpriseController {
         return new Data(enterpriseArrayList, Message.SUCCESS);
     }
 
-    @DeleteMapping("/{id}")
-    public Data DeleteById(@PathVariable Integer id) {
-        boolean result = enterpriseServiceImpl.deleteEnterprise(id);
+    @DeleteMapping
+    public Data DeleteById(@RequestBody Enterprise enterprise) {
+        boolean result = enterpriseServiceImpl.deleteEnterpriseByAny(enterprise);
         String msg = result ? Message.SUCCESS : Message.NOT_SUCCESS;
         return new Data(result, msg);
     }

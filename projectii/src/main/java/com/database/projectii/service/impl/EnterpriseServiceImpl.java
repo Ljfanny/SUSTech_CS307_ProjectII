@@ -17,10 +17,6 @@ public class EnterpriseServiceImpl implements EnterpriseService {
     @Autowired
     private EnterpriseMapper enterpriseMapper;
 
-    public Enterprise selectEnterpriseById(Integer id) {
-        return enterpriseMapper.selectById(id);
-    }
-
     public boolean updateEnterprise(Enterprise enterprise) {
         QueryWrapper<Enterprise> enterpriseQueryWrapper = new QueryWrapper<>();
         enterpriseQueryWrapper.eq("id", enterprise.getId());
@@ -32,12 +28,47 @@ public class EnterpriseServiceImpl implements EnterpriseService {
         return true;
     }
 
-    public boolean deleteEnterprise(Integer id) {
-        Enterprise etr = enterpriseMapper.selectById(id);
-        if (etr == null) {
-            return false;
+    public List<Map<String, Object>> selectEnterpriseByAny(Enterprise enterprise) {
+        QueryWrapper<Enterprise> enterpriseQueryWrapper = new QueryWrapper<>();
+        if (enterprise.getId() != null) {
+            enterpriseQueryWrapper.eq("id", enterprise.getId());
         }
-        enterpriseMapper.deleteById(id);
+        if (enterprise.getName() != null) {
+            enterpriseQueryWrapper.eq("name", enterprise.getName());
+        }
+        if (enterprise.getCountry() != null) {
+            enterpriseQueryWrapper.eq("country", enterprise.getCountry());
+        }
+        if (enterprise.getSupplyCenter() != null) {
+            enterpriseQueryWrapper.eq("supply_center", enterprise.getSupplyCenter());
+        }
+        if (enterprise.getIndustry() != null) {
+            enterpriseQueryWrapper.eq("industry", enterprise.getIndustry());
+        }
+        return enterpriseMapper.selectMaps(enterpriseQueryWrapper);
+    }
+
+    public boolean deleteEnterpriseByAny(Enterprise enterprise) {
+        QueryWrapper<Enterprise> enterpriseQueryWrapper = new QueryWrapper<>();
+        if (enterprise.getId() != null) {
+            enterpriseQueryWrapper.eq("id", enterprise.getId());
+        }
+        if (enterprise.getName() != null) {
+            enterpriseQueryWrapper.eq("name", enterprise.getName());
+        }
+        if (enterprise.getCountry() != null) {
+            enterpriseQueryWrapper.eq("country", enterprise.getCountry());
+        }
+        if (enterprise.getSupplyCenter() != null) {
+            enterpriseQueryWrapper.eq("supply_center", enterprise.getSupplyCenter());
+        }
+        if (enterprise.getIndustry() != null) {
+            enterpriseQueryWrapper.eq("industry", enterprise.getIndustry());
+        }
+        List<Map<String, Object>> centers = enterpriseMapper.selectMaps(enterpriseQueryWrapper);
+        for (Map<String, Object> map : centers) {
+            enterpriseMapper.deleteById((int) map.get("id"));
+        }
         return true;
     }
 

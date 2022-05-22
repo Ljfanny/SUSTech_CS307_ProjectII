@@ -61,7 +61,6 @@ public class InventoryController {
     @PostMapping
     public Data stockIn(@RequestBody Inventory inventory) {
         boolean result = inventoryServiceImpl.insert(inventory);
-//        System.out.println(inventory);
         return new Data(result, result ? Message.SUCCESS : Message.NOT_SUCCESS);
     }
 

@@ -23,11 +23,7 @@ public class ContractServiceImpl {
     public Object selectContractCount(){
         QueryWrapper<Order> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("count(distinct contract_number)");
-        Object result = orderMapper.selectObjs(queryWrapper);
-//        QueryWrapper<Contract> contractQueryWrapper = new QueryWrapper<>();
-//        contractQueryWrapper.select("count(*) as cnt");
-//        result += contractMapper.selectCount(contractQueryWrapper);
-        return result;
+        return orderMapper.selectObjs(queryWrapper);
     }
 
     public List<Map<String,Object>> selectAll() {

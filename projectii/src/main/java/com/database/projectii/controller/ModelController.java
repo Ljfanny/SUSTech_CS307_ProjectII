@@ -3,13 +3,8 @@ package com.database.projectii.controller;
 
 import com.database.projectii.controller.transmission.Data;
 import com.database.projectii.controller.transmission.Message;
-import com.database.projectii.model.Center;
-import com.database.projectii.model.Enterprise;
-import com.database.projectii.model.Inventory;
 import com.database.projectii.model.Model;
-import com.database.projectii.model.Staff;
 import com.database.projectii.service.impl.ModelServiceImpl;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -32,13 +27,19 @@ public class ModelController {
     @Autowired
     private ModelServiceImpl modelServiceImpl;
 
-    @GetMapping("/{id}")
-    public Data getById(@PathVariable Integer id) {
-        Model model = modelServiceImpl.selectModelById(id);
-        if (model == null) {
+    @GetMapping
+    public Data getByAny(@RequestBody Model model) {
+        List<Map<String, Object>> mapList = modelServiceImpl.selectModelByAny(model);
+        if (mapList.isEmpty()) {
             return new Data(null, Message.NOT_SUCCESS);
         }
-        return new Data(model, Message.SUCCESS);
+        ArrayList<Model> models = new ArrayList<>();
+        for (Map<String, Object> map : mapList) {
+            models.add(new Model((Integer) map.get("id"),
+                (String) map.get("number"), (String) map.get("model"),
+                (String) map.get("name"), (Integer) map.get("unit_price")));
+        }
+        return new Data(models, Message.SUCCESS);
     }
 
     @GetMapping("/all")
@@ -53,9 +54,9 @@ public class ModelController {
         return new Data(modelArrayList, Message.SUCCESS);
     }
 
-    @DeleteMapping("/{id}")
-    public Data DeleteById(@PathVariable Integer id) {
-        boolean result = modelServiceImpl.deleteModel(id);
+    @DeleteMapping
+    public Data DeleteById(@RequestBody Model model) {
+        boolean result = modelServiceImpl.deleteModelByAny(model);
         String msg = result ? Message.SUCCESS : Message.NOT_SUCCESS;
         return new Data(result, msg);
     }
