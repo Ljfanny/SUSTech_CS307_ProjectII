@@ -20,7 +20,7 @@ public class Order implements Comparable<Order>{
     @JsonFormat(pattern = "yyyy/MM/dd")
     private Date contractDate;
     @JsonFormat(pattern = "yyyy/MM/dd")
-    private Date EstimatedDeliveryDate;
+    private Date estimatedDeliveryDate;
     @JsonFormat(pattern = "yyyy/MM/dd")
     private Date lodgementDate;
     private String salesmanNumber;
@@ -37,7 +37,7 @@ public class Order implements Comparable<Order>{
             ", quantity=" + quantity +
             ", contractManager='" + contractManager + '\'' +
             ", contractDate=" + contractDate +
-            ", EstimatedDeliveryDate=" + EstimatedDeliveryDate +
+            ", EstimatedDeliveryDate=" + estimatedDeliveryDate +
             ", lodgementDate=" + lodgementDate +
             ", salesmanNumber='" + salesmanNumber + '\'' +
             ", contractType='" + contractType + '\'' +
@@ -93,11 +93,11 @@ public class Order implements Comparable<Order>{
     }
 
     public Date getEstimatedDeliveryDate() {
-        return EstimatedDeliveryDate;
+        return estimatedDeliveryDate;
     }
 
     public void setEstimatedDeliveryDate(Date estimatedDeliveryDate) {
-        EstimatedDeliveryDate = estimatedDeliveryDate;
+        this.estimatedDeliveryDate = estimatedDeliveryDate;
     }
 
     public Date getLodgementDate() {
@@ -126,7 +126,7 @@ public class Order implements Comparable<Order>{
 
     @Override
     public int compareTo(Order o) {
-        int result = this.EstimatedDeliveryDate.compareTo(o.getEstimatedDeliveryDate());
+        int result = this.estimatedDeliveryDate.compareTo(o.getEstimatedDeliveryDate());
         if (result == 0){
             return this.productModel.compareTo(o.productModel);
         }else return result;

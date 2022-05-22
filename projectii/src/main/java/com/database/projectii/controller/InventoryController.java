@@ -2,6 +2,7 @@ package com.database.projectii.controller;
 
 import com.database.projectii.controller.transmission.Data;
 import com.database.projectii.controller.transmission.Message;
+import com.database.projectii.model.Contract;
 import com.database.projectii.model.Enterprise;
 import com.database.projectii.service.impl.InventoryServiceImpl;
 import com.database.projectii.model.Inventory;
@@ -13,11 +14,13 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -30,6 +33,63 @@ public class InventoryController {
 
     @Autowired
     private OrderServiceImpl orderServiceImpl;
+
+    @GetMapping
+    public Data getByAny(
+        @RequestParam(value = "id", required = false, defaultValue = "") Integer id,
+        @RequestParam(value = "supplyCenter", required = false, defaultValue = "")
+            String supplyCenter,
+        @RequestParam(value = "productModel", required = false, defaultValue = "")
+            String productModel,
+        @RequestParam(value = "supplyStaff", required = false, defaultValue = "")
+            String supplyStaff,
+        @RequestParam(value = "date", required = false, defaultValue = "") Date date,
+        @RequestParam(value = "purchasePrice", required = false, defaultValue = "")
+            Integer purchasePrice,
+        @RequestParam(value = "surplusQuantity", required = false, defaultValue = "")
+            Integer surplusQuantity) {
+        Inventory inventory = new Inventory(id, supplyCenter.equals("") ? null : supplyCenter,
+            productModel.equals("") ? null : productModel,
+            supplyStaff.equals("") ? null : supplyStaff, date,
+            purchasePrice, surplusQuantity, null);
+        List<Map<String, Object>> mapList = inventoryServiceImpl.selectInventoryByAny(inventory);
+        ArrayList<Inventory> inventories = new ArrayList<>();
+        if (mapList.isEmpty()) {
+            return new Data(null, Message.SUCCESS);
+        } else {
+            for (Map<String, Object> map : mapList) {
+                inventories.add(new Inventory((Integer) map.get("id"),
+                    (String) map.get("supply_center"), (String) map.get("product_model"),
+                    (String) map.get("supply_staff"),
+                    (Date) map.get("date"), (Integer) map.get("purchase_price"),
+                    (Integer) map.get("surplus_quantity"), (Integer) map.get("total_quantity")));
+            }
+        }
+        return new Data(inventories, Message.SUCCESS);
+    }
+
+    @DeleteMapping
+    public Data DeleteByAny(
+        @RequestParam(value = "id", required = false, defaultValue = "") Integer id,
+        @RequestParam(value = "supplyCenter", required = false, defaultValue = "")
+            String supplyCenter,
+        @RequestParam(value = "productModel", required = false, defaultValue = "")
+            String productModel,
+        @RequestParam(value = "supplyStaff", required = false, defaultValue = "")
+            String supplyStaff,
+        @RequestParam(value = "date", required = false, defaultValue = "") Date date,
+        @RequestParam(value = "purchasePrice", required = false, defaultValue = "")
+            Integer purchasePrice,
+        @RequestParam(value = "surplusQuantity", required = false, defaultValue = "")
+            Integer surplusQuantity) {
+        Inventory inventory = new Inventory(id, supplyCenter.equals("") ? null : supplyCenter,
+            productModel.equals("") ? null : productModel,
+            supplyStaff.equals("") ? null : supplyStaff, date,
+            purchasePrice, surplusQuantity, null);
+        boolean result = inventoryServiceImpl.deleteInventoryByAny(inventory);
+        String msg = result ? Message.SUCCESS : Message.NOT_SUCCESS;
+        return new Data(result, msg);
+    }
 
     @GetMapping("/all")
     public Data getAllInventory() {

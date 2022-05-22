@@ -5,6 +5,7 @@ import com.database.projectii.controller.transmission.Message;
 import com.database.projectii.model.Inventory;
 import com.database.projectii.service.impl.OrderServiceImpl;
 import com.database.projectii.model.Order;
+import com.sun.org.apache.xpath.internal.operations.Or;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -162,6 +164,88 @@ public class OrderController {
                 (String) map.get("contract_type")));
         }
         return new Data(orderArrayList, Message.SUCCESS);
+    }
+
+    @GetMapping
+    public Data getByAny(
+        @RequestParam(value = "contractNumber", required = false, defaultValue = "")
+            String contractNumber,
+        @RequestParam(value = "enterprise", required = false, defaultValue = "") String enterprise,
+        @RequestParam(value = "productModel", required = false, defaultValue = "")
+            String productModel,
+        @RequestParam(value = "quantity", required = false, defaultValue = "")
+            Integer quantity,
+        @RequestParam(value = "contractManager", required = false, defaultValue = "")
+            String contractManager,
+        @RequestParam(value = "contractDate", required = false, defaultValue = "")
+            Date contractDate,
+        @RequestParam(value = "estimatedDeliveryDate", required = false, defaultValue = "")
+            Date estimatedDeliveryDate,
+        @RequestParam(value = "lodgementDate", required = false, defaultValue = "")
+            Date lodgementDate,
+        @RequestParam(value = "salesmanNumber", required = false, defaultValue = "")
+            String salesmanNumber,
+        @RequestParam(value = "contractType", required = false, defaultValue = "")
+            String contractType) {
+        Order order = new Order(
+            contractNumber.equals("") ? null : contractNumber,
+            enterprise.equals("") ? null : enterprise,
+            productModel.equals("") ? null : productModel, quantity,
+            contractManager.equals("") ? null : contractManager,
+            contractDate, estimatedDeliveryDate, lodgementDate,
+            salesmanNumber.equals("") ? null : salesmanNumber,
+            contractType.equals("") ? null : contractType
+        );
+        List<Map<String, Object>> mapList = orderServiceImpl.selectOrderByAny(order);
+        ArrayList<Order> orders = new ArrayList<>();
+        if (mapList.isEmpty()) {
+            return new Data(null, Message.SUCCESS);
+        } else {
+            for (Map<String, Object> map : mapList) {
+                orders.add(new Order((String) map.get("contract_number"),
+                    (String) map.get("enterprise"), (String) map.get("product_model"),
+                    (Integer) map.get("quantity"), (String) map.get("contract_manager"),
+                    (Date) map.get("contract_date"), (Date) map.get("estimated_delivery_date"),
+                    (Date) map.get("lodgement_date"), (String) map.get("salesman_number"),
+                    (String) map.get("contract_type")));
+            }
+        }
+        return new Data(orders, Message.SUCCESS);
+    }
+
+    @DeleteMapping
+    public Data DeleteByAny(
+        @RequestParam(value = "contractNumber", required = false, defaultValue = "")
+            String contractNumber,
+        @RequestParam(value = "enterprise", required = false, defaultValue = "") String enterprise,
+        @RequestParam(value = "productModel", required = false, defaultValue = "")
+            String productModel,
+        @RequestParam(value = "quantity", required = false, defaultValue = "")
+            Integer quantity,
+        @RequestParam(value = "contractManager", required = false, defaultValue = "")
+            String contractManager,
+        @RequestParam(value = "contractDate", required = false, defaultValue = "")
+            Date contractDate,
+        @RequestParam(value = "estimatedDeliveryDate", required = false, defaultValue = "")
+            Date estimatedDeliveryDate,
+        @RequestParam(value = "lodgementDate", required = false, defaultValue = "")
+            Date lodgementDate,
+        @RequestParam(value = "salesmanNumber", required = false, defaultValue = "")
+            String salesmanNumber,
+        @RequestParam(value = "contractType", required = false, defaultValue = "")
+            String contractType) {
+        Order order = new Order(
+            contractNumber.equals("") ? null : contractNumber,
+            enterprise.equals("") ? null : enterprise,
+            productModel.equals("") ? null : productModel, quantity,
+            contractManager.equals("") ? null : contractManager,
+            contractDate, estimatedDeliveryDate, lodgementDate,
+            salesmanNumber.equals("") ? null : salesmanNumber,
+            contractType.equals("") ? null : contractType
+        );
+        boolean result = orderServiceImpl.deleteOrderByAny(order);
+        String msg = result ? Message.SUCCESS : Message.NOT_SUCCESS;
+        return new Data(result, msg);
     }
 
 }

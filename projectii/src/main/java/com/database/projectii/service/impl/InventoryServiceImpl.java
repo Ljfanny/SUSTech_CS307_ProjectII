@@ -10,6 +10,7 @@ import com.database.projectii.model.Center;
 import com.database.projectii.model.Enterprise;
 import com.database.projectii.model.Inventory;
 import com.database.projectii.model.Model;
+import com.database.projectii.model.Order;
 import com.database.projectii.model.Staff;
 import com.database.projectii.service.InventoryService;
 import com.database.projectii.service.property.StaffType;
@@ -74,5 +75,61 @@ public class InventoryServiceImpl implements InventoryService {
         QueryWrapper<Inventory> inventoryQueryWrapper = new QueryWrapper<>();
         inventoryQueryWrapper.select("*");
         return inventoryMapper.selectMaps(inventoryQueryWrapper);
+    }
+
+    public List<Map<String, Object>> selectInventoryByAny(Inventory inventory) {
+        QueryWrapper<Inventory> inventoryQueryWrapper = new QueryWrapper<>();
+        if (inventory.getId() != null) {
+            inventoryQueryWrapper.eq("id", inventory.getId());
+        }
+        if (inventory.getSupplyCenter() != null) {
+            inventoryQueryWrapper.eq("supplyCenter", inventory.getSupplyCenter());
+        }
+        if (inventory.getProductModel() != null) {
+            inventoryQueryWrapper.eq("ProductModel", inventory.getProductModel());
+        }
+        if (inventory.getSupplyStaff() != null) {
+            inventoryQueryWrapper.eq("supplyStaff", inventory.getSupplyStaff());
+        }
+        if (inventory.getDate() != null) {
+            inventoryQueryWrapper.eq("date", inventory.getDate());
+        }
+        if (inventory.getPurchasePrice() != null) {
+            inventoryQueryWrapper.eq("purchasePrice", inventory.getPurchasePrice());
+        }
+        if (inventory.getSurplusQuantity() != null) {
+            inventoryQueryWrapper.eq("id", inventory.getSurplusQuantity());
+        }
+        return inventoryMapper.selectMaps(inventoryQueryWrapper);
+    }
+
+    public boolean deleteInventoryByAny(Inventory inventory) {
+        QueryWrapper<Inventory> inventoryQueryWrapper = new QueryWrapper<>();
+        if (inventory.getId() != null) {
+            inventoryQueryWrapper.eq("id", inventory.getId());
+        }
+        if (inventory.getSupplyCenter() != null) {
+            inventoryQueryWrapper.eq("supplyCenter", inventory.getSupplyCenter());
+        }
+        if (inventory.getProductModel() != null) {
+            inventoryQueryWrapper.eq("ProductModel", inventory.getProductModel());
+        }
+        if (inventory.getSupplyStaff() != null) {
+            inventoryQueryWrapper.eq("supplyStaff", inventory.getSupplyStaff());
+        }
+        if (inventory.getDate() != null) {
+            inventoryQueryWrapper.eq("date", inventory.getDate());
+        }
+        if (inventory.getPurchasePrice() != null) {
+            inventoryQueryWrapper.eq("purchasePrice", inventory.getPurchasePrice());
+        }
+        if (inventory.getSurplusQuantity() != null) {
+            inventoryQueryWrapper.eq("id", inventory.getSurplusQuantity());
+        }
+        List<Map<String, Object>> inventories = inventoryMapper.selectMaps(inventoryQueryWrapper);
+        for (Map<String, Object> map : inventories) {
+            inventoryMapper.deleteById((int) map.get("id"));
+        }
+        return true;
     }
 }

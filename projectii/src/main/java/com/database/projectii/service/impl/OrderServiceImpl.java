@@ -35,6 +35,8 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private ContractMapper contractMapper;
 
+
+
     /**
      * 1. 订单中的商品数量⼤于库存数量。（每个商品型号的库存在不同供应中⼼是不同的）
      * 2. ⼈员类型不是“Salesman"
@@ -259,5 +261,79 @@ public class OrderServiceImpl implements OrderService {
         QueryWrapper<Order> orderQueryWrapper = new QueryWrapper<>();
         orderQueryWrapper.select("*");
         return orderMapper.selectMaps(orderQueryWrapper);
+    }
+
+    public List<Map<String, Object>> selectOrderByAny(Order order) {
+        QueryWrapper<Order> orderQueryWrapper = new QueryWrapper<>();
+        if (order.getContractNumber()!= null) {
+            orderQueryWrapper.eq("contractNumber", order.getContractNumber());
+        }
+        if (order.getEnterprise() != null) {
+            orderQueryWrapper.eq("enterprise", order.getEnterprise());
+        }
+        if (order.getProductModel() != null) {
+            orderQueryWrapper.eq("productModel", order.getProductModel());
+        }
+        if (order.getQuantity() != null) {
+            orderQueryWrapper.eq("quantity", order.getQuantity());
+        }
+        if (order.getContractManager() != null) {
+            orderQueryWrapper.eq("contractManager", order.getContractManager());
+        }
+        if (order.getContractDate() != null) {
+            orderQueryWrapper.eq("contractDate", order.getContractDate());
+        }
+        if (order.getEstimatedDeliveryDate() != null) {
+            orderQueryWrapper.eq("estimatedDeliveryDate", order.getEstimatedDeliveryDate());
+        }
+        if (order.getLodgementDate() != null) {
+            orderQueryWrapper.eq("lodgementDate", order.getLodgementDate());
+        }
+        if (order.getSalesmanNumber() != null) {
+            orderQueryWrapper.eq("salesmanNumber", order.getSalesmanNumber());
+        }
+        if (order.getContractType() != null) {
+            orderQueryWrapper.eq("contractType", order.getContractType());
+        }
+        return orderMapper.selectMaps(orderQueryWrapper);
+    }
+
+    public boolean deleteOrderByAny(Order order) {
+        QueryWrapper<Order> orderQueryWrapper = new QueryWrapper<>();
+        if (order.getContractNumber()!= null) {
+            orderQueryWrapper.eq("contractNumber", order.getContractNumber());
+        }
+        if (order.getEnterprise() != null) {
+            orderQueryWrapper.eq("enterprise", order.getEnterprise());
+        }
+        if (order.getProductModel() != null) {
+            orderQueryWrapper.eq("productModel", order.getProductModel());
+        }
+        if (order.getQuantity() != null) {
+            orderQueryWrapper.eq("quantity", order.getQuantity());
+        }
+        if (order.getContractManager() != null) {
+            orderQueryWrapper.eq("contractManager", order.getContractManager());
+        }
+        if (order.getContractDate() != null) {
+            orderQueryWrapper.eq("contractDate", order.getContractDate());
+        }
+        if (order.getEstimatedDeliveryDate() != null) {
+            orderQueryWrapper.eq("estimatedDeliveryDate", order.getEstimatedDeliveryDate());
+        }
+        if (order.getLodgementDate() != null) {
+            orderQueryWrapper.eq("lodgementDate", order.getLodgementDate());
+        }
+        if (order.getSalesmanNumber() != null) {
+            orderQueryWrapper.eq("salesmanNumber", order.getSalesmanNumber());
+        }
+        if (order.getContractType() != null) {
+            orderQueryWrapper.eq("contractType", order.getContractType());
+        }
+        List<Map<String, Object>> orders = orderMapper.selectMaps(orderQueryWrapper);
+        for (Map<String, Object> map : orders) {
+            orderMapper.deleteById((int) map.get("id"));
+        }
+        return true;
     }
 }
