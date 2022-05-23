@@ -5,11 +5,11 @@ import java.sql.Date;
 
 public class ReturnOrder {
     private String contractNumber;
-    private String contractManager;
-    private String enterprise;
+    private String contractManagerName;
+    private String enterpriseName;
     private String supplyCenter;
     private String productModel;
-    private String name;
+    private String salesmanName;
     private Integer quantity;
     private Integer unitPrice;
     @JsonFormat(pattern = "yyyy/MM/dd", timezone = "GMT+8")
@@ -17,16 +17,16 @@ public class ReturnOrder {
     @JsonFormat(pattern = "yyyy/MM/dd", timezone = "GMT+8")
     private java.sql.Date lodgementDate;
 
-    public ReturnOrder(String contractNumber, String contractManager, String enterprise,
-                       String supplyCenter, String productModel, String salesmanNumber,
-                       Integer quantity, Integer unitPrice, Date estimatedDeliveryDate,
-                       Date lodgementDate) {
+    public ReturnOrder(String contractNumber, String contractManagerName,
+                       String enterpriseName, String supplyCenter, String productModel,
+                       String salesmanName, Integer quantity, Integer unitPrice,
+                       Date estimatedDeliveryDate, Date lodgementDate) {
         this.contractNumber = contractNumber;
-        this.contractManager = contractManager;
-        this.enterprise = enterprise;
+        this.contractManagerName = contractManagerName;
+        this.enterpriseName = enterpriseName;
         this.supplyCenter = supplyCenter;
         this.productModel = productModel;
-        this.name = salesmanNumber;
+        this.salesmanName = salesmanName;
         this.quantity = quantity;
         this.unitPrice = unitPrice;
         this.estimatedDeliveryDate = estimatedDeliveryDate;
@@ -41,20 +41,20 @@ public class ReturnOrder {
         this.contractNumber = contractNumber;
     }
 
-    public String getContractManager() {
-        return contractManager;
+    public String getContractManagerName() {
+        return contractManagerName;
     }
 
-    public void setContractManager(String contractManager) {
-        this.contractManager = contractManager;
+    public void setContractManagerName(String contractManagerName) {
+        this.contractManagerName = contractManagerName;
     }
 
-    public String getEnterprise() {
-        return enterprise;
+    public String getEnterpriseName() {
+        return enterpriseName;
     }
 
-    public void setEnterprise(String enterprise) {
-        this.enterprise = enterprise;
+    public void setEnterpriseName(String enterpriseName) {
+        this.enterpriseName = enterpriseName;
     }
 
     public String getSupplyCenter() {
@@ -73,12 +73,12 @@ public class ReturnOrder {
         this.productModel = productModel;
     }
 
-    public String getSalesmanNumber() {
-        return name;
+    public String getSalesmanName() {
+        return salesmanName;
     }
 
-    public void setSalesmanNumber(String salesmanNumber) {
-        this.name = salesmanNumber;
+    public void setSalesmanName(String salesmanName) {
+        this.salesmanName = salesmanName;
     }
 
     public Integer getQuantity() {
@@ -97,19 +97,19 @@ public class ReturnOrder {
         this.unitPrice = unitPrice;
     }
 
-    public java.sql.Date getEstimatedDeliveryDate() {
+    public Date getEstimatedDeliveryDate() {
         return estimatedDeliveryDate;
     }
 
-    public void setEstimatedDeliveryDate(java.sql.Date estimatedDeliveryDate) {
+    public void setEstimatedDeliveryDate(Date estimatedDeliveryDate) {
         this.estimatedDeliveryDate = estimatedDeliveryDate;
     }
 
-    public java.sql.Date getLodgementDate() {
+    public Date getLodgementDate() {
         return lodgementDate;
     }
 
-    public void setLodgementDate(java.sql.Date lodgementDate) {
+    public void setLodgementDate(Date lodgementDate) {
         this.lodgementDate = lodgementDate;
     }
 }
