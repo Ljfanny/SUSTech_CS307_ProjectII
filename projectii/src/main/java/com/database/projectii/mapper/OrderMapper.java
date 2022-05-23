@@ -16,10 +16,11 @@ public interface OrderMapper extends BaseMapper<Order> {
         "group by product_model order by max_sum desc limit 1)")
     List<Map<String, Object>> selectFavoriteProductModel();
 
-    @Select("select supply_center, round(sum * 1.0 / cnt * 1.0, 1) as avg " +
-        "from (select supply_center, count(surplus_quantity) as cnt, sum(surplus_quantity) as sum " +
-        "      from inventories " +
-        "      group by supply_center) sub " +
+    @Select("select supply_center, " +
+        "       round((sum(surplus_quantity) * 1.0) / (count(distinct (supply_center, product_model)) * 1.0), " +
+        "             1) as avg " +
+        "from inventories " +
+        "group by supply_center " +
         "order by supply_center")
     List<Map<String, Object>> selectAvgStockByCenter();
 
