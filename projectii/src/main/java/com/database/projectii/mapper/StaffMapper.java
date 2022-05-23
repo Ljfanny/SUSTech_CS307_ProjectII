@@ -13,5 +13,5 @@ import org.apache.ibatis.annotations.Select;
 public interface StaffMapper extends BaseMapper<Staff> {
 
     @Select("select name from staffs where number = ${number}")
-    String selectNameByNumber(@Param("number") String number);
+    Object selectNameByNumber(@Param("number") String number);
 }

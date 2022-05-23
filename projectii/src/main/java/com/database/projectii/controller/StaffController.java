@@ -71,6 +71,7 @@ public class StaffController {
                     (String) map.get("mobile_number"),
                     (String) map.get("type")));
         }
+
         return new Data(staffArrayList, Message.SUCCESS);
     }
 

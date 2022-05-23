@@ -292,10 +292,10 @@ public class OrderServiceImpl implements OrderService {
         } else {
             for (Map<String, Object> map : mapList) {
                 orders.add(new ReturnOrder((String) map.get("contract_number"),
-                    staffMapper.selectNameByNumber((String) map.get("contract_manager")),
+                    (String) staffMapper.selectNameByNumber((String) map.get("contract_manager")),
                     (String) map.get("enterprise"), (String) map.get("supply_center"),
                     (String) map.get("product_model"),
-                    staffMapper.selectNameByNumber((String) map.get("salesman_number")),
+                    (String) staffMapper.selectNameByNumber((String) map.get("salesman_number")),
                     (Integer) map.get("quantity"),
                     (Integer) map.get("unit_price"),
                     (java.sql.Date) map.get("estimated_delivery_date"),
