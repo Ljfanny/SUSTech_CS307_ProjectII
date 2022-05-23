@@ -34,7 +34,7 @@
     <el-table :data="tableData2" stripe border style="width: 100%" height="500">
       <el-table-column fixed prop="productModel" label="model" width="150">
       </el-table-column>
-      <el-table-column prop="name" label="salesman" width="150">
+      <el-table-column prop="salesmanName" label="salesman" width="150">
       </el-table-column>
       <el-table-column prop="quantity" label="quantity" width="150">
       </el-table-column>
