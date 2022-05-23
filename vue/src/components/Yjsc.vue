@@ -11,19 +11,24 @@
         </el-row>
       </el-header>
     </el-container>
-    getAllStaffCount:
+    <el-header>Staffs by count</el-header>
     <el-table :data="countByType" stripe border style="width: 100%" height="300">
       <el-table-column fixed prop="type" label="type" width="150">
       </el-table-column>
       <el-table-column prop="cnt" label="count" width="150"> </el-table-column>
     </el-table>
-    getContractCount:
-    <el-table :data="contractCount" stripe border style="width: 100%" height="300">
+    <el-header>Contract Count</el-header>
+    <el-table :data="contractCount" stripe border style="width: 100%" height="100">
       <el-table-column fixed prop="0" label="count" width="150">
       </el-table-column>
     </el-table>
-    getOrderCount:
-    <el-table :data="orderCount" stripe border style="width: 100%" height="300">
+    <el-header>Order Count</el-header>
+    <el-table :data="orderCount" stripe border style="width: 100%" height="100">
+      <el-table-column fixed prop="0" label="count" width="150">
+      </el-table-column>
+    </el-table>
+    <el-header>Never Sold</el-header>
+    <el-table :data="nSPC" stripe border style="width: 100%" height="100">
       <el-table-column fixed prop="0" label="count" width="150">
       </el-table-column>
     </el-table>
@@ -36,7 +41,8 @@ export default {
     return {
       countByType: [],
       contractCount: [],
-      orderCount: []
+      orderCount: [],
+      nSPC: []
     }
   },
   methods: {
@@ -57,11 +63,20 @@ export default {
       this.$axios
         .get('/orders/getOrderCount')
         .then((response) => { this.orderCount.push(response.data.data) })
+    },
+    getNeverSoldProductCount () {
+      this.$axios
+        .get('/inventories/getNeverSoldProductCount')
+        .then((response) => {
+          this.nSPC.push(response.data.data)
+        })
     }
   },
   mounted () {
     this.CountByType()
     this.getContractCount()
+    this.getOrderCount()
+    this.getNeverSoldProductCount()
   }
 }
 </script>
@@ -71,6 +86,7 @@ export default {
   background-color: #e9eef3;
   color: #333;
   text-align: center;
+  line-height: 60px;
 }
 
 .el-main {

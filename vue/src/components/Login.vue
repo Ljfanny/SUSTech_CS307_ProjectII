@@ -3,7 +3,9 @@
     <el-container>
       <el-header> </el-header>
       <el-header> CS307 ProjectII </el-header>
-      <el-main>
+      <el-header> </el-header>
+
+      <el-header>
         <el-row>
           <el-button type="primary" plain @click="Center">Center</el-button>
           <el-button type="primary" plain @click="Contract">Contract</el-button>
@@ -16,11 +18,24 @@
           <el-button type="primary" plain @click="Model">Model</el-button>
           <el-button type="primary" plain @click="Order">Order</el-button>
           <el-button type="primary" plain @click="Staff">Staff</el-button>
-          <el-button type="primary" plain @click="Yjsc">TotalOut</el-button>
+        </el-row>
+      </el-header>
+      <el-header>
+        <el-row>
+          <el-button type="primary" plain @click="Yjsc">OneKeyOut</el-button>
+        </el-row></el-header
+      >
+      <el-header>
+        <el-row>
           <el-button type="primary" plain @click="Import">Import</el-button>
         </el-row>
-      </el-main>
-      <el-footer> </el-footer>
+         </el-header>
+      <el-header> </el-header>
+      <el-header> </el-header>
+      <el-header> </el-header>
+      <el-header> </el-header>
+      <el-header> </el-header>
+      <el-header> </el-header>
     </el-container>
   </div>
 </template>
@@ -67,13 +82,6 @@ export default {
   background-color: #e9eef3;
   color: #333;
   text-align: center;
-}
-
-.el-main {
-  background-color: #e9eef3;
-  color: #333;
-  text-align: center;
-  line-height: 500px;
 }
 
 body > .el-container {

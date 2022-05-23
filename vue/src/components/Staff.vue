@@ -11,54 +11,63 @@
           <el-col :span="2">
             <el-button type="primary" plain @click="getAll">Staff</el-button>
           </el-col>
-        </el-row>
-      </el-header>
-      <el-header>
-        <el-row>
           <el-col :span="2">
-            <el-button type="primary" plain @click="getById">select</el-button>
+            <el-button type="primary" plain @click="get">select</el-button>
           </el-col>
           <el-col :span="2">
-            <el-button type="primary" plain @click="deleteById"
-              >delete</el-button
-            >
+            <el-button type="primary" plain @click="dlt">delete</el-button>
           </el-col>
-          <el-col :span="4">
-            <el-input
-              v-model="input"
-              placeholder="input to select or delete by id"
-            ></el-input>
-          </el-col>
-        </el-row>
-      </el-header>
-      <el-header>
-        <el-row>
           <el-col :span="2">
             <el-button type="primary" plain @click="insert">insert</el-button>
           </el-col>
           <el-col :span="2">
             <el-button type="primary" plain @click="update">update</el-button>
           </el-col>
+        </el-row>
+      </el-header>
+      <el-header>
+        <el-row>
           <el-col :span="2">
             <el-input v-model="iuid" placeholder="id"></el-input>
+          </el-col>
+          <el-col :span="0.1">
+            &#160;
           </el-col>
           <el-col :span="2">
             <el-input v-model="iuname" placeholder="name"></el-input>
           </el-col>
+          <el-col :span="0.1">
+            &#160;
+          </el-col>
           <el-col :span="2">
             <el-input v-model="iuage" placeholder="age"></el-input>
+          </el-col>
+          <el-col :span="0.1">
+            &#160;
           </el-col>
           <el-col :span="2">
             <el-input v-model="iugender" placeholder="gender"></el-input>
           </el-col>
+          <el-col :span="0.1">
+            &#160;
+          </el-col>
           <el-col :span="2">
             <el-input v-model="iunumber" placeholder="number"></el-input>
+          </el-col>
+          <el-col :span="0.1">
+            &#160;
           </el-col>
           <el-col :span="2">
             <el-input v-model="iucenter" placeholder="center"></el-input>
           </el-col>
+          <el-col :span="0.1">
+            &#160;
+          </el-col>
           <el-col :span="2">
             <el-input v-model="iumn" placeholder="mob number"></el-input>
+          </el-col>
+          <el-col :span="0.1">
+            &#160;
           </el-col>
           <el-col :span="2">
             <el-input v-model="iutype" placeholder="type"></el-input>
@@ -89,7 +98,6 @@ export default {
   data () {
     return {
       tableData: [],
-      input: '',
       iuid: '',
       iuname: '',
       iuage: '',
@@ -110,7 +118,7 @@ export default {
         .get('/staffs/all')
         .then((response) => { this.tableData = response.data.data })
     },
-    getById () {
+    get () {
       this.tableData = []
       this.$axios
         .get('/staffs?' +
@@ -132,17 +140,17 @@ export default {
       this.iumn = ''
       this.iutype = ''
     },
-    deleteById () {
-      this.$axios.delete('/staffs', {
-        id: this.iuid,
-        name: this.iuname,
-        age: this.iuage,
-        gender: this.iugender,
-        number: this.iunumber,
-        supplyCenter: this.iucenter,
-        mobileNumber: this.iumn,
-        type: this.iutype
-      })
+    dlt () {
+      this.tableData = []
+      this.$axios.delete('/staffs?' +
+        'id=' + this.iuid +
+        '&name=' + this.iuname +
+        '&age=' + this.iuage +
+        '&gender=' + this.iugender +
+        '&number=' + this.iunumber +
+        '&supplyCenter=' + this.iucenter +
+        '&mobileNumber=' + this.iumn +
+        '&type=' + this.iutype)
       this.iuid = ''
       this.iuname = ''
       this.iuage = ''
