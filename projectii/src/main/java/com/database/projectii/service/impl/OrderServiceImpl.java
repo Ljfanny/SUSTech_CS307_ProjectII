@@ -1,11 +1,13 @@
 package com.database.projectii.service.impl;
 
+import com.alibaba.druid.pool.ha.selector.StickyDataSourceHolder;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.database.projectii.mapper.*;
 import com.database.projectii.model.*;
 import com.database.projectii.service.OrderService;
 import com.database.projectii.service.property.StaffType;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -274,25 +276,31 @@ public class OrderServiceImpl implements OrderService {
         return orderMapper.selectAvgStockByCenter();
     }
 
-    public List<Order> selectContractInfo(String contractNumber, String infos) {
-        QueryWrapper<Order> orderQueryWrapper = new QueryWrapper<>();
-        orderQueryWrapper.eq("contract_number", contractNumber);
-        Order order = orderMapper.selectOne(orderQueryWrapper);
-        StringBuilder stringBuilder = new StringBuilder();
-        if (order == null) {
-            QueryWrapper<Contract> contractQueryWrapper = new QueryWrapper<>();
-            contractQueryWrapper.eq("contract_number", contractNumber);
-            Contract contract = contractMapper.selectOne(contractQueryWrapper);
-            stringBuilder.append(contract.getNumber());
-            stringBuilder.append(",").append(contract.getEnterprise());
-            stringBuilder.append(",").append(contract.getManager());
-            stringBuilder.append(",").append(contract.getCenter());
-            infos = stringBuilder.toString();
-            return null;
+    public List<ReturnOrder> selectContractInfo(String contractNumber) {
+        List<ReturnOrder> orders = new ArrayList<>();
+        List<Map<String, Object>> mapList = orderMapper.selectContractInfo(contractNumber);
+        if (mapList.isEmpty()) {
+            List<Map<String, Object>> cons = contractMapper.selectContractInfo(contractNumber);
+            for (Map<String, Object> con : cons) {
+                orders.add(
+                    new ReturnOrder((String) con.get("number"), (String) con.get("manager"),
+                        (String) con.get("enterprise"), (String) con.get("center"),
+                        null, null, null, null, null, null));
+            }
+            return orders;
         } else {
-            QueryWrapper<Order> queryWrapper = new QueryWrapper<>();
-            queryWrapper.eq("contract_number", contractNumber);
-            return orderMapper.selectList(queryWrapper);
+            for (Map<String, Object> map : mapList) {
+                orders.add(new ReturnOrder((String) map.get("contract_number"),
+                    (String) map.get("contract_manager"),
+                    (String) map.get("enterprise"), (String) map.get("supply_center"),
+                    (String) map.get("product_model"),
+                    (String) map.get("salesman_number"),
+                    (Integer) map.get("quantity"),
+                    (Integer) map.get("unit_price"),
+                    (java.sql.Date) map.get("estimated_delivery_date"),
+                    (java.sql.Date) map.get("lodgement_date")));
+            }
+            return orders;
         }
     }
 

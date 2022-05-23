@@ -2,6 +2,8 @@ package com.database.projectii.controller;
 
 import com.database.projectii.controller.transmission.Data;
 import com.database.projectii.controller.transmission.Message;
+import com.database.projectii.model.Contract;
+import com.database.projectii.model.ReturnOrder;
 import com.database.projectii.service.impl.OrderServiceImpl;
 import com.database.projectii.model.Order;
 import java.sql.Date;
@@ -11,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import com.database.projectii.service.impl.OrderServiceImpl.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -150,19 +153,8 @@ public class OrderController {
 
     @GetMapping("/getContractInfo/{contractNumber}")
     public Data getContractInfo(@PathVariable String contractNumber) {
-        String infos = "";
-        List<Order> orderList = orderServiceImpl.selectContractInfo(contractNumber, infos);
-        if (orderList == null) {
-            return new Data(infos, Message.SUCCESS);
-        }
-        List<Order> result = new ArrayList<>();
-        for (Order order : orderList) {
-            result.add(
-                new Order(null, null, order.getProductModel(), order.getQuantity(), null,
-                    null, order.getEstimatedDeliveryDate()
-                    , order.getLodgementDate(), order.getSalesmanNumber(), null));
-        }
-        return new Data(result, Message.SUCCESS);
+        List<ReturnOrder> orders = orderServiceImpl.selectContractInfo(contractNumber);
+        return new Data(orders, Message.SUCCESS);
     }
 
     @GetMapping("/all")
@@ -318,12 +310,5 @@ public class OrderController {
         String msg = result ? Message.SUCCESS : Message.NOT_SUCCESS;
         return new Data(result, msg);
     }
-
-//    @InitBinder
-//    public void initBinder(WebDataBinder binder) {
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-//        dateFormat.setLenient(false);
-//        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
-//    }
 
 }
