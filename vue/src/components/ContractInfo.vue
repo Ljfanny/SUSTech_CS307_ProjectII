@@ -21,7 +21,7 @@
         </el-row>
       </el-header>
     </el-container>
-    <el-table :data="tableData" stripe border style="width: 100%" height="500">
+    <el-table :data="tableData"  stripe border style="width: 100%" height="200">
       <el-table-column fixed prop="contractNumber" label="number" width="150">
       </el-table-column>
       <el-table-column prop="contractManager" label="manager" width="150">
@@ -30,7 +30,9 @@
       </el-table-column>
       <el-table-column prop="supplyCenter" label="supply center" width="150">
       </el-table-column>
-      <el-table-column prop="productModel" label="model" width="150">
+      </el-table>
+    <el-table :data="tableData2" stripe border style="width: 100%" height="500">
+      <el-table-column fixed prop="productModel" label="model" width="150">
       </el-table-column>
       <el-table-column prop="name" label="salesman" width="150">
       </el-table-column>
@@ -38,7 +40,7 @@
       </el-table-column>
       <el-table-column prop="unitPrice" label="unit price" width="150">
       </el-table-column>
-      <el-table-column prop="estimatedDiliveryDate" label="estimated date" width="150">
+      <el-table-column prop="estimatedDeliveryDate" label="estimated date" width="150">
       </el-table-column>
       <el-table-column prop="lodgementDate" label="lodgement date" width="150">
       </el-table-column>
@@ -51,7 +53,8 @@ export default {
   data () {
     return {
       tableData: [],
-      number: ''
+      number: '',
+      tableData2: []
     }
   },
   methods: {
@@ -60,8 +63,10 @@ export default {
     },
     get () {
       this.tableData = []
+      this.tableData2 = []
       this.$axios.get('/orders/getContractInfo/' + this.number).then((response) => {
-        this.tableData = response.data.data
+        this.tableData.push(response.data.data[1])
+        this.tableData2 = response.data.data
       })
       this.number = ''
     }
