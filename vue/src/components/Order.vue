@@ -157,7 +157,7 @@ export default {
     },
     dlt () {
       this.tableData = []
-      this.$axios.delete('/orders?' +
+      this.$axios.delete('/orders/diy?' +
         'contractNumber=' + this.iucn +
         '&enterprise=' + this.iuenterprise +
         '&productModel=' + this.iupm +

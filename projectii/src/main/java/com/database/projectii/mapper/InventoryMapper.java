@@ -13,7 +13,7 @@ public interface InventoryMapper extends BaseMapper<Inventory> {
 
     @Select("select count(*) as cnt " +
         "from (select distinct product_model from inventories except (select distinct product_model from orders))sub")
-    Object selectNeverSoldProductCount();
+    long selectNeverSoldProductCount();
 
 
     @Select(

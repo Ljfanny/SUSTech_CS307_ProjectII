@@ -62,13 +62,18 @@ export default {
     getOrderCount () {
       this.$axios
         .get('/orders/getOrderCount')
-        .then((response) => { this.orderCount.push(response.data.data) })
+        .then((response) => {
+          this.orderCount.push(response.data.data)
+          console.log(response.data.data)
+        })
     },
     getNeverSoldProductCount () {
       this.$axios
+        // .get('/orders/getOrderCount')
         .get('/inventories/getNeverSoldProductCount')
         .then((response) => {
           this.nSPC.push(response.data.data)
+          console.log(response.data.data)
         })
     }
   },

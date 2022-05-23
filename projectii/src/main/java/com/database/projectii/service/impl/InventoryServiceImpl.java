@@ -63,7 +63,7 @@ public class InventoryServiceImpl implements InventoryService {
         return true;
     }
 
-    public Object selectNeverSoldProductCount() {
+    public long selectNeverSoldProductCount() {
         return inventoryMapper.selectNeverSoldProductCount();
     }
 
