@@ -34,6 +34,8 @@
       <el-header>
         <el-row>
           <el-button type="primary" plain @click="Import">Import</el-button>
+          <el-button type="primary" plain @click="Product">ProByNum</el-button>
+          <el-button type="primary" plain @click="ContractInfo">ContractInfo</el-button>
         </el-row>
          </el-header>
       <el-header> </el-header>
@@ -97,6 +99,12 @@ export default {
     },
     Average: function () {
       this.$router.push('Average')
+    },
+    Product: function () {
+      this.$router.push('Product')
+    },
+    ContractInfo: function () {
+      this.$router.push('ContractInfo')
     }
   }
 }
