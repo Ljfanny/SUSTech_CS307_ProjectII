@@ -24,7 +24,7 @@
     <el-table :data="tableData"  stripe border style="width: 100%" height="200">
       <el-table-column fixed prop="contractNumber" label="number" width="150">
       </el-table-column>
-      <el-table-column prop="contractManager" label="manager" width="150">
+      <el-table-column prop="contractManagerName" label="manager" width="150">
       </el-table-column>
       <el-table-column prop="enterprise" label="enterprise" width="150">
       </el-table-column>
