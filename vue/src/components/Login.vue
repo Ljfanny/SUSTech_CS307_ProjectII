@@ -1,10 +1,9 @@
 <template>
-  <div>
+  <div class="bg">
     <el-container>
       <el-header> </el-header>
       <el-header> CS307 ProjectII </el-header>
       <el-header> </el-header>
-
       <el-header>
         <el-row>
           <el-button type="primary" plain @click="Center">Center</el-button>
@@ -51,6 +50,13 @@
 
 <script>
 export default {
+  data () {
+    return {
+      url: '',
+      urlList: [],
+      timer: null
+    }
+  },
   methods: {
     handleSelect (key, keyPath) {
       console.log(key, keyPath)
@@ -112,12 +118,20 @@ export default {
 
 <style>
 .el-header {
-  background-color: #e9eef3;
+  /* background-color: #e9eef3; */
+  background-color: Transparent;
   color: #333;
   text-align: center;
+}
+
+.el-container{
+  background: url("../assets/bg.png");
+    width: 100%;
+    height: 100%;
 }
 
 body > .el-container {
   margin-bottom: 40px;
 }
+
 </style>
