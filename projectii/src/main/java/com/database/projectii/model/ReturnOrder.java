@@ -9,7 +9,7 @@ public class ReturnOrder {
     private String enterprise;
     private String supplyCenter;
     private String productModel;
-    private String salesmanNumber;
+    private String name;
     private Integer quantity;
     private Integer unitPrice;
     @JsonFormat(pattern = "yyyy/MM/dd", timezone = "GMT+8")
@@ -26,7 +26,7 @@ public class ReturnOrder {
         this.enterprise = enterprise;
         this.supplyCenter = supplyCenter;
         this.productModel = productModel;
-        this.salesmanNumber = salesmanNumber;
+        this.name = salesmanNumber;
         this.quantity = quantity;
         this.unitPrice = unitPrice;
         this.estimatedDeliveryDate = estimatedDeliveryDate;
@@ -74,11 +74,11 @@ public class ReturnOrder {
     }
 
     public String getSalesmanNumber() {
-        return salesmanNumber;
+        return name;
     }
 
     public void setSalesmanNumber(String salesmanNumber) {
-        this.salesmanNumber = salesmanNumber;
+        this.name = salesmanNumber;
     }
 
     public Integer getQuantity() {
