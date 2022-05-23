@@ -39,8 +39,12 @@ public class OrderServiceImpl implements OrderService {
 
     public boolean insert(Order order) {
         Staff staff = selectStaffBySalesmanNumber(order);
-        if (staff == null) return false;
-        if (!StaffType.SALESMAN.equals(staff.getType())) return false;
+        if (staff == null) {
+            return false;
+        }
+        if (!StaffType.SALESMAN.equals(staff.getType())) {
+            return false;
+        }
         int cnt = 0;
         List<Inventory> inventoryList = selectInventoriesByModelAndCenter(order);
         for (Inventory item : inventoryList) {
@@ -81,25 +85,16 @@ public class OrderServiceImpl implements OrderService {
             .eq("product_model", order.getProductModel())
             .eq("salesman_number", order.getSalesmanNumber());
         Order orderPrev = orderMapper.selectOne(queryWrapper);
-        Staff staff = selectStaffBySalesmanNumber(order);
-        Staff manager = selectStaffByManagerNumber(order);
-        order.setEnterprise(orderPrev.getEnterprise());
-        List<Inventory> inventoryList = selectInventoriesByModelAndCenter(order);
-        if (order.getQuantity() == 0) {
-            QueryWrapper<Order> queryContract = new QueryWrapper<>();
-            queryContract.eq("contract_number", order.getContractNumber());
-            List<Order> orderList = orderMapper.selectList(queryContract);
-            if (orderList.size() == 1) {
-                contractMapper.insert(
-                    new Contract(order.getContractNumber(), order.getContractManager(),
-                        order.getContractDate(), order.getEnterprise(), manager.getSupplyCenter()));
-                orderMapper.deleteById(orderPrev);
-            }
-        }
         int orderQuantityPrev = orderPrev.getQuantity();
-        if (orderQuantityPrev < order.getQuantity()) {
+        int orderQuantityNext = order.getQuantity();
+        orderPrev.setQuantity(order.getQuantity());
+        orderPrev.setEstimatedDeliveryDate(order.getEstimatedDeliveryDate());
+        orderPrev.setLodgementDate(order.getLodgementDate());
+        String center = selectEnterpriseCenterByName(orderPrev);
+        List<Inventory> inventoryList = selectInventoriesByModelAndCenter(orderPrev);
+        if (orderQuantityPrev < orderQuantityNext) {
             int cnt = 0;
-            int differential = order.getQuantity() - orderQuantityPrev;
+            int differential = orderQuantityNext - orderQuantityPrev;
             for (Inventory item : inventoryList) {
                 cnt += item.getSurplusQuantity();
             }
@@ -107,42 +102,62 @@ public class OrderServiceImpl implements OrderService {
                 return false;
             }
             for (Inventory item : inventoryList) {
-                LambdaUpdateWrapper<Inventory> updateWrapper = new LambdaUpdateWrapper<>();
+//                LambdaUpdateWrapper<Inventory> updateWrapper = new LambdaUpdateWrapper<>();
                 if (item.getSurplusQuantity() >= differential) {
-                    updateWrapper.eq(Inventory::getProductModel, order.getProductModel())
-                        .eq(Inventory::getSupplyCenter, staff.getSupplyCenter())
-                        .set(Inventory::getSurplusQuantity,
-                            item.getSurplusQuantity() - differential);
-                    inventoryMapper.update(null, updateWrapper);
+//                    updateWrapper.eq(Inventory::getProductModel, order.getProductModel())
+//                        .eq(Inventory::getSupplyCenter, staff.getSupplyCenter())
+//                        .set(Inventory::getSurplusQuantity,
+//                            item.getSurplusQuantity() - differential);
+                    item.setSurplusQuantity(item.getSurplusQuantity() - differential);
+                    inventoryMapper.updateById(item);
                     break;
                 } else {
                     differential -= item.getSurplusQuantity();
-                    updateWrapper.eq(Inventory::getProductModel, order.getProductModel())
-                        .eq(Inventory::getSupplyCenter, staff.getSupplyCenter())
-                        .set(Inventory::getSurplusQuantity, 0);
-                    inventoryMapper.update(null, updateWrapper);
+//                    updateWrapper.eq(Inventory::getProductModel, order.getProductModel())
+//                        .eq(Inventory::getSupplyCenter, staff.getSupplyCenter())
+//                        .set(Inventory::getSurplusQuantity, 0);
+//                    inventoryMapper.update(null, updateWrapper);
+                    item.setSurplusQuantity(0);
+                    inventoryMapper.updateById(item);
                 }
             }
-        } else if (orderQuantityPrev > order.getQuantity()) {
-            int differential = orderQuantityPrev - order.getQuantity();
+        } else if (orderQuantityPrev > orderQuantityNext) {
+            int differential = orderQuantityPrev - orderQuantityNext;
             for (Inventory item : inventoryList) {
-                LambdaUpdateWrapper<Inventory> updateWrapper = new LambdaUpdateWrapper<>();
-                if (item.getTotalQuantity() - item.getSurplusQuantity() <= differential) {
-                    updateWrapper.eq(Inventory::getProductModel, order.getProductModel())
-                        .eq(Inventory::getSupplyCenter, staff.getSupplyCenter())
-                        .set(Inventory::getSurplusQuantity,
-                            item.getSurplusQuantity() + differential);
-                    inventoryMapper.update(null, updateWrapper);
+//                LambdaUpdateWrapper<Inventory> updateWrapper = new LambdaUpdateWrapper<>();
+                if (item.getTotalQuantity() - item.getSurplusQuantity() >= differential) {
+//                    updateWrapper.eq(Inventory::getProductModel, order.getProductModel())
+//                        .eq(Inventory::getSupplyCenter, staff.getSupplyCenter())
+//                        .set(Inventory::getSurplusQuantity,
+//                            item.getSurplusQuantity() + differential);
+//                    inventoryMapper.update(null, updateWrapper);
+                    item.setSurplusQuantity(item.getSurplusQuantity() + differential);
+                    inventoryMapper.updateById(item);
                     break;
                 } else {
                     differential -= (item.getTotalQuantity() - item.getSurplusQuantity());
-                    updateWrapper.eq(Inventory::getProductModel, order.getProductModel())
-                        .eq(Inventory::getSupplyCenter, staff.getSupplyCenter())
-                        .set(Inventory::getSurplusQuantity, item.getTotalQuantity());
-                    inventoryMapper.update(null, updateWrapper);
+//                    updateWrapper.eq(Inventory::getProductModel, order.getProductModel())
+//                        .eq(Inventory::getSupplyCenter, staff.getSupplyCenter())
+//                        .set(Inventory::getSurplusQuantity, item.getTotalQuantity());
+//                    inventoryMapper.update(null, updateWrapper);
+                    item.setSurplusQuantity(item.getTotalQuantity());
+                    inventoryMapper.updateById(item);
                 }
             }
         }
+        if (orderQuantityNext == 0) {
+            orderMapper.deleteById(orderPrev);
+            QueryWrapper<Order> queryContract = new QueryWrapper<>();
+            queryContract.eq("contract_number", order.getContractNumber());
+            List<Order> orderList = orderMapper.selectList(queryContract);
+            if (orderList.size() == 0) {
+                contractMapper.insert(
+                    new Contract(orderPrev.getContractNumber(), orderPrev.getContractManager(),
+                        orderPrev.getContractDate(), orderPrev.getEnterprise(), center));
+            }
+            return true;
+        }
+//        orderMapper.updateById(orderPrev);
         lambdaUpdateWrapper.eq(Order::getContractNumber, order.getContractNumber())
             .eq(Order::getProductModel, order.getProductModel())
             .eq(Order::getSalesmanNumber, order.getSalesmanNumber())
@@ -163,41 +178,45 @@ public class OrderServiceImpl implements OrderService {
         for (int i = 0; i < orderList.size(); i++) {
             if (seq - 1 == i) {
                 num = i;
-                Map<String ,Object> columnMap = new HashMap<String, Object>();
+                Map<String, Object> columnMap = new HashMap<String, Object>();
                 columnMap.put("contract_number", orderList.get(i).getContractNumber());
                 columnMap.put("enterprise", orderList.get(i).getEnterprise());
                 columnMap.put("product_model", orderList.get(i).getProductModel());
                 columnMap.put("quantity", orderList.get(i).getQuantity());
                 columnMap.put("contract_manager", orderList.get(i).getContractManager());
                 columnMap.put("contract_date", orderList.get(i).getContractDate());
-                columnMap.put("estimated_delivery_date", orderList.get(i).getEstimatedDeliveryDate());
+                columnMap.put("estimated_delivery_date",
+                    orderList.get(i).getEstimatedDeliveryDate());
                 columnMap.put("lodgement_date", orderList.get(i).getLodgementDate());
                 columnMap.put("salesman_number", orderList.get(i).getSalesmanNumber());
                 columnMap.put("contract_type", orderList.get(i).getContractType());
+                System.out.println(orderList.get(i));
                 orderMapper.deleteByMap(columnMap);
                 break;
             }
         }
         Order order = orderList.get(num);
         List<Inventory> inventoryList = selectInventoriesByModelAndCenter(order);
-        Staff staff = selectStaffBySalesmanNumber(order);
-        Staff manager = selectStaffByManagerNumber(order);
+        String center = selectEnterpriseCenterByName(order);
         int quantity = order.getQuantity();
         for (Inventory item : inventoryList) {
-            LambdaUpdateWrapper<Inventory> updateWrapper = new LambdaUpdateWrapper<>();
-            if (item.getTotalQuantity() - item.getSurplusQuantity() <= quantity) {
-                updateWrapper.eq(Inventory::getProductModel, order.getProductModel())
-                    .eq(Inventory::getSupplyCenter, staff.getSupplyCenter())
-                    .set(Inventory::getSurplusQuantity,
-                        item.getSurplusQuantity() + quantity);
-                inventoryMapper.update(null, updateWrapper);
+//            LambdaUpdateWrapper<Inventory> updateWrapper = new LambdaUpdateWrapper<>();
+            if (item.getTotalQuantity() - item.getSurplusQuantity() >= quantity) {
+//                updateWrapper.eq(Inventory::getProductModel, order.getProductModel())
+//                    .eq(Inventory::getSupplyCenter, center)
+//                    .set(Inventory::getSurplusQuantity,
+//                      item.getSurplusQuantity() + quantity);
+//                inventoryMapper.update(null, updateWrapper);
+                item.setSurplusQuantity(item.getSurplusQuantity() + quantity);
+                inventoryMapper.updateById(item);
                 break;
             } else {
                 quantity -= (item.getTotalQuantity() - item.getSurplusQuantity());
-                updateWrapper.eq(Inventory::getProductModel, order.getProductModel())
-                    .eq(Inventory::getSupplyCenter, staff.getSupplyCenter())
-                    .set(Inventory::getSurplusQuantity, item.getTotalQuantity());
-                inventoryMapper.update(null, updateWrapper);
+//                  updateWrapper.eq(Inventory::getProductModel, order.getProductModel())
+//                    .eq(Inventory::getSupplyCenter, center)
+//                    .set(Inventory::getSurplusQuantity, item.getTotalQuantity());
+                item.setSurplusQuantity(item.getTotalQuantity());
+                inventoryMapper.updateById(item);
             }
         }
         QueryWrapper<Order> queryContract = new QueryWrapper<>();
@@ -206,7 +225,7 @@ public class OrderServiceImpl implements OrderService {
         if (orders.size() == 0) {
             contractMapper.insert(
                 new Contract(order.getContractNumber(), order.getContractManager(),
-                    order.getContractDate(), order.getEnterprise(), manager.getSupplyCenter()));
+                    order.getContractDate(), order.getEnterprise(), center));
         }
         return true;
     }
@@ -221,6 +240,12 @@ public class OrderServiceImpl implements OrderService {
         QueryWrapper<Staff> wrapper = new QueryWrapper<>();
         wrapper.eq("number", order.getContractManager());
         return staffMapper.selectOne(wrapper);
+    }
+
+    private String selectEnterpriseCenterByName(Order order) {
+        QueryWrapper<Enterprise> wrapper = new QueryWrapper<>();
+        wrapper.eq("name", order.getEnterprise());
+        return enterpriseMapper.selectOne(wrapper).getSupplyCenter();
     }
 
     private List<Inventory> selectInventoriesByModelAndCenter(Order order) {
@@ -252,7 +277,7 @@ public class OrderServiceImpl implements OrderService {
         orderQueryWrapper.eq("contract_number", contractNumber);
         Order order = orderMapper.selectOne(orderQueryWrapper);
         StringBuilder stringBuilder = new StringBuilder();
-        if (order == null){
+        if (order == null) {
             QueryWrapper<Contract> contractQueryWrapper = new QueryWrapper<>();
             contractQueryWrapper.eq("contract_number", contractNumber);
             Contract contract = contractMapper.selectOne(contractQueryWrapper);
@@ -262,7 +287,7 @@ public class OrderServiceImpl implements OrderService {
             stringBuilder.append(",").append(contract.getCenter());
             infos = stringBuilder.toString();
             return null;
-        }else {
+        } else {
             QueryWrapper<Order> queryWrapper = new QueryWrapper<>();
             queryWrapper.eq("contract_number", contractNumber);
             return orderMapper.selectList(queryWrapper);
@@ -277,7 +302,7 @@ public class OrderServiceImpl implements OrderService {
 
     public List<Map<String, Object>> selectOrderByAny(Order order) {
         QueryWrapper<Order> orderQueryWrapper = new QueryWrapper<>();
-        if (order.getContractNumber()!= null) {
+        if (order.getContractNumber() != null) {
             orderQueryWrapper.eq("contractNumber", order.getContractNumber());
         }
         if (order.getEnterprise() != null) {
@@ -312,7 +337,7 @@ public class OrderServiceImpl implements OrderService {
 
     public boolean deleteOrderByAny(Order order) {
         QueryWrapper<Order> orderQueryWrapper = new QueryWrapper<>();
-        if (order.getContractNumber()!= null) {
+        if (order.getContractNumber() != null) {
             orderQueryWrapper.eq("contractNumber", order.getContractNumber());
         }
         if (order.getEnterprise() != null) {

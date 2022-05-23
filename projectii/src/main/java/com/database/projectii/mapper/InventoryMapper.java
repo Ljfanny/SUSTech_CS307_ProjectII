@@ -11,8 +11,8 @@ import org.apache.ibatis.annotations.Select;
 @Mapper
 public interface InventoryMapper extends BaseMapper<Inventory> {
 
-    @Select("select count(distinct product_model) as cnt from inventories " +
-        "where surplus_quantity = total_quantity and surplus_quantity > 0")
+    @Select("select count(*) as cnt " +
+        "from (select distinct product_model from inventories except (select distinct product_model from orders))sub")
     Object selectNeverSoldProductCount();
 
 

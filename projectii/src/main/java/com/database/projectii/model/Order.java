@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Data
 @AllArgsConstructor
 @TableName("orders")
-public class Order implements Comparable<Order>{
+public class Order implements Comparable<Order> {
     private String contractNumber;
     private String enterprise;
     private String productModel;
@@ -26,7 +26,8 @@ public class Order implements Comparable<Order>{
     private String salesmanNumber;
     private String contractType;
 
-    public Order(){}
+    public Order() {
+    }
 
     @Override
     public String toString() {
@@ -127,8 +128,10 @@ public class Order implements Comparable<Order>{
     @Override
     public int compareTo(Order o) {
         int result = this.estimatedDeliveryDate.compareTo(o.getEstimatedDeliveryDate());
-        if (result == 0){
-            return this.productModel.compareTo(o.productModel);
-        }else return result;
+        if (result == 0) {
+            return this.getProductModel().compareTo(o.productModel);
+        } else {
+            return result;
+        }
     }
 }

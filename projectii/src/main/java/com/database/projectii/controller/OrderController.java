@@ -59,7 +59,7 @@ public class OrderController {
                 isFir = false;
                 continue;
             }
-            orderServiceImpl.updateQuantityEstLod(order);
+            boolean rt = orderServiceImpl.updateQuantityEstLod(order);
         }
         return new Data(true, Message.SUCCESS);
     }
@@ -68,7 +68,7 @@ public class OrderController {
     public Data deleteOrder(@RequestParam("contract") String contract,
                             @RequestParam("salesman") String salesman,
                             @RequestParam("seq") Integer seq) {
-        orderServiceImpl.deleteByContractSalesmanSeq(contract, salesman, seq);
+        boolean rt = orderServiceImpl.deleteByContractSalesmanSeq(contract, salesman, seq);
         return new Data(true, Message.SUCCESS);
     }
 
