@@ -7,6 +7,9 @@ import com.database.projectii.model.Enterprise;
 import com.database.projectii.service.impl.InventoryServiceImpl;
 import com.database.projectii.model.Inventory;
 import com.database.projectii.service.impl.OrderServiceImpl;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -139,6 +142,14 @@ public class InventoryController {
         long result = inventoryServiceImpl.selectNeverSoldProductCount();
         long[] res = new long[1];
         res[0] = result;
+        try {
+            BufferedWriter out = new BufferedWriter(new FileWriter("output.txt"));
+            out.write("Q9\\r\\n");
+            out.write(res[0] + "\\r\\n");
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return new Data(res, Message.SUCCESS);
     }
 

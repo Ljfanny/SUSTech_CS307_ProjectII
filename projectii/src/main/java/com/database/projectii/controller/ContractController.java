@@ -5,6 +5,9 @@ import com.database.projectii.controller.transmission.Message;
 import com.database.projectii.model.Center;
 import com.database.projectii.model.Contract;
 import com.database.projectii.service.impl.ContractServiceImpl;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -46,6 +49,14 @@ public class ContractController {
     @GetMapping("/getContractCount")
     public Data getContractCount() {
         Object result = contractServiceImpl.selectContractCount();
+        try {
+            BufferedWriter out = new BufferedWriter(new FileWriter("output.txt"));
+            out.write("Q7\\r\\n");
+            out.write(Integer.parseInt((String) result) +"\\r\\n");
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return new Data(result, Message.SUCCESS);
     }
 

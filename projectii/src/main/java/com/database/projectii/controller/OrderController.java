@@ -6,6 +6,9 @@ import com.database.projectii.model.Contract;
 import com.database.projectii.model.ReturnOrder;
 import com.database.projectii.service.impl.OrderServiceImpl;
 import com.database.projectii.model.Order;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -37,6 +40,14 @@ public class OrderController {
     @GetMapping("/getOrderCount")
     public Data getOrderCount() {
         Object result = orderServiceImpl.selectOrderCount();
+        try {
+            BufferedWriter out = new BufferedWriter(new FileWriter("output.txt"));
+            out.write("Q8\\r\\n");
+            out.write(Integer.parseInt((String) result) +"\\r\\n");
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return new Data(result, Message.SUCCESS);
     }
 
@@ -137,6 +148,16 @@ public class OrderController {
             result.add(new FavoriteProduct(String.valueOf(map.get("product_model")),
                 (Long) map.get("sum")));
         }
+        try {
+            BufferedWriter out = new BufferedWriter(new FileWriter("output.txt"));
+            out.write("Q10\\r\\n");
+            for (FavoriteProduct favoriteProduct : result) {
+                out.write(favoriteProduct.productModel + " " + favoriteProduct.sum + "\\r\\n");
+            }
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return new Data(result, Message.SUCCESS);
     }
 
@@ -147,6 +168,16 @@ public class OrderController {
         for (Map<String, Object> map : maps) {
             result.add(new CenterAve(String.valueOf(map.get("supply_center")),
                 String.valueOf(map.get("avg"))));
+        }
+        try {
+            BufferedWriter out = new BufferedWriter(new FileWriter("output.txt"));
+            out.write("Q11\\r\\n");
+            for (CenterAve centerAve : result) {
+                out.write(centerAve.supplyCenter + " " + centerAve.average + "\\r\\n");
+            }
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return new Data(result, Message.SUCCESS);
     }

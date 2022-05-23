@@ -4,6 +4,9 @@ import com.database.projectii.controller.transmission.Data;
 import com.database.projectii.controller.transmission.Message;
 import com.database.projectii.model.Staff;
 import com.database.projectii.service.impl.StaffServiceImpl;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -71,7 +74,6 @@ public class StaffController {
                     (String) map.get("mobile_number"),
                     (String) map.get("type")));
         }
-
         return new Data(staffArrayList, Message.SUCCESS);
     }
 
@@ -83,6 +85,16 @@ public class StaffController {
             result.add(
                 new StaffType(String.valueOf(map.get("type")), Integer.parseInt(
                     String.valueOf(map.get("cnt")))));
+        }
+        try {
+            BufferedWriter out = new BufferedWriter(new FileWriter("output.txt"));
+            out.write("Q6\\r\\n");
+            for (StaffType type : result) {
+                out.write(type.type + " " + type.cnt + "\\r\\n");
+            }
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return new Data(result, Message.SUCCESS);
     }
