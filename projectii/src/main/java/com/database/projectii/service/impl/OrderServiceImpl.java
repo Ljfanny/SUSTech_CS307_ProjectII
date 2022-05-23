@@ -284,7 +284,7 @@ public class OrderServiceImpl implements OrderService {
             for (Map<String, Object> con : cons) {
                 orders.add(
                     new ReturnOrder((String) con.get("number"),
-                        staffMapper.selectNameByNumber((String) con.get("manager")),
+                        (String) staffMapper.selectNameByNumber((String) con.get("manager")),
                         (String) con.get("enterprise"), (String) con.get("center"),
                         null, null, null, null, null, null));
             }
