@@ -6,9 +6,12 @@ import com.database.projectii.model.Center;
 import com.database.projectii.model.Contract;
 import com.database.projectii.service.impl.ContractServiceImpl;
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -50,12 +53,27 @@ public class ContractController {
     public Data getByAny(
         @RequestParam(value = "number", required = false, defaultValue = "") String number,
         @RequestParam(value = "manager", required = false, defaultValue = "") String manager,
-        @RequestParam(value = "date", required = false, defaultValue = "") Date date,
+        @RequestParam(value = "date", required = false, defaultValue = "") String date,
         @RequestParam(value = "enterprise", required = false, defaultValue = "") String enterprise,
-        @RequestParam(value = "center", required = false, defaultValue = "") String center) {
+        @RequestParam(value = "center", required = false, defaultValue = "") String center) throws
+        ParseException {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+        java.util.Date dt = null;
+        try {
+            if (!Objects.equals(date, "")) {
+                dt = format.parse(date);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Date rigDt = null;
+        if (dt != null) {
+            rigDt = new Date(dt.getTime());
+        }
         Contract contract =
             new Contract(number.equals("") ? null : number, manager.equals("") ? null : manager,
-                date, enterprise.equals("") ? null : enterprise, center.equals("") ? null : center);
+                rigDt, enterprise.equals("") ? null : enterprise,
+                center.equals("") ? null : center);
         List<Map<String, Object>> mapList = contractServiceImpl.selectContractByAny(contract);
         ArrayList<Contract> contracts = new ArrayList<>();
         if (mapList.isEmpty()) {
@@ -75,12 +93,27 @@ public class ContractController {
     public Data DeleteByAny(
         @RequestParam(value = "number", required = false, defaultValue = "") String number,
         @RequestParam(value = "manager", required = false, defaultValue = "") String manager,
-        @RequestParam(value = "date", required = false, defaultValue = "") Date date,
+        @RequestParam(value = "date", required = false, defaultValue = "") String date,
         @RequestParam(value = "enterprise", required = false, defaultValue = "") String enterprise,
-        @RequestParam(value = "center", required = false, defaultValue = "") String center) {
+        @RequestParam(value = "center", required = false, defaultValue = "") String center)
+        throws ParseException {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+        java.util.Date dt = null;
+        try {
+            if (!Objects.equals(date, "")) {
+                dt = format.parse(date);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Date rigDt = null;
+        if (dt != null) {
+            rigDt = new Date(dt.getTime());
+        }
         Contract contract =
             new Contract(number.equals("") ? null : number, manager.equals("") ? null : manager,
-                date, enterprise.equals("") ? null : enterprise, center.equals("") ? null : center);
+                rigDt, enterprise.equals("") ? null : enterprise,
+                center.equals("") ? null : center);
         boolean result = contractServiceImpl.deleteContractByAny(contract);
         String msg = result ? Message.SUCCESS : Message.NOT_SUCCESS;
         return new Data(result, msg);

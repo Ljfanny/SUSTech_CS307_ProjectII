@@ -5,14 +5,21 @@ import com.database.projectii.controller.transmission.Message;
 import com.database.projectii.service.impl.OrderServiceImpl;
 import com.database.projectii.model.Order;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -55,7 +62,7 @@ public class OrderController {
     public Data updateOrder(@RequestBody Order[] orders) {
         boolean isFir = true;
         for (Order order : orders) {
-            if (isFir){
+            if (isFir) {
                 isFir = false;
                 continue;
             }
@@ -190,21 +197,49 @@ public class OrderController {
         @RequestParam(value = "contractManager", required = false, defaultValue = "")
             String contractManager,
         @RequestParam(value = "contractDate", required = false, defaultValue = "")
-            Date contractDate,
+            String contractDate,
         @RequestParam(value = "estimatedDeliveryDate", required = false, defaultValue = "")
-            Date estimatedDeliveryDate,
+            String estimatedDeliveryDate,
         @RequestParam(value = "lodgementDate", required = false, defaultValue = "")
-            Date lodgementDate,
+            String lodgementDate,
         @RequestParam(value = "salesmanNumber", required = false, defaultValue = "")
             String salesmanNumber,
         @RequestParam(value = "contractType", required = false, defaultValue = "")
-            String contractType) {
+            String contractType) throws ParseException {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+        java.util.Date cd = null;
+        java.util.Date ed = null;
+        java.util.Date ld = null;
+        try {
+            if (!Objects.equals(contractDate, "")) {
+                cd = format.parse(contractDate);
+            }
+            if (!Objects.equals(estimatedDeliveryDate, "")) {
+                ed = format.parse(estimatedDeliveryDate);
+            }
+            if (!Objects.equals(lodgementDate, "")) {
+                ld = format.parse(lodgementDate);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Date rigCd = null;
+        Date rigEd = null;
+        Date rigLd = null;
+        if (cd != null) {
+            rigCd = new Date(cd.getTime());
+        }
+        if (ed != null) {
+            rigEd = new Date(ed.getTime());
+        }
+        if (ld != null) {
+            rigLd = new Date(ld.getTime());
+        }
         Order order = new Order(
             contractNumber.equals("") ? null : contractNumber,
             enterprise.equals("") ? null : enterprise,
             productModel.equals("") ? null : productModel, quantity,
-            contractManager.equals("") ? null : contractManager,
-            contractDate, estimatedDeliveryDate, lodgementDate,
+            contractManager.equals("") ? null : contractManager, rigCd, rigEd, rigLd,
             salesmanNumber.equals("") ? null : salesmanNumber,
             contractType.equals("") ? null : contractType
         );
@@ -222,6 +257,7 @@ public class OrderController {
                     (String) map.get("contract_type")));
             }
         }
+        System.out.println(orders);
         return new Data(orders, Message.SUCCESS);
     }
 
@@ -237,21 +273,49 @@ public class OrderController {
         @RequestParam(value = "contractManager", required = false, defaultValue = "")
             String contractManager,
         @RequestParam(value = "contractDate", required = false, defaultValue = "")
-            Date contractDate,
+            String contractDate,
         @RequestParam(value = "estimatedDeliveryDate", required = false, defaultValue = "")
-            Date estimatedDeliveryDate,
+            String estimatedDeliveryDate,
         @RequestParam(value = "lodgementDate", required = false, defaultValue = "")
-            Date lodgementDate,
+            String lodgementDate,
         @RequestParam(value = "salesmanNumber", required = false, defaultValue = "")
             String salesmanNumber,
         @RequestParam(value = "contractType", required = false, defaultValue = "")
-            String contractType) {
+            String contractType) throws ParseException {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+        java.util.Date cd = null;
+        java.util.Date ed = null;
+        java.util.Date ld = null;
+        try {
+            if (!Objects.equals(contractDate, "")) {
+                cd = format.parse(contractDate);
+            }
+            if (!Objects.equals(estimatedDeliveryDate, "")) {
+                ed = format.parse(estimatedDeliveryDate);
+            }
+            if (!Objects.equals(lodgementDate, "")) {
+                ld = format.parse(lodgementDate);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Date rigCd = null;
+        Date rigEd = null;
+        Date rigLd = null;
+        if (cd != null) {
+            rigCd = new Date(cd.getTime());
+        }
+        if (ed != null) {
+            rigEd = new Date(ed.getTime());
+        }
+        if (ld != null) {
+            rigLd = new Date(ld.getTime());
+        }
         Order order = new Order(
             contractNumber.equals("") ? null : contractNumber,
             enterprise.equals("") ? null : enterprise,
             productModel.equals("") ? null : productModel, quantity,
-            contractManager.equals("") ? null : contractManager,
-            contractDate, estimatedDeliveryDate, lodgementDate,
+            contractManager.equals("") ? null : contractManager, rigCd, rigEd, rigLd,
             salesmanNumber.equals("") ? null : salesmanNumber,
             contractType.equals("") ? null : contractType
         );
@@ -259,5 +323,12 @@ public class OrderController {
         String msg = result ? Message.SUCCESS : Message.NOT_SUCCESS;
         return new Data(result, msg);
     }
+
+//    @InitBinder
+//    public void initBinder(WebDataBinder binder) {
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+//        dateFormat.setLenient(false);
+//        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+//    }
 
 }

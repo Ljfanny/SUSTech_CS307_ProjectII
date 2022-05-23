@@ -14,6 +14,8 @@ import com.database.projectii.model.Order;
 import com.database.projectii.model.Staff;
 import com.database.projectii.service.InventoryService;
 import com.database.projectii.service.property.StaffType;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,56 +81,97 @@ public class InventoryServiceImpl implements InventoryService {
 
     public List<Map<String, Object>> selectInventoryByAny(Inventory inventory) {
         QueryWrapper<Inventory> inventoryQueryWrapper = new QueryWrapper<>();
+        boolean isDate = false;
+        boolean isOther = false;
         if (inventory.getId() != null) {
             inventoryQueryWrapper.eq("id", inventory.getId());
+            isOther = true;
         }
         if (inventory.getSupplyCenter() != null) {
             inventoryQueryWrapper.eq("supplyCenter", inventory.getSupplyCenter());
+            isOther = true;
         }
         if (inventory.getProductModel() != null) {
             inventoryQueryWrapper.eq("ProductModel", inventory.getProductModel());
+            isOther = true;
         }
         if (inventory.getSupplyStaff() != null) {
             inventoryQueryWrapper.eq("supplyStaff", inventory.getSupplyStaff());
+            isOther = true;
         }
         if (inventory.getDate() != null) {
-            inventoryQueryWrapper.eq("date", inventory.getDate());
+//            inventoryQueryWrapper.eq("date", inventory.getDate());
+            isDate = true;
         }
         if (inventory.getPurchasePrice() != null) {
             inventoryQueryWrapper.eq("purchasePrice", inventory.getPurchasePrice());
+            isOther = true;
         }
         if (inventory.getSurplusQuantity() != null) {
             inventoryQueryWrapper.eq("id", inventory.getSurplusQuantity());
+            isOther = true;
         }
-        return inventoryMapper.selectMaps(inventoryQueryWrapper);
+        List<Map<String, Object>> inventories;
+        if (isOther) {
+            inventories = inventoryMapper.selectMaps(inventoryQueryWrapper);
+        } else {
+            inventories = selectAll();
+        }
+        List<Map<String, Object>> res = new ArrayList<>();
+        for (Map<String, Object> map : inventories) {
+            boolean check = isDate &&
+                inventory.getDate().getTime() == ((Date) map.get("date")).getTime();
+            if (check == isDate) {
+                res.add(map);
+            }
+        }
+        return res;
     }
 
     public boolean deleteInventoryByAny(Inventory inventory) {
         QueryWrapper<Inventory> inventoryQueryWrapper = new QueryWrapper<>();
+        boolean isDate = false;
+        boolean isOther = false;
         if (inventory.getId() != null) {
             inventoryQueryWrapper.eq("id", inventory.getId());
+            isOther = true;
         }
         if (inventory.getSupplyCenter() != null) {
             inventoryQueryWrapper.eq("supplyCenter", inventory.getSupplyCenter());
+            isOther = true;
         }
         if (inventory.getProductModel() != null) {
             inventoryQueryWrapper.eq("ProductModel", inventory.getProductModel());
+            isOther = true;
         }
         if (inventory.getSupplyStaff() != null) {
             inventoryQueryWrapper.eq("supplyStaff", inventory.getSupplyStaff());
+            isOther = true;
         }
         if (inventory.getDate() != null) {
-            inventoryQueryWrapper.eq("date", inventory.getDate());
+//            inventoryQueryWrapper.eq("date", inventory.getDate());
+            isDate = true;
         }
         if (inventory.getPurchasePrice() != null) {
             inventoryQueryWrapper.eq("purchasePrice", inventory.getPurchasePrice());
+            isOther = true;
         }
         if (inventory.getSurplusQuantity() != null) {
             inventoryQueryWrapper.eq("id", inventory.getSurplusQuantity());
+            isOther = true;
         }
-        List<Map<String, Object>> inventories = inventoryMapper.selectMaps(inventoryQueryWrapper);
+        List<Map<String, Object>> inventories;
+        if (isOther) {
+            inventories = inventoryMapper.selectMaps(inventoryQueryWrapper);
+        } else {
+            inventories = selectAll();
+        }
         for (Map<String, Object> map : inventories) {
-            inventoryMapper.deleteById((int) map.get("id"));
+            boolean check = isDate &&
+                inventory.getDate().getTime() == ((Date) map.get("date")).getTime();
+            if (check == isDate) {
+                inventoryMapper.deleteById((int) map.get("id"));
+            }
         }
         return true;
     }

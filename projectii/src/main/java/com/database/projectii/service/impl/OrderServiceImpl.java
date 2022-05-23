@@ -6,7 +6,9 @@ import com.database.projectii.mapper.*;
 import com.database.projectii.model.*;
 import com.database.projectii.service.OrderService;
 import com.database.projectii.service.property.StaffType;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -302,74 +304,156 @@ public class OrderServiceImpl implements OrderService {
 
     public List<Map<String, Object>> selectOrderByAny(Order order) {
         QueryWrapper<Order> orderQueryWrapper = new QueryWrapper<>();
+        boolean isCon = false;
+        boolean isEst = false;
+        boolean isLod = false;
+        boolean isOther = false;
         if (order.getContractNumber() != null) {
-            orderQueryWrapper.eq("contractNumber", order.getContractNumber());
+            isOther = true;
+            orderQueryWrapper.eq("contract_number", order.getContractNumber());
         }
         if (order.getEnterprise() != null) {
+            isOther = true;
             orderQueryWrapper.eq("enterprise", order.getEnterprise());
         }
         if (order.getProductModel() != null) {
-            orderQueryWrapper.eq("productModel", order.getProductModel());
+            isOther = true;
+            orderQueryWrapper.eq("product_model", order.getProductModel());
         }
         if (order.getQuantity() != null) {
+            isOther = true;
             orderQueryWrapper.eq("quantity", order.getQuantity());
         }
         if (order.getContractManager() != null) {
-            orderQueryWrapper.eq("contractManager", order.getContractManager());
+            isOther = true;
+            orderQueryWrapper.eq("contract_manager", order.getContractManager());
         }
         if (order.getContractDate() != null) {
-            orderQueryWrapper.eq("contractDate", order.getContractDate());
+            isCon = true;
         }
         if (order.getEstimatedDeliveryDate() != null) {
-            orderQueryWrapper.eq("estimatedDeliveryDate", order.getEstimatedDeliveryDate());
+            isEst = true;
         }
         if (order.getLodgementDate() != null) {
-            orderQueryWrapper.eq("lodgementDate", order.getLodgementDate());
+            isLod = true;
         }
         if (order.getSalesmanNumber() != null) {
-            orderQueryWrapper.eq("salesmanNumber", order.getSalesmanNumber());
+            isOther = true;
+            orderQueryWrapper.eq("salesman_number", order.getSalesmanNumber());
         }
         if (order.getContractType() != null) {
-            orderQueryWrapper.eq("contractType", order.getContractType());
+            isOther = true;
+            orderQueryWrapper.eq("contract_type", order.getContractType());
         }
-        return orderMapper.selectMaps(orderQueryWrapper);
+        List<Map<String, Object>> orders;
+        if (isOther) {
+            orders = orderMapper.selectMaps(orderQueryWrapper);
+        } else {
+            orders = selectAll();
+        }
+        List<Map<String, Object>> res = new ArrayList<>();
+        for (Map<String, Object> map : orders) {
+            boolean conCheck = false;
+            boolean estCheck = false;
+            boolean lodCheck = false;
+            if (isCon &&
+                order.getContractDate().getTime() == ((Date) map.get("contract_date")).getTime()) {
+                conCheck = true;
+            }
+            if (isEst &&
+                order.getEstimatedDeliveryDate().getTime() ==
+                    ((Date) map.get("estimated_delivery_date")).getTime()) {
+                estCheck = true;
+            }
+            if (isLod &&
+                order.getLodgementDate().getTime() ==
+                    ((Date) map.get("lodgement_date")).getTime()) {
+                lodCheck = true;
+            }
+            if (isCon == conCheck && isEst == estCheck && isLod == lodCheck) {
+                res.add(map);
+            }
+        }
+        return res;
     }
 
     public boolean deleteOrderByAny(Order order) {
         QueryWrapper<Order> orderQueryWrapper = new QueryWrapper<>();
+        boolean isCon = false;
+        boolean isEst = false;
+        boolean isLod = false;
+        boolean isOther = false;
         if (order.getContractNumber() != null) {
-            orderQueryWrapper.eq("contractNumber", order.getContractNumber());
+            isOther = true;
+            orderQueryWrapper.eq("contract_number", order.getContractNumber());
         }
         if (order.getEnterprise() != null) {
+            isOther = true;
             orderQueryWrapper.eq("enterprise", order.getEnterprise());
         }
         if (order.getProductModel() != null) {
-            orderQueryWrapper.eq("productModel", order.getProductModel());
+            isOther = true;
+            orderQueryWrapper.eq("product_model", order.getProductModel());
         }
         if (order.getQuantity() != null) {
+            isOther = true;
             orderQueryWrapper.eq("quantity", order.getQuantity());
         }
         if (order.getContractManager() != null) {
-            orderQueryWrapper.eq("contractManager", order.getContractManager());
+            isOther = true;
+            orderQueryWrapper.eq("contract_manager", order.getContractManager());
         }
         if (order.getContractDate() != null) {
-            orderQueryWrapper.eq("contractDate", order.getContractDate());
+            isCon = true;
         }
         if (order.getEstimatedDeliveryDate() != null) {
-            orderQueryWrapper.eq("estimatedDeliveryDate", order.getEstimatedDeliveryDate());
+            isEst = true;
         }
         if (order.getLodgementDate() != null) {
-            orderQueryWrapper.eq("lodgementDate", order.getLodgementDate());
+            isLod = true;
         }
         if (order.getSalesmanNumber() != null) {
-            orderQueryWrapper.eq("salesmanNumber", order.getSalesmanNumber());
+            isOther = true;
+            orderQueryWrapper.eq("salesman_number", order.getSalesmanNumber());
         }
         if (order.getContractType() != null) {
-            orderQueryWrapper.eq("contractType", order.getContractType());
+            isOther = true;
+            orderQueryWrapper.eq("contract_type", order.getContractType());
         }
-        List<Map<String, Object>> orders = orderMapper.selectMaps(orderQueryWrapper);
+        List<Map<String, Object>> orders;
+        if (isOther) {
+            orders = orderMapper.selectMaps(orderQueryWrapper);
+        } else {
+            orders = selectAll();
+        }
         for (Map<String, Object> map : orders) {
-            orderMapper.deleteById((int) map.get("id"));
+            boolean conCheck = false;
+            boolean estCheck = false;
+            boolean lodCheck = false;
+            if (isCon &&
+                order.getContractDate().getTime() == ((Date) map.get("contract_date")).getTime()) {
+                conCheck = true;
+            }
+            if (isEst &&
+                order.getEstimatedDeliveryDate().getTime() ==
+                    ((Date) map.get("estimated_delivery_date")).getTime()) {
+                estCheck = true;
+            }
+            if (isLod &&
+                order.getLodgementDate().getTime() ==
+                    ((Date) map.get("lodgement_date")).getTime()) {
+                lodCheck = true;
+            }
+            if (isCon == conCheck && isEst == estCheck && isLod == lodCheck) {
+//                orderMapper.deleteById(new Order((String) map.get("contract_number"),
+//                    (String) map.get("enterprise"), (String) map.get("product_model"),
+//                    (Integer) map.get("quantity"),
+//                    (String) map.get("contract_manager"), (java.sql.Date) map.get("contract_date"),
+//                    (java.sql.Date) map.get("estimated_delivery_date"),
+//                    (java.sql.Date) map.get("lodgement_date"), (String) map.get("salesman_number"),
+//                    (String) map.get("contract_type")));
+                orderMapper.deleteByMap(map);
+            }
         }
         return true;
     }

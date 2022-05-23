@@ -8,9 +8,12 @@ import com.database.projectii.service.impl.InventoryServiceImpl;
 import com.database.projectii.model.Inventory;
 import com.database.projectii.service.impl.OrderServiceImpl;
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -43,14 +46,27 @@ public class InventoryController {
             String productModel,
         @RequestParam(value = "supplyStaff", required = false, defaultValue = "")
             String supplyStaff,
-        @RequestParam(value = "date", required = false, defaultValue = "") Date date,
+        @RequestParam(value = "date", required = false, defaultValue = "") String date,
         @RequestParam(value = "purchasePrice", required = false, defaultValue = "")
             Integer purchasePrice,
         @RequestParam(value = "surplusQuantity", required = false, defaultValue = "")
-            Integer surplusQuantity) {
+            Integer surplusQuantity) throws ParseException {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+        java.util.Date dt = null;
+        try {
+            if (!Objects.equals(date, "")) {
+                dt = format.parse(date);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Date rigDt = null;
+        if (dt != null) {
+            rigDt = new Date(dt.getTime());
+        }
         Inventory inventory = new Inventory(id, supplyCenter.equals("") ? null : supplyCenter,
             productModel.equals("") ? null : productModel,
-            supplyStaff.equals("") ? null : supplyStaff, date,
+            supplyStaff.equals("") ? null : supplyStaff, rigDt,
             purchasePrice, surplusQuantity, null);
         List<Map<String, Object>> mapList = inventoryServiceImpl.selectInventoryByAny(inventory);
         ArrayList<Inventory> inventories = new ArrayList<>();
@@ -77,14 +93,27 @@ public class InventoryController {
             String productModel,
         @RequestParam(value = "supplyStaff", required = false, defaultValue = "")
             String supplyStaff,
-        @RequestParam(value = "date", required = false, defaultValue = "") Date date,
+        @RequestParam(value = "date", required = false, defaultValue = "") String date,
         @RequestParam(value = "purchasePrice", required = false, defaultValue = "")
             Integer purchasePrice,
         @RequestParam(value = "surplusQuantity", required = false, defaultValue = "")
-            Integer surplusQuantity) {
+            Integer surplusQuantity) throws ParseException {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+        java.util.Date dt = null;
+        try {
+            if (!Objects.equals(date, "")) {
+                dt = format.parse(date);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Date rigDt = null;
+        if (dt != null) {
+            rigDt = new Date(dt.getTime());
+        }
         Inventory inventory = new Inventory(id, supplyCenter.equals("") ? null : supplyCenter,
             productModel.equals("") ? null : productModel,
-            supplyStaff.equals("") ? null : supplyStaff, date,
+            supplyStaff.equals("") ? null : supplyStaff, rigDt,
             purchasePrice, surplusQuantity, null);
         boolean result = inventoryServiceImpl.deleteInventoryByAny(inventory);
         String msg = result ? Message.SUCCESS : Message.NOT_SUCCESS;

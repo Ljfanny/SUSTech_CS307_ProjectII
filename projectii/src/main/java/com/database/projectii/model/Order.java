@@ -17,11 +17,11 @@ public class Order implements Comparable<Order> {
     private String productModel;
     private Integer quantity;
     private String contractManager;
-    @JsonFormat(pattern = "yyyy/MM/dd")
+    @JsonFormat(pattern = "yyyy/MM/dd",timezone = "GMT+8")
     private Date contractDate;
-    @JsonFormat(pattern = "yyyy/MM/dd")
+    @JsonFormat(pattern = "yyyy/MM/dd",timezone = "GMT+8")
     private Date estimatedDeliveryDate;
-    @JsonFormat(pattern = "yyyy/MM/dd")
+    @JsonFormat(pattern = "yyyy/MM/dd",timezone = "GMT+8")
     private Date lodgementDate;
     private String salesmanNumber;
     private String contractType;

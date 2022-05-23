@@ -16,7 +16,7 @@ public class Contract {
 
     private String number;
     private String manager;
-    @JsonFormat(pattern = "yyyy/MM/dd")
+    @JsonFormat(pattern = "yyyy/MM/dd",timezone = "GMT+8")
     private Date date;
     private String enterprise;
     private String center;

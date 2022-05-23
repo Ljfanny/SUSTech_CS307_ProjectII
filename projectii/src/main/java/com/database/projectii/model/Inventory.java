@@ -17,7 +17,7 @@ public class Inventory {
     private String supplyCenter;
     private String productModel;
     private String supplyStaff;
-    @JsonFormat(pattern="yyyy/MM/dd")
+    @JsonFormat(pattern="yyyy/MM/dd",timezone = "GMT+8")
     private Date date;
     private Integer purchasePrice;
     private Integer surplusQuantity;
