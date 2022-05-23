@@ -36,6 +36,9 @@ public class EnterpriseServiceImpl implements EnterpriseService {
         if (enterprise.getName() != null) {
             enterpriseQueryWrapper.eq("name", enterprise.getName());
         }
+        if (enterprise.getCity() != null) {
+            enterpriseQueryWrapper.eq("city", enterprise.getCity());
+        }
         if (enterprise.getCountry() != null) {
             enterpriseQueryWrapper.eq("country", enterprise.getCountry());
         }
