@@ -10,6 +10,12 @@ import Order from '@/components/Order'
 import Staff from '@/components/Staff'
 import Yjsc from '@/components/Yjsc'
 import Import from '@/components/Import'
+import StaffCount from '@/components/StaffCount'
+import OrderCount from '@/components/OrderCount'
+import ContractCount from '@/components/ContractCount'
+import Favorite from '@/components/Favorite'
+import Average from '@/components/Average'
+import NeverSold from '@/components/NeverSold'
 
 Vue.use(Router)
 
@@ -68,6 +74,36 @@ export default new Router({
       path: '/import',
       name: 'Import',
       component: Import
+    },
+    {
+      path: '/staffCount',
+      name: 'StaffCount',
+      component: StaffCount
+    },
+    {
+      path: '/contractCount',
+      name: 'ContractCount',
+      component: ContractCount
+    },
+    {
+      path: '/orderCount',
+      name: 'OrderCount',
+      component: OrderCount
+    },
+    {
+      path: '/neverSold',
+      name: 'NeverSold',
+      component: NeverSold
+    },
+    {
+      path: '/average',
+      name: 'Average',
+      component: Average
+    },
+    {
+      path: '/favorite',
+      name: 'Favorite',
+      component: Favorite
     }
   ]
 })

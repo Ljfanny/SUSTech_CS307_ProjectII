@@ -11,38 +11,10 @@
         </el-row>
       </el-header>
     </el-container>
-    <el-header>Staff Count</el-header>
-    <el-table :data="countByType" stripe border style="width: 100%" height="300">
-      <el-table-column fixed prop="type" label="type" width="150">
-      </el-table-column>
-      <el-table-column prop="cnt" label="count" width="150"> </el-table-column>
-    </el-table>
     <el-header>Contract Count</el-header>
-    <el-table :data="contractCount" stripe border style="width: 100%" height="100">
+    <el-table :data="contractCount" stripe border style="width: 100%" height="500">
       <el-table-column fixed prop="0" label="count" width="150">
       </el-table-column>
-    </el-table>
-    <el-header>Order Count</el-header>
-    <el-table :data="orderCount" stripe border style="width: 100%" height="100">
-      <el-table-column fixed prop="0" label="count" width="150">
-      </el-table-column>
-    </el-table>
-    <el-header>Never Sold</el-header>
-    <el-table :data="nSPC" stripe border style="width: 100%" height="100">
-      <el-table-column fixed prop="0" label="count" width="150">
-      </el-table-column>
-    </el-table>
-        <el-header>Favorite</el-header>
-    <el-table :data="favorite" stripe border style="width: 100%" height="100">
-      <el-table-column fixed prop="productModel" label="model" width="150">
-      </el-table-column>
-      <el-table-column prop="sum" label="sum" width="150"> </el-table-column>
-    </el-table>
-            <el-header>Average</el-header>
-    <el-table :data="avg" stripe border style="width: 100%" height="300">
-      <el-table-column fixed prop="supplyCenter" label="center" width="300">
-      </el-table-column>
-      <el-table-column prop="average" label="average" width="150"> </el-table-column>
     </el-table>
   </div>
 </template>

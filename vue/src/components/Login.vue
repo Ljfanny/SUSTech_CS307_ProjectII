@@ -23,6 +23,12 @@
       <el-header>
         <el-row>
           <el-button type="primary" plain @click="Yjsc">OneKeyOut</el-button>
+          <el-button type="primary" plain @click="StaffCount">StaffCount</el-button>
+          <el-button type="primary" plain @click="ContractCount">ContractCount</el-button>
+          <el-button type="primary" plain @click="OrderCount">OrderCount</el-button>
+          <el-button type="primary" plain @click="NeverSold">NeverSold</el-button>
+          <el-button type="primary" plain @click="Favorite">Favorite</el-button>
+          <el-button type="primary" plain @click="Average">Average</el-button>
         </el-row></el-header
       >
       <el-header>
@@ -30,6 +36,7 @@
           <el-button type="primary" plain @click="Import">Import</el-button>
         </el-row>
          </el-header>
+      <el-header> </el-header>
       <el-header> </el-header>
       <el-header> </el-header>
       <el-header> </el-header>
@@ -70,8 +77,26 @@ export default {
     Yjsc: function () {
       this.$router.push('Yjsc')
     },
+    StaffCount: function () {
+      this.$router.push('StaffCount')
+    },
+    ContractCount: function () {
+      this.$router.push('ContractCount')
+    },
+    OrderCount: function () {
+      this.$router.push('OrderCount')
+    },
     Import: function () {
       this.$router.push('Import')
+    },
+    NeverSold: function () {
+      this.$router.push('NeverSold')
+    },
+    Favorite: function () {
+      this.$router.push('Favorite')
+    },
+    Average: function () {
+      this.$router.push('Average')
     }
   }
 }
