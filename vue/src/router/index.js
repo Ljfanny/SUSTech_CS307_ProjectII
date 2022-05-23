@@ -16,6 +16,8 @@ import ContractCount from '@/components/ContractCount'
 import Favorite from '@/components/Favorite'
 import Average from '@/components/Average'
 import NeverSold from '@/components/NeverSold'
+import Product from '@/components/Product'
+import ContractInfo from '@/components/ContractInfo'
 
 Vue.use(Router)
 
@@ -104,6 +106,16 @@ export default new Router({
       path: '/favorite',
       name: 'Favorite',
       component: Favorite
+    },
+    {
+      path: '/product',
+      name: 'Product',
+      component: Product
+    },
+    {
+      path: '/contractInfo',
+      name: 'ContractInfo',
+      component: ContractInfo
     }
   ]
 })

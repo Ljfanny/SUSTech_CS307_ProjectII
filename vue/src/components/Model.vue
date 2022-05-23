@@ -97,7 +97,7 @@ export default {
       this.$axios
         .get('/models?' +
         'id=' + this.iuid +
-        '&number=' + this.iuname +
+        '&number=' + this.iunumber +
         '&model=' + this.iumodel +
         '&name=' + this.iuname +
         '&unitPrice=' + this.iuup)
@@ -112,7 +112,7 @@ export default {
       this.tableData = []
       this.$axios.delete('/models?' +
         'id=' + this.iuid +
-        '&number=' + this.iuname +
+        '&number=' + this.iunumber +
         '&model=' + this.iumodel +
         '&name=' + this.iuname +
         '&unitPrice=' + this.iuup)
