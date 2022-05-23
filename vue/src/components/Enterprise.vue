@@ -169,6 +169,9 @@ export default {
       this.iusc = ''
       this.iuindustry = ''
     }
+  },
+  mounted () {
+    this.getAll()
   }
 }
 </script>

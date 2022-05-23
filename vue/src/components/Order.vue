@@ -229,6 +229,9 @@ export default {
       this.iusn = ''
       this.iuct = ''
     }
+  },
+  mounted () {
+    this.getAll()
   }
 }
 </script>

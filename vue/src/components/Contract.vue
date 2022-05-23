@@ -152,6 +152,9 @@ export default {
       this.iuenterprise = ''
       this.iucenter = ''
     }
+  },
+  mounted () {
+    this.getAll()
   }
 }
 </script>

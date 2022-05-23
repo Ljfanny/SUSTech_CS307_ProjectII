@@ -102,6 +102,9 @@ export default {
       this.iuid = ''
       this.iuname = ''
     }
+  },
+  mounted () {
+    this.getAll()
   }
 }
 </script>

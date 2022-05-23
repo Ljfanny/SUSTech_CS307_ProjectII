@@ -202,6 +202,9 @@ export default {
       this.iumn = ''
       this.iutype = ''
     }
+  },
+  mounted () {
+    this.getAll()
   }
 }
 </script>

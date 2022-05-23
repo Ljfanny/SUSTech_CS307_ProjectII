@@ -202,6 +202,9 @@ export default {
       this.iusq = ''
       this.iutq = ''
     }
+  },
+  mounted () {
+    this.getAll()
   }
 }
 </script>

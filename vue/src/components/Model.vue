@@ -152,6 +152,9 @@ export default {
       this.iumodel = ''
       this.iuup = ''
     }
+  },
+  mounted () {
+    this.getAll()
   }
 }
 </script>

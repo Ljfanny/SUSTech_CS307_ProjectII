@@ -39,8 +39,8 @@
       <el-table-column prop="sum" label="sum" width="150"> </el-table-column>
     </el-table>
             <el-header>Average</el-header>
-    <el-table :data="avg" stripe border style="width: 100%" height="300">
-      <el-table-column fixed prop="supplyCenter" label="center" width="300">
+    <el-table :data="avg" stripe border style="width: 100%" height="600">
+      <el-table-column fixed prop="supplyCenter" label="center" width="150">
       </el-table-column>
       <el-table-column prop="average" label="average" width="150"> </el-table-column>
     </el-table>
