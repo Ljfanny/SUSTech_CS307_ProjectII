@@ -52,7 +52,7 @@
             &#160;
           </el-col>
           <el-col :span="2">
-            <el-input v-model="date" placeholder="date"></el-input>
+            <el-input v-model="iudate" placeholder="date"></el-input>
           </el-col>
           <el-col :span="0.1">
             &#160;
@@ -64,13 +64,13 @@
             &#160;
           </el-col>
           <el-col :span="2">
-            <el-input v-model="sq" placeholder="sur quantity"></el-input>
+            <el-input v-model="iusq" placeholder="sur quantity"></el-input>
           </el-col>
           <el-col :span="0.1">
             &#160;
           </el-col>
           <el-col :span="2">
-            <el-input v-model="iutt" placeholder="tot quantity"></el-input>
+            <el-input v-model="iutq" placeholder="tot quantity"></el-input>
           </el-col>
         </el-row>
       </el-header>

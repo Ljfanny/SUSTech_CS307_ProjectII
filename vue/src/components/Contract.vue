@@ -89,13 +89,13 @@ export default {
     getAll () {
       this.tableData = []
       this.$axios
-        .get('/concracts/all')
+        .get('/contracts/all')
         .then((response) => { this.tableData = response.data.data })
     },
     get () {
       this.tableData = []
       this.$axios
-        .get('/concracts?' +
+        .get('/contracts?' +
         'contractNumber=' + this.iucn +
         '&contractManager=' + this.cm +
         '&contractDate=' + this.iucd +
@@ -110,7 +110,7 @@ export default {
     },
     dlt () {
       this.tableData = []
-      this.$axios.delete('/concracts?' +
+      this.$axios.delete('/contracts?' +
         'contractNumber=' + this.iucn +
         '&contractManager=' + this.cm +
         '&contractDate=' + this.iucd +
@@ -124,7 +124,7 @@ export default {
     },
     insert () {
       this.$axios
-        .post('/concracts', {
+        .post('/contracts', {
           contractNumber: this.iucn,
           contractManager: this.cm,
           contractDate: this.iucd,
@@ -139,7 +139,7 @@ export default {
     },
     update () {
       this.$axios
-        .put('/concracts', {
+        .put('/contracts', {
           contractNumber: this.iucn,
           contractManager: this.cm,
           contractDate: this.iucd,
