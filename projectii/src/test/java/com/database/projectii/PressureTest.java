@@ -34,8 +34,8 @@ public class PressureTest {
      * throughput 每秒执行测试数目
      * percentile “66:  ,99:  ” 66%测试不超过多少秒, 99%的测试不超过多少秒
      */
-    @PerfTest(invocations = 900, threads = 100)
-    @Required(max = 1200, average = 250, totalTime = 60000)
+    @PerfTest(invocations = 10000, threads = 100000)
+    @Required(max = 100000, average = 20000, totalTime = 6000000)
     public void test() {
         Staff staff = new Staff(1, null, null, null, null, null, null, null);
         System.out.println(staffServiceimpl.selectStaffByAny(staff));
