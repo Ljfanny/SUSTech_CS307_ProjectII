@@ -23,6 +23,9 @@
           <el-col :span="2">
             <el-button type="primary" plain @click="update">update</el-button>
           </el-col>
+          <el-col :span="2">
+            <el-button type="primary" plain @click="updateb">updateByNum&Mob</el-button>
+          </el-col>
         </el-row>
       </el-header>
       <el-header>
@@ -111,6 +114,21 @@ export default {
   methods: {
     backToHome () {
       this.$router.push('Login')
+    },
+    updateb () {
+      this.$axios
+        .post('/staffs/diy?' +
+          'number=' + this.iunumber +
+          '&mobileNumber=' + this.iumn
+        )
+      this.iuid = ''
+      this.iuname = ''
+      this.iuage = ''
+      this.iugender = ''
+      this.iunumber = ''
+      this.iucenter = ''
+      this.iumn = ''
+      this.iutype = ''
     },
     getAll () {
       this.tableData = []
