@@ -8,6 +8,7 @@ import com.database.projectii.model.Staff;
 import com.database.projectii.service.StaffService;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +38,27 @@ public class StaffServiceImpl implements StaffService {
         Staff stf = staffMapper.selectOne(staffQueryWrapper);
         if (stf == null) {
             return false;
+        }
+        if (Objects.equals(staff.getName(), "")) {
+            staff.setName(stf.getName());
+        }
+        if (staff.getAge() == null) {
+            staff.setAge(stf.getAge());
+        }
+        if (Objects.equals(staff.getNumber(), "")) {
+            staff.setNumber(stf.getNumber());
+        }
+        if (Objects.equals(staff.getGender(), "")) {
+            staff.setGender(stf.getGender());
+        }
+        if (Objects.equals(staff.getSupplyCenter(), "")) {
+            staff.setSupplyCenter(stf.getSupplyCenter());
+        }
+        if (Objects.equals(staff.getMobileNumber(), "")) {
+            staff.setMobileNumber(stf.getMobileNumber());
+        }
+        if (Objects.equals(staff.getType(), "")) {
+            staff.setType(stf.getType());
         }
         staffMapper.updateById(staff);
         return true;
@@ -115,7 +137,7 @@ public class StaffServiceImpl implements StaffService {
         return true;
     }
 
-    public boolean updateMobileByProcedure(String number,String mobileNumber){
+    public boolean updateMobileByProcedure(String number, String mobileNumber) {
         staffMapper.updateMobileByNumberUseProcedure(number, mobileNumber);
         return true;
     }

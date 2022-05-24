@@ -1,27 +1,5 @@
-Q13
-contract_number: CSE0000102
-contract_manager: Marshall Hall
-enterprise: Netease
-supply_center: Southern China
-model salesman quantity unit_price estimated_date lodgement_date
-LaptopDesk45 Shen Mingliang 413 80 2022-01-05 2022-01-05
-GpsI3 Qian  biqin 470 590 2022-01-05 2022-01-05
-AirConditioner71 Bobby Roberts 499 500 2022-01-05 2022-01-07
-SolarWaterHeaters26 Qi Yinxiang 276 220 2022-01-08 2022-01-08
-HardDiskExtractionBoxA4 Zhu Honglin 137 880 2022-01-06 2022-01-07
 Q9
 55
-Q10
-WirelessSecurity90 1762
-Q11
-America 303.4
-Asia 226.4
-Eastern China 183.9
-Europe 322.8
-Hong Kong, Macao and Taiwan regions of China 267.4
-Northern China 224.6
-Southern China 234.2
-Southwestern China 313.6
 Q8
 529
 Q7
@@ -31,38 +9,93 @@ Director 8
 Contracts Manager 160
 Salesman 640
 Supply Staff 192
+Q11
+America 303.4
+Asia 226.4
+Eastern China 183.9
+Europe 322.8
+Hong Kong, Macao and Taiwan regions of China 267.4
+Northern China 224.6
+Southern China 234.2
+Southwestern China 313.6
+Q10
+WirelessSecurity90 1762
+Q12
+supply_center product_number product_model purchase_price surplus
+Southern China L60241X LabelPrinterA6 207 191
 Q13
-contract_number: CSE0000305
-contract_manager: Qing Mining
-enterprise: Mizuho Holdings
+contract_number: CSE0000205
+contract_manager: Zhou Yuandong
+enterprise: Tencent
+supply_center: Southern China
+model salesman quantity unit_price estimated_date lodgement_date
+LaptopDesk45 Noah Harris 207 80 2022-02-09 2022-02-08
+AirConditioner71 Zou Lengrou 250 500 2022-02-09 2022-02-09
+All-In-OnePrintingMachineW9 Tao Xixia 544 420 2022-02-08 2022-02-10
+RouterX4 Hua Erqiu 176 920 2022-02-09 2022-02-11
+HardDiskExtractionBoxA4 Yang Baitao 31 880 2022-02-11 2022-02-11
+SecurityCamera25 Wayne Taylor 223 650 2022-02-10 2022-02-11
+Q13
+contract_number: CSE0000307
+contract_manager: Wang Yingtao
+enterprise: Hyundai
 supply_center: Asia
 model salesman quantity unit_price estimated_date lodgement_date
-LensQ4 Candida Jackson 182 190 2022-03-09 2022-03-09
-CameraBattery26 Gavin Thomas 360 60 2022-03-09 2022-03-10
-Mp437 Sun Yinger 472 780 2022-03-11 2022-03-08
-MobileHardDisk72 Gavin Thomas 39 820 2022-03-09 2022-03-10
-TvPlayer60 Lenny Harris 397 80 2022-03-08 2022-03-09
-ServerBarebones96 Camilla Smith 384 430 2022-03-11 2022-03-11
+PrintMediaY8 Qing  zixue 455 450 2022-03-10 2022-03-13
+CoffeeMachineK4 Oliver Green 240 540 2022-03-10 2022-03-10
+TvPlayer60 Zhao Zhengsong 198 80 2022-03-12 2022-03-11
+Q9
+55
+Q6
+Director 8
+Contracts Manager 160
+Salesman 640
+Supply Staff 192
+Q7
+112
+Q11
+America 303.4
+Asia 226.4
+Eastern China 183.9
+Europe 322.8
+Hong Kong, Macao and Taiwan regions of China 267.4
+Northern China 224.6
+Southern China 234.2
+Southwestern China 313.6
+Q8
+529
+Q10
+WirelessSecurity90 1762
+Q12
+supply_center product_number product_model purchase_price surplus
+Southern China FK39705 FlatFilm23 633 31
+Eastern China FK39705 FlatFilm07 703 387
+Q12
+supply_center product_number product_model purchase_price surplus
+Europe M2348K0 MobileHardDisk72 555 140
+Asia M2348K0 MobileHardDisk72 879 116
 Q13
-contract_number: CSE0000102
-contract_manager: Marshall Hall
-enterprise: Netease
+contract_number: CSE0000116
+contract_manager: Shui Zhuyu
+enterprise: Tencent
 supply_center: Southern China
 model salesman quantity unit_price estimated_date lodgement_date
-LaptopDesk45 Shen Mingliang 413 80 2022-01-05 2022-01-05
-GpsI3 Qian  biqin 470 590 2022-01-05 2022-01-05
-AirConditioner71 Bobby Roberts 499 500 2022-01-05 2022-01-07
-SolarWaterHeaters26 Qi Yinxiang 276 220 2022-01-08 2022-01-08
-HardDiskExtractionBoxA4 Zhu Honglin 137 880 2022-01-06 2022-01-07
-Q6
-Director 8
-Contracts Manager 160
-Salesman 640
-Supply Staff 192
-Q7
-112
-Q9
-55
+ElectricHeaterE3 Jill Thomas 2 270 2022-01-20 2022-01-21
+RouterX4 Feng Ermei 351 920 2022-01-22 2022-01-20
+Server40 Noah Harris 152 220 2022-01-19 2022-01-21
+Q13
+contract_number: CSE0000306
+contract_manager: You Dongsi
+enterprise: Ping An Insurance (Group) Company Of China
+supply_center: Southern China
+model salesman quantity unit_price estimated_date lodgement_date
+FlatFilm23 You Bisong 41 90 2022-03-12 2022-03-10
+Mp4Z2 Olive Wright 61 650 2022-03-11 2022-03-10
+PocketPcV3 Jill Thomas 189 530 2022-02-11 2022-03-09
+ElectricHeaterE3 Mildred Wright 79 270 2022-03-12 2022-03-11
+BarcodeAndCardReadingEquipment34 Ollie Smith 245 790 2022-03-11 2022-03-10
+Server40 Georgie Taylor 76 220 2022-03-12 2022-03-11
+Anti-TheftAlarmHost23 Hua Haonan 320 220 2022-03-09 2022-03-10
 Q11
 America 303.4
 Asia 226.4
@@ -74,10 +107,35 @@ Southern China 234.2
 Southwestern China 313.6
 Q10
 WirelessSecurity90 1762
-Q8
-529
 Q9
 55
+Q8
+528
+Q7
+112
+Q6
+Director 8
+Contracts Manager 160
+Salesman 640
+Supply Staff 192
+Q12
+supply_center product_number product_model purchase_price surplus
+Southern China L60241X LabelPrinterA6 207 191
+Q12
+supply_center product_number product_model purchase_price surplus
+Southern China FK39705 FlatFilm23 633 31
+Eastern China FK39705 FlatFilm07 703 387
+Q7
+112
+Q9
+55
+Q10
+WirelessSecurity90 1762
+Q6
+Director 8
+Contracts Manager 160
+Salesman 640
+Supply Staff 192
 Q11
 America 303.4
 Asia 226.4
@@ -87,14 +145,26 @@ Hong Kong, Macao and Taiwan regions of China 267.4
 Northern China 224.6
 Southern China 234.2
 Southwestern China 313.6
-Q10
-WirelessSecurity90 1762
 Q8
-529
-Q6
-Director 8
-Contracts Manager 160
-Salesman 640
-Supply Staff 192
-Q7
-112
+528
+Q13
+contract_number: CSE0000205
+contract_manager: Zhou Yuandong
+enterprise: Tencent
+supply_center: Southern China
+model salesman quantity unit_price estimated_date lodgement_date
+LaptopDesk45 Noah Harris 207 80 2022-02-09 2022-02-08
+AirConditioner71 Zou Lengrou 250 500 2022-02-09 2022-02-09
+All-In-OnePrintingMachineW9 Tao Xixia 544 420 2022-02-08 2022-02-10
+RouterX4 Hua Erqiu 176 920 2022-02-09 2022-02-11
+HardDiskExtractionBoxA4 Yang Baitao 31 880 2022-02-11 2022-02-11
+SecurityCamera25 Wayne Taylor 223 650 2022-02-10 2022-02-11
+Q13
+contract_number: CSE0000307
+contract_manager: Wang Yingtao
+enterprise: Hyundai
+supply_center: Asia
+model salesman quantity unit_price estimated_date lodgement_date
+PrintMediaY8 Qing  zixue 455 450 2022-03-10 2022-03-13
+CoffeeMachineK4 Oliver Green 240 540 2022-03-10 2022-03-10
+TvPlayer60 Zhao Zhengsong 198 80 2022-03-12 2022-03-11

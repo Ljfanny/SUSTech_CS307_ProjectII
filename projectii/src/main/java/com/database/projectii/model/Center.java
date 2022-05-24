@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Data
 @AllArgsConstructor
-@TableName("center_view")
+@TableName("centers")
 public class Center {
     private Integer id;
     private String name;
