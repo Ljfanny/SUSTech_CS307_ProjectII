@@ -7,6 +7,7 @@ import com.database.projectii.service.impl.StaffServiceImpl;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -86,15 +87,29 @@ public class StaffController {
                 new StaffType(String.valueOf(map.get("type")), Integer.parseInt(
                     String.valueOf(map.get("cnt")))));
         }
-        try {
-            BufferedWriter out = new BufferedWriter(new FileWriter("output.txt"));
-            out.write("Q6");
-            out.newLine();
+//        try {
+//            BufferedWriter out = new BufferedWriter(new FileWriter("output.txt"));
+//            out.write("Q6");
+//            out.newLine();
+//            for (StaffType type : result) {
+//                out.write(type.type + " " + type.cnt);
+//                out.newLine();
+//            }
+//            out.flush();
+//            out.close();
+//            PrintStream printStream = new PrintStream("output.txt");
+//            System.setOut(printStream);
+//            System.out.println("Q6");
+//            for (StaffType type : result) {
+//                System.out.println(type.type + " " + type.cnt);
+//            }
+//    }
+        try (FileWriter fileWriter = new FileWriter("output.txt" ,true)) {
+            fileWriter.append("Q6\n");
             for (StaffType type : result) {
-                out.write(type.type + " " + type.cnt);
-                out.newLine();
+                fileWriter.append(type.type).append(" ").append(String.valueOf(type.cnt));
+                fileWriter.append("\n");
             }
-            out.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,5 +1,6 @@
-Q6
-Director 8
-Contracts Manager 160
-Salesman 640
-Supply Staff 192
+Q12
+supply_center product_number product_model purchase_price surplus
+Eastern China A35J746 AirConditioner71 784 125
+Hong Kong, Macao and Taiwan regions of China A35J746 AirConditioner71 540 109
+America A35J746 AirConditioner27 681 218
+Southern China A35J746 AirConditioner71 564 250

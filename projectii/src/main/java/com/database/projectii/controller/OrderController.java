@@ -7,8 +7,10 @@ import com.database.projectii.model.ReturnOrder;
 import com.database.projectii.service.impl.OrderServiceImpl;
 import com.database.projectii.model.Order;
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -38,20 +40,30 @@ public class OrderController {
     private OrderServiceImpl orderServiceImpl;
 
     @GetMapping("/getOrderCount")
-    public Data getOrderCount() {
+    public Data getOrderCount() throws FileNotFoundException {
         Object result = orderServiceImpl.selectOrderCount();
-        try {
-            FileWriter fileWritter = new FileWriter("output.txt",true);
-            BufferedWriter out = new BufferedWriter(fileWritter);
-            ArrayList<Long> chg = (ArrayList<Long>) result;
-            out.write("Q8");
-            out.newLine();
-            out.write(String.valueOf(chg.get(0)));
-            out.newLine();
-            out.close();
+        ArrayList<Long> chg = (ArrayList<Long>) result;
+//        try {
+//            FileWriter fileWritter = new FileWriter("output.txt",true);
+//            BufferedWriter out = new BufferedWriter(fileWritter);
+
+//            out.write("Q8");
+//            out.newLine();
+//            out.write(String.valueOf(chg.get(0)));
+//            out.newLine();
+//            out.flush();
+//            out.close();
+//        PrintStream printStream = new PrintStream("output.txt");
+//        System.setOut(printStream);
+//        System.out.println("Q8\n" + String.valueOf(chg.get(0)));
+//        System.out.println();
+        try (FileWriter fileWriter = new FileWriter("output.txt", true)) {
+            fileWriter.append("Q8\n");
+            fileWriter.append(String.valueOf(chg.get(0))).append("\n");
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         return new Data(result, Message.SUCCESS);
     }
 
@@ -152,16 +164,30 @@ public class OrderController {
             result.add(new FavoriteProduct(String.valueOf(map.get("product_model")),
                 (Long) map.get("sum")));
         }
-        try {
-            FileWriter fileWritter = new FileWriter("output.txt",true);
-            BufferedWriter out = new BufferedWriter(fileWritter);
-            out.write("Q10");
-            out.newLine();
+//        try {
+//            FileWriter fileWritter = new FileWriter("output.txt", true);
+//            BufferedWriter out = new BufferedWriter(fileWritter);
+//            out.write("Q10");
+//            out.newLine();
+//            for (FavoriteProduct favoriteProduct : result) {
+//                out.write(favoriteProduct.productModel + " " + favoriteProduct.sum);
+//                out.newLine();
+//            }
+//            out.flush();
+//            out.close();
+//            PrintStream printStream = new PrintStream("output.txt");
+//            System.setOut(printStream);
+//            System.out.println("Q10");
+//            for (FavoriteProduct favoriteProduct : result) {
+//                System.out.println(favoriteProduct.productModel + " " + favoriteProduct.sum);
+//            }
+        try (FileWriter fileWriter = new FileWriter("output.txt", true)) {
+            fileWriter.append("Q10\n");
             for (FavoriteProduct favoriteProduct : result) {
-                out.write(favoriteProduct.productModel + " " + favoriteProduct.sum);
-                out.newLine();
+                fileWriter.append(favoriteProduct.productModel).append(" ")
+                    .append(String.valueOf(favoriteProduct.sum));
+                fileWriter.append("\n");
             }
-            out.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -176,16 +202,29 @@ public class OrderController {
             result.add(new CenterAve(String.valueOf(map.get("supply_center")),
                 String.valueOf(map.get("avg"))));
         }
-        try {
-            FileWriter fileWritter = new FileWriter("output.txt",true);
-            BufferedWriter out = new BufferedWriter(fileWritter);
-            out.write("Q11");
-            out.newLine();
+//        try {
+//            FileWriter fileWritter = new FileWriter("output.txt", true);
+//            BufferedWriter out = new BufferedWriter(fileWritter);
+//            out.write("Q11");
+//            out.newLine();
+//            for (CenterAve centerAve : result) {
+//                out.write(centerAve.supplyCenter + " " + centerAve.average);
+//                out.newLine();
+//            }
+//            out.flush();
+//            out.close();
+//            PrintStream printStream = new PrintStream("output.txt");
+//            System.setOut(printStream);
+//            System.out.println("Q11");
+//            for (CenterAve centerAve : result) {
+//                System.out.println(centerAve.supplyCenter + " " + centerAve.average);
+//            }
+        try (FileWriter fileWriter = new FileWriter("output.txt", true)) {
+            fileWriter.append("Q11\n");
             for (CenterAve centerAve : result) {
-                out.write(centerAve.supplyCenter + " " + centerAve.average);
-                out.newLine();
+                fileWriter.append(centerAve.supplyCenter).append(" ").append(centerAve.average);
+                fileWriter.append("\n");
             }
-            out.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -195,6 +234,34 @@ public class OrderController {
     @GetMapping("/getContractInfo/{contractNumber}")
     public Data getContractInfo(@PathVariable String contractNumber) {
         List<ReturnOrder> orders = orderServiceImpl.selectContractInfo(contractNumber);
+        boolean isFir = true;
+        try (FileWriter fileWriter = new FileWriter("output.txt", true)) {
+            fileWriter.append("Q13\n");
+            for (ReturnOrder order : orders) {
+                if (isFir) {
+                    fileWriter.append("contract_number: ").append(order.getContractNumber())
+                        .append("\n");
+                    fileWriter.append("contract_manager: ").append(order.getContractManagerName())
+                        .append("\n");
+                    fileWriter.append("enterprise: ").append(order.getEnterpriseName()).append("\n");
+                    fileWriter.append("supply_center: ").append(order.getSupplyCenter()).append("\n");
+                    fileWriter.append("model ").append("salesman ").append("quantity ")
+                        .append("unit_price ").append("estimated_date ").append("lodgement_date")
+                        .append("\n");
+                    isFir = false;
+                }
+                if (order.getProductModel() != null) {
+                    fileWriter.append(order.getProductModel()).append(" ");
+                    fileWriter.append(order.getSalesmanName()).append(" ");
+                    fileWriter.append(String.valueOf(order.getQuantity())).append(" ");
+                    fileWriter.append(String.valueOf(order.getUnitPrice())).append(" ");
+                    fileWriter.append(order.getEstimatedDeliveryDate().toString()).append(" ");
+                    fileWriter.append(order.getLodgementDate().toString()).append("\n");
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return new Data(orders, Message.SUCCESS);
     }
 

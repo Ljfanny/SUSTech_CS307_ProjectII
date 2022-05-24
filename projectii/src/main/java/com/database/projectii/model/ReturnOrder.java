@@ -6,7 +6,7 @@ import java.sql.Date;
 public class ReturnOrder {
     private String contractNumber;
     private String contractManagerName;
-    private String enterpriseName;
+    private String enterprise;
     private String supplyCenter;
     private String productModel;
     private String salesmanName;
@@ -23,7 +23,7 @@ public class ReturnOrder {
                        Date estimatedDeliveryDate, Date lodgementDate) {
         this.contractNumber = contractNumber;
         this.contractManagerName = contractManagerName;
-        this.enterpriseName = enterpriseName;
+        this.enterprise = enterpriseName;
         this.supplyCenter = supplyCenter;
         this.productModel = productModel;
         this.salesmanName = salesmanName;
@@ -50,11 +50,11 @@ public class ReturnOrder {
     }
 
     public String getEnterpriseName() {
-        return enterpriseName;
+        return enterprise;
     }
 
     public void setEnterpriseName(String enterpriseName) {
-        this.enterpriseName = enterpriseName;
+        this.enterprise = enterpriseName;
     }
 
     public String getSupplyCenter() {
