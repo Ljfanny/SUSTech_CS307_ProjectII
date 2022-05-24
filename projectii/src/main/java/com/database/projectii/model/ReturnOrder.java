@@ -18,12 +18,12 @@ public class ReturnOrder {
     private java.sql.Date lodgementDate;
 
     public ReturnOrder(String contractNumber, String contractManagerName,
-                       String enterpriseName, String supplyCenter, String productModel,
+                       String enterprise, String supplyCenter, String productModel,
                        String salesmanName, Integer quantity, Integer unitPrice,
                        Date estimatedDeliveryDate, Date lodgementDate) {
         this.contractNumber = contractNumber;
         this.contractManagerName = contractManagerName;
-        this.enterprise = enterpriseName;
+        this.enterprise = enterprise;
         this.supplyCenter = supplyCenter;
         this.productModel = productModel;
         this.salesmanName = salesmanName;
@@ -49,12 +49,12 @@ public class ReturnOrder {
         this.contractManagerName = contractManagerName;
     }
 
-    public String getEnterpriseName() {
+    public String getEnterprise() {
         return enterprise;
     }
 
-    public void setEnterpriseName(String enterpriseName) {
-        this.enterprise = enterpriseName;
+    public void setEnterprise(String enterprise) {
+        this.enterprise = enterprise;
     }
 
     public String getSupplyCenter() {
