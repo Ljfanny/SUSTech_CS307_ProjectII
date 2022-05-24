@@ -1,5 +1,5 @@
 <template>
-  <div class="bg">
+  <div>
     <el-container>
       <el-header> </el-header>
       <el-header> CS307 ProjectII </el-header>
@@ -22,10 +22,18 @@
       <el-header>
         <el-row>
           <el-button type="primary" plain @click="Yjsc">OneKeyOut</el-button>
-          <el-button type="primary" plain @click="StaffCount">StaffCount</el-button>
-          <el-button type="primary" plain @click="ContractCount">ContractCount</el-button>
-          <el-button type="primary" plain @click="OrderCount">OrderCount</el-button>
-          <el-button type="primary" plain @click="NeverSold">NeverSold</el-button>
+          <el-button type="primary" plain @click="StaffCount"
+            >StaffCount</el-button
+          >
+          <el-button type="primary" plain @click="ContractCount"
+            >ContractCount</el-button
+          >
+          <el-button type="primary" plain @click="OrderCount"
+            >OrderCount</el-button
+          >
+          <el-button type="primary" plain @click="NeverSold"
+            >NeverSold</el-button
+          >
           <el-button type="primary" plain @click="Favorite">Favorite</el-button>
           <el-button type="primary" plain @click="Average">Average</el-button>
         </el-row></el-header
@@ -34,9 +42,11 @@
         <el-row>
           <el-button type="primary" plain @click="Import">Import</el-button>
           <el-button type="primary" plain @click="Product">ProByNum</el-button>
-          <el-button type="primary" plain @click="ContractInfo">ContractInfo</el-button>
+          <el-button type="primary" plain @click="ContractInfo"
+            >ContractInfo</el-button
+          >
         </el-row>
-         </el-header>
+      </el-header>
       <el-header> </el-header>
       <el-header> </el-header>
       <el-header> </el-header>
@@ -51,8 +61,7 @@
 <script>
 export default {
   data () {
-    return {
-    }
+    return {}
   },
   methods: {
     handleSelect (key, keyPath) {
@@ -115,21 +124,20 @@ export default {
 
 <style>
 .el-header {
-  /* background-color: #e9eef3; */
-  background-color: Transparent;
+  background-color: #e9eef3;
+  /* background-color: Transparent; */
   color: #333;
   text-align: center;
 }
-
-.bg{
+/*
+.bg {
   background: url("../assets/bg.png");
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-}
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+} */
 
 body > .el-container {
   margin-bottom: 40px;
 }
-
 </style>

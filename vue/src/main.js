@@ -6,7 +6,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 import Papa from '../package.json'
 
 var axios = require('axios')
-axios.defaults.baseURL = 'http://localhost:8088'
+axios.defaults.baseURL = 'http://10.14.151.222:8088'
 Vue.prototype.$axios = axios
 Vue.config.productionTip = false
 

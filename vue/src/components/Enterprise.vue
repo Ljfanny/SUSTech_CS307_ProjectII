@@ -110,7 +110,7 @@ export default {
         '&country=' + this.iucountry +
         '&city=' + this.iucity +
         '&supplyCenter=' + this.iusc +
-        '&iuindustry=' + this.iuindustry)
+        '&industry=' + this.iuindustry)
         .then((response) => { this.tableData = response.data.data })
       this.iuid = ''
       this.iuname = ''
@@ -127,7 +127,7 @@ export default {
         '&country=' + this.iucountry +
         '&city=' + this.iucity +
         '&supplyCenter=' + this.iusc +
-        '&iuindustry=' + this.iuindustry)
+        '&industry=' + this.iuindustry)
       this.iuid = ''
       this.iuname = ''
       this.iucountry = ''
