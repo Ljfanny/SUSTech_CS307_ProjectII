@@ -243,7 +243,7 @@ public class OrderController {
                         .append("\n");
                     fileWriter.append("contract_manager: ").append(order.getContractManagerName())
                         .append("\n");
-                    fileWriter.append("enterprise: ").append(order.getEnterpriseName()).append("\n");
+                    fileWriter.append("enterprise: ").append(order.getEnterprise()).append("\n");
                     fileWriter.append("supply_center: ").append(order.getSupplyCenter()).append("\n");
                     fileWriter.append("model ").append("salesman ").append("quantity ")
                         .append("unit_price ").append("estimated_date ").append("lodgement_date")
