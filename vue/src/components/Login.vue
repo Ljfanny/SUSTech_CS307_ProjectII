@@ -52,9 +52,6 @@
 export default {
   data () {
     return {
-      url: '',
-      urlList: [],
-      timer: null
     }
   },
   methods: {
@@ -124,7 +121,7 @@ export default {
   text-align: center;
 }
 
-.el-container{
+.bg{
   background: url("../assets/bg.png");
     width: 100%;
     height: 100%;
