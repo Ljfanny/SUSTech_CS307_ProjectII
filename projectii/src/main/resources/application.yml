@@ -18,8 +18,10 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/projectII
-    username: postgres
-    password: 216122
+#    username: postgres
+#    password: 216122
+    username: ljf
+    password: 12011543
 
 
 #spring:

@@ -114,4 +114,9 @@ public class StaffServiceImpl implements StaffService {
         staffMapper.insert(staff);
         return true;
     }
+
+    public boolean updateMobileByProcedure(String number,String mobileNumber){
+        staffMapper.updateMobileByNumberUseProcedure(number, mobileNumber);
+        return true;
+    }
 }

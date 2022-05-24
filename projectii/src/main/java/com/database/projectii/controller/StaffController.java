@@ -104,7 +104,7 @@ public class StaffController {
 //                System.out.println(type.type + " " + type.cnt);
 //            }
 //    }
-        try (FileWriter fileWriter = new FileWriter("output.txt" ,true)) {
+        try (FileWriter fileWriter = new FileWriter("output.txt", true)) {
             fileWriter.append("Q6\n");
             for (StaffType type : result) {
                 fileWriter.append(type.type).append(" ").append(String.valueOf(type.cnt));
@@ -175,5 +175,14 @@ public class StaffController {
             this.type = type;
             this.cnt = cnt;
         }
+    }
+
+    @PostMapping("/diy")
+    public Data updateMobileByProcedure(
+        @RequestParam(value = "number", required = true, defaultValue = "") String number,
+        @RequestParam(value = "mobileNumber", required = true, defaultValue = "")
+            String mobileNumber) {
+        return new Data(staffServiceImpl.updateMobileByProcedure(number, mobileNumber),
+            Message.SUCCESS);
     }
 }

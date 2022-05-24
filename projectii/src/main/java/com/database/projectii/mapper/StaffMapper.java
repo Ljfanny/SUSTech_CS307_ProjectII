@@ -14,4 +14,7 @@ public interface StaffMapper extends BaseMapper<Staff> {
 
     @Select("select name from staffs where number = #{number}")
     List<Map<String, Object>> selectNameByNumber(@Param("number") String number);
+
+    @Select("call updateStaff(#{number}, #{mobileNumber})")
+    void updateMobileByNumberUseProcedure(@Param("number") String number, @Param("mobileNumber") String mobileNumber);
 }
