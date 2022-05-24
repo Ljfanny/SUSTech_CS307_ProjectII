@@ -1,0 +1,100 @@
+Q13
+contract_number: CSE0000102
+contract_manager: Marshall Hall
+enterprise: Netease
+supply_center: Southern China
+model salesman quantity unit_price estimated_date lodgement_date
+LaptopDesk45 Shen Mingliang 413 80 2022-01-05 2022-01-05
+GpsI3 Qian  biqin 470 590 2022-01-05 2022-01-05
+AirConditioner71 Bobby Roberts 499 500 2022-01-05 2022-01-07
+SolarWaterHeaters26 Qi Yinxiang 276 220 2022-01-08 2022-01-08
+HardDiskExtractionBoxA4 Zhu Honglin 137 880 2022-01-06 2022-01-07
+Q9
+55
+Q10
+WirelessSecurity90 1762
+Q11
+America 303.4
+Asia 226.4
+Eastern China 183.9
+Europe 322.8
+Hong Kong, Macao and Taiwan regions of China 267.4
+Northern China 224.6
+Southern China 234.2
+Southwestern China 313.6
+Q8
+529
+Q7
+112
+Q6
+Director 8
+Contracts Manager 160
+Salesman 640
+Supply Staff 192
+Q13
+contract_number: CSE0000305
+contract_manager: Qing Mining
+enterprise: Mizuho Holdings
+supply_center: Asia
+model salesman quantity unit_price estimated_date lodgement_date
+LensQ4 Candida Jackson 182 190 2022-03-09 2022-03-09
+CameraBattery26 Gavin Thomas 360 60 2022-03-09 2022-03-10
+Mp437 Sun Yinger 472 780 2022-03-11 2022-03-08
+MobileHardDisk72 Gavin Thomas 39 820 2022-03-09 2022-03-10
+TvPlayer60 Lenny Harris 397 80 2022-03-08 2022-03-09
+ServerBarebones96 Camilla Smith 384 430 2022-03-11 2022-03-11
+Q13
+contract_number: CSE0000102
+contract_manager: Marshall Hall
+enterprise: Netease
+supply_center: Southern China
+model salesman quantity unit_price estimated_date lodgement_date
+LaptopDesk45 Shen Mingliang 413 80 2022-01-05 2022-01-05
+GpsI3 Qian  biqin 470 590 2022-01-05 2022-01-05
+AirConditioner71 Bobby Roberts 499 500 2022-01-05 2022-01-07
+SolarWaterHeaters26 Qi Yinxiang 276 220 2022-01-08 2022-01-08
+HardDiskExtractionBoxA4 Zhu Honglin 137 880 2022-01-06 2022-01-07
+Q6
+Director 8
+Contracts Manager 160
+Salesman 640
+Supply Staff 192
+Q7
+112
+Q9
+55
+Q11
+America 303.4
+Asia 226.4
+Eastern China 183.9
+Europe 322.8
+Hong Kong, Macao and Taiwan regions of China 267.4
+Northern China 224.6
+Southern China 234.2
+Southwestern China 313.6
+Q10
+WirelessSecurity90 1762
+Q8
+529
+Q9
+55
+Q11
+America 303.4
+Asia 226.4
+Eastern China 183.9
+Europe 322.8
+Hong Kong, Macao and Taiwan regions of China 267.4
+Northern China 224.6
+Southern China 234.2
+Southwestern China 313.6
+Q10
+WirelessSecurity90 1762
+Q8
+529
+Q6
+Director 8
+Contracts Manager 160
+Salesman 640
+Supply Staff 192
+Q7
+112
