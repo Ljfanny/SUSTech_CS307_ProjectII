@@ -1,0 +1,5 @@
+Q6
+Director 8
+Contracts Manager 160
+Salesman 640
+Supply Staff 192

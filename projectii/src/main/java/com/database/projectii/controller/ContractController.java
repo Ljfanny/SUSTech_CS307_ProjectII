@@ -49,10 +49,14 @@ public class ContractController {
     @GetMapping("/getContractCount")
     public Data getContractCount() {
         Object result = contractServiceImpl.selectContractCount();
+        ArrayList<Long> chg = (ArrayList<Long>) result;
         try {
-            BufferedWriter out = new BufferedWriter(new FileWriter("output.txt"));
-            out.write("Q7\\r\\n");
-            out.write(Integer.parseInt((String) result) +"\\r\\n");
+            FileWriter fileWritter = new FileWriter("output.txt",true);
+            BufferedWriter out = new BufferedWriter(fileWritter);
+            out.write("Q7");
+            out.newLine();
+            out.write(String.valueOf(chg.get(0)));
+            out.newLine();
             out.close();
         } catch (IOException e) {
             e.printStackTrace();

@@ -41,9 +41,13 @@ public class OrderController {
     public Data getOrderCount() {
         Object result = orderServiceImpl.selectOrderCount();
         try {
-            BufferedWriter out = new BufferedWriter(new FileWriter("output.txt"));
-            out.write("Q8\\r\\n");
-            out.write(Integer.parseInt((String) result) +"\\r\\n");
+            FileWriter fileWritter = new FileWriter("output.txt",true);
+            BufferedWriter out = new BufferedWriter(fileWritter);
+            ArrayList<Long> chg = (ArrayList<Long>) result;
+            out.write("Q8");
+            out.newLine();
+            out.write(String.valueOf(chg.get(0)));
+            out.newLine();
             out.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -149,10 +153,13 @@ public class OrderController {
                 (Long) map.get("sum")));
         }
         try {
-            BufferedWriter out = new BufferedWriter(new FileWriter("output.txt"));
-            out.write("Q10\\r\\n");
+            FileWriter fileWritter = new FileWriter("output.txt",true);
+            BufferedWriter out = new BufferedWriter(fileWritter);
+            out.write("Q10");
+            out.newLine();
             for (FavoriteProduct favoriteProduct : result) {
-                out.write(favoriteProduct.productModel + " " + favoriteProduct.sum + "\\r\\n");
+                out.write(favoriteProduct.productModel + " " + favoriteProduct.sum);
+                out.newLine();
             }
             out.close();
         } catch (IOException e) {
@@ -170,10 +177,13 @@ public class OrderController {
                 String.valueOf(map.get("avg"))));
         }
         try {
-            BufferedWriter out = new BufferedWriter(new FileWriter("output.txt"));
-            out.write("Q11\\r\\n");
+            FileWriter fileWritter = new FileWriter("output.txt",true);
+            BufferedWriter out = new BufferedWriter(fileWritter);
+            out.write("Q11");
+            out.newLine();
             for (CenterAve centerAve : result) {
-                out.write(centerAve.supplyCenter + " " + centerAve.average + "\\r\\n");
+                out.write(centerAve.supplyCenter + " " + centerAve.average);
+                out.newLine();
             }
             out.close();
         } catch (IOException e) {

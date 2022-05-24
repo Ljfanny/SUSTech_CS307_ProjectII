@@ -143,9 +143,12 @@ public class InventoryController {
         long[] res = new long[1];
         res[0] = result;
         try {
-            BufferedWriter out = new BufferedWriter(new FileWriter("output.txt"));
-            out.write("Q9\\r\\n");
-            out.write(res[0] + "\\r\\n");
+            FileWriter fileWritter = new FileWriter("output.txt",true);
+            BufferedWriter out = new BufferedWriter(fileWritter);
+            out.write("Q9");
+            out.newLine();
+            out.write(String.valueOf(res[0]));
+            out.newLine();
             out.close();
         } catch (IOException e) {
             e.printStackTrace();

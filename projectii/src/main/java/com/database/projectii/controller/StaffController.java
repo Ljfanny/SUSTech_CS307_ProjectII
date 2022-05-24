@@ -88,9 +88,11 @@ public class StaffController {
         }
         try {
             BufferedWriter out = new BufferedWriter(new FileWriter("output.txt"));
-            out.write("Q6\\r\\n");
+            out.write("Q6");
+            out.newLine();
             for (StaffType type : result) {
-                out.write(type.type + " " + type.cnt + "\\r\\n");
+                out.write(type.type + " " + type.cnt);
+                out.newLine();
             }
             out.close();
         } catch (IOException e) {
