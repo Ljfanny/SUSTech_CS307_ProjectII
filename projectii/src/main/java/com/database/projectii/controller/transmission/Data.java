@@ -1,6 +1,5 @@
 package com.database.projectii.controller.transmission;
 
-
 public class Data {
     private Object data;
     private String message;

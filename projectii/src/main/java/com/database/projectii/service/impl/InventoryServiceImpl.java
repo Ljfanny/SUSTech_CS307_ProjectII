@@ -7,10 +7,8 @@ import com.database.projectii.mapper.InventoryMapper;
 import com.database.projectii.mapper.ModelMapper;
 import com.database.projectii.mapper.StaffMapper;
 import com.database.projectii.model.Center;
-import com.database.projectii.model.Enterprise;
 import com.database.projectii.model.Inventory;
 import com.database.projectii.model.Model;
-import com.database.projectii.model.Order;
 import com.database.projectii.model.Staff;
 import com.database.projectii.service.InventoryService;
 import com.database.projectii.service.property.StaffType;
@@ -100,7 +98,6 @@ public class InventoryServiceImpl implements InventoryService {
             isOther = true;
         }
         if (inventory.getDate() != null) {
-//            inventoryQueryWrapper.eq("date", inventory.getDate());
             isDate = true;
         }
         if (inventory.getPurchasePrice() != null) {

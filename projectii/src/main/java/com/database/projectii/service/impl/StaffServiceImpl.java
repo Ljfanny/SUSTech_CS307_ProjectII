@@ -2,8 +2,6 @@ package com.database.projectii.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.database.projectii.mapper.StaffMapper;
-import com.database.projectii.model.Center;
-import com.database.projectii.model.Model;
 import com.database.projectii.model.Staff;
 import com.database.projectii.service.StaffService;
 import java.util.List;

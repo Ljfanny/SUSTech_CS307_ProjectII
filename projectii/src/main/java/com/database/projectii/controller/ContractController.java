@@ -2,13 +2,10 @@ package com.database.projectii.controller;
 
 import com.database.projectii.controller.transmission.Data;
 import com.database.projectii.controller.transmission.Message;
-import com.database.projectii.model.Center;
 import com.database.projectii.model.Contract;
 import com.database.projectii.service.impl.ContractServiceImpl;
-import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -51,20 +48,6 @@ public class ContractController {
     public Data getContractCount() {
         Object result = contractServiceImpl.selectContractCount();
         ArrayList<Long> chg = (ArrayList<Long>) result;
-//        try {
-//            FileWriter fileWritter = new FileWriter("output.txt",true);
-//            BufferedWriter out = new BufferedWriter(fileWritter);
-//            out.write("Q7");
-//            out.newLine();
-//            out.write(String.valueOf(chg.get(0)));
-//            out.newLine();
-//            out.flush();
-//            out.close();
-//            PrintStream printStream = new PrintStream("output.txt");
-//            System.setOut(printStream);
-//            System.out.println("Q7");
-//            System.out.println(String.valueOf(chg.get(0)));
-//    }
         try (FileWriter fileWriter = new FileWriter("output.txt", true)) {
             fileWriter.append("Q7\n");
             fileWriter.append(String.valueOf(chg.get(0))).append("\n");

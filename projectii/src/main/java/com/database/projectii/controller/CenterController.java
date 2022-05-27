@@ -3,18 +3,14 @@ package com.database.projectii.controller;
 import com.database.projectii.controller.transmission.Data;
 import com.database.projectii.controller.transmission.Message;
 import com.database.projectii.model.Center;
-import com.database.projectii.model.Model;
-import com.database.projectii.model.Staff;
 import com.database.projectii.service.impl.CenterServiceImpl;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -61,7 +57,7 @@ public class CenterController {
 
 
     @DeleteMapping
-    public Data DeleteById(
+    public Data DeleteByAny(
         @RequestParam(value = "id", required = false, defaultValue = "") Integer id,
         @RequestParam(value = "name", required = false, defaultValue = "") String name) {
         Center center =

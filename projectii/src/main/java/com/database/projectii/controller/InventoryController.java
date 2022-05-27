@@ -2,16 +2,11 @@ package com.database.projectii.controller;
 
 import com.database.projectii.controller.transmission.Data;
 import com.database.projectii.controller.transmission.Message;
-import com.database.projectii.model.Contract;
-import com.database.projectii.model.Enterprise;
-import com.database.projectii.model.ReturnOrder;
 import com.database.projectii.service.impl.InventoryServiceImpl;
 import com.database.projectii.model.Inventory;
 import com.database.projectii.service.impl.OrderServiceImpl;
-import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -20,7 +15,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -144,19 +138,6 @@ public class InventoryController {
         long result = inventoryServiceImpl.selectNeverSoldProductCount();
         long[] res = new long[1];
         res[0] = result;
-//        try {
-//            FileWriter fileWritter = new FileWriter("output.txt",true);
-//            BufferedWriter out = new BufferedWriter(fileWritter);
-//            out.write("Q9");
-//            out.newLine();
-//            out.write(String.valueOf(res[0]));
-//            out.newLine();
-//            out.flush();
-//            out.close();
-//            PrintStream printStream = new PrintStream("output.txt");
-//            System.setOut(printStream);
-//            System.out.println("Q9");
-//            System.out.println(String.valueOf(String.valueOf(res[0])));
         try (FileWriter fileWriter = new FileWriter("output.txt", true)) {
             fileWriter.append("Q9\n");
             fileWriter.append(String.valueOf(String.valueOf(res[0]))).append("\n");

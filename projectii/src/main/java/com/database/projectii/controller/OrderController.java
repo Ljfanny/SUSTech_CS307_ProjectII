@@ -2,15 +2,11 @@ package com.database.projectii.controller;
 
 import com.database.projectii.controller.transmission.Data;
 import com.database.projectii.controller.transmission.Message;
-import com.database.projectii.model.Contract;
 import com.database.projectii.model.ReturnOrder;
 import com.database.projectii.service.impl.OrderServiceImpl;
 import com.database.projectii.model.Order;
-import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import com.database.projectii.service.impl.OrderServiceImpl.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -40,23 +35,9 @@ public class OrderController {
     private OrderServiceImpl orderServiceImpl;
 
     @GetMapping("/getOrderCount")
-    public Data getOrderCount() throws FileNotFoundException {
+    public Data getOrderCount(){
         Object result = orderServiceImpl.selectOrderCount();
         ArrayList<Long> chg = (ArrayList<Long>) result;
-//        try {
-//            FileWriter fileWritter = new FileWriter("output.txt",true);
-//            BufferedWriter out = new BufferedWriter(fileWritter);
-
-//            out.write("Q8");
-//            out.newLine();
-//            out.write(String.valueOf(chg.get(0)));
-//            out.newLine();
-//            out.flush();
-//            out.close();
-//        PrintStream printStream = new PrintStream("output.txt");
-//        System.setOut(printStream);
-//        System.out.println("Q8\n" + String.valueOf(chg.get(0)));
-//        System.out.println();
         try (FileWriter fileWriter = new FileWriter("output.txt", true)) {
             fileWriter.append("Q8\n");
             fileWriter.append(String.valueOf(chg.get(0))).append("\n");
@@ -74,9 +55,6 @@ public class OrderController {
 
     @PostMapping
     public Data placeOrder(@RequestBody Order[] orders) {
-//        System.out.println(order);
-//        boolean result = orderServiceImpl.insert(order);
-//        return new Data(result, result ? Message.SUCCESS : Message.NOT_SUCCESS);
         for (Order order : orders) {
             orderServiceImpl.insert(order);
         }
@@ -164,23 +142,6 @@ public class OrderController {
             result.add(new FavoriteProduct(String.valueOf(map.get("product_model")),
                 (Long) map.get("sum")));
         }
-//        try {
-//            FileWriter fileWritter = new FileWriter("output.txt", true);
-//            BufferedWriter out = new BufferedWriter(fileWritter);
-//            out.write("Q10");
-//            out.newLine();
-//            for (FavoriteProduct favoriteProduct : result) {
-//                out.write(favoriteProduct.productModel + " " + favoriteProduct.sum);
-//                out.newLine();
-//            }
-//            out.flush();
-//            out.close();
-//            PrintStream printStream = new PrintStream("output.txt");
-//            System.setOut(printStream);
-//            System.out.println("Q10");
-//            for (FavoriteProduct favoriteProduct : result) {
-//                System.out.println(favoriteProduct.productModel + " " + favoriteProduct.sum);
-//            }
         try (FileWriter fileWriter = new FileWriter("output.txt", true)) {
             fileWriter.append("Q10\n");
             for (FavoriteProduct favoriteProduct : result) {
@@ -202,23 +163,6 @@ public class OrderController {
             result.add(new CenterAve(String.valueOf(map.get("supply_center")),
                 String.valueOf(map.get("avg"))));
         }
-//        try {
-//            FileWriter fileWritter = new FileWriter("output.txt", true);
-//            BufferedWriter out = new BufferedWriter(fileWritter);
-//            out.write("Q11");
-//            out.newLine();
-//            for (CenterAve centerAve : result) {
-//                out.write(centerAve.supplyCenter + " " + centerAve.average);
-//                out.newLine();
-//            }
-//            out.flush();
-//            out.close();
-//            PrintStream printStream = new PrintStream("output.txt");
-//            System.setOut(printStream);
-//            System.out.println("Q11");
-//            for (CenterAve centerAve : result) {
-//                System.out.println(centerAve.supplyCenter + " " + centerAve.average);
-//            }
         try (FileWriter fileWriter = new FileWriter("output.txt", true)) {
             fileWriter.append("Q11\n");
             for (CenterAve centerAve : result) {
@@ -352,7 +296,6 @@ public class OrderController {
                     (String) map.get("contract_type")));
             }
         }
-//        System.out.println(orders);
         return new Data(orders, Message.SUCCESS);
     }
 

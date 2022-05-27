@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.database.projectii.mapper.ContractMapper;
 import com.database.projectii.mapper.OrderMapper;
 import com.database.projectii.model.Contract;
-import com.database.projectii.model.Inventory;
 import com.database.projectii.model.Order;
 import java.util.ArrayList;
 import java.util.Date;

@@ -1,13 +1,11 @@
 package com.database.projectii.service.impl;
 
-import com.alibaba.druid.pool.ha.selector.StickyDataSourceHolder;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.database.projectii.mapper.*;
 import com.database.projectii.model.*;
 import com.database.projectii.service.OrderService;
 import com.database.projectii.service.property.StaffType;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -59,21 +57,12 @@ public class OrderServiceImpl implements OrderService {
         }
         int quantity = order.getQuantity();
         for (Inventory item : inventoryList) {
-//            LambdaUpdateWrapper<Inventory> lambdaUpdateWrapper = new LambdaUpdateWrapper<>();
             if (item.getSurplusQuantity() >= quantity) {
-//                lambdaUpdateWrapper.eq(Inventory::getProductModel, order.getProductModel())
-//                    .eq(Inventory::getSupplyCenter, staff.getSupplyCenter())
-//                    .set(Inventory::getSurplusQuantity, item.getSurplusQuantity() - quantity);
                 item.setSurplusQuantity(item.getSurplusQuantity() - quantity);
-//                inventoryMapper.update(null, lambdaUpdateWrapper);
                 inventoryMapper.updateById(item);
                 break;
             } else {
                 quantity -= item.getSurplusQuantity();
-//                lambdaUpdateWrapper.eq(Inventory::getProductModel, order.getProductModel())
-//                    .eq(Inventory::getSupplyCenter, staff.getSupplyCenter())
-//                    .set(Inventory::getSurplusQuantity, 0);
-//                inventoryMapper.update(null, lambdaUpdateWrapper);
                 item.setSurplusQuantity(0);
                 inventoryMapper.updateById(item);
             }
@@ -106,21 +95,12 @@ public class OrderServiceImpl implements OrderService {
                 return false;
             }
             for (Inventory item : inventoryList) {
-//                LambdaUpdateWrapper<Inventory> updateWrapper = new LambdaUpdateWrapper<>();
                 if (item.getSurplusQuantity() >= differential) {
-//                    updateWrapper.eq(Inventory::getProductModel, order.getProductModel())
-//                        .eq(Inventory::getSupplyCenter, staff.getSupplyCenter())
-//                        .set(Inventory::getSurplusQuantity,
-//                            item.getSurplusQuantity() - differential);
                     item.setSurplusQuantity(item.getSurplusQuantity() - differential);
                     inventoryMapper.updateById(item);
                     break;
                 } else {
                     differential -= item.getSurplusQuantity();
-//                    updateWrapper.eq(Inventory::getProductModel, order.getProductModel())
-//                        .eq(Inventory::getSupplyCenter, staff.getSupplyCenter())
-//                        .set(Inventory::getSurplusQuantity, 0);
-//                    inventoryMapper.update(null, updateWrapper);
                     item.setSurplusQuantity(0);
                     inventoryMapper.updateById(item);
                 }
@@ -128,22 +108,12 @@ public class OrderServiceImpl implements OrderService {
         } else if (orderQuantityPrev > orderQuantityNext) {
             int differential = orderQuantityPrev - orderQuantityNext;
             for (Inventory item : inventoryList) {
-//                LambdaUpdateWrapper<Inventory> updateWrapper = new LambdaUpdateWrapper<>();
                 if (item.getTotalQuantity() - item.getSurplusQuantity() >= differential) {
-//                    updateWrapper.eq(Inventory::getProductModel, order.getProductModel())
-//                        .eq(Inventory::getSupplyCenter, staff.getSupplyCenter())
-//                        .set(Inventory::getSurplusQuantity,
-//                            item.getSurplusQuantity() + differential);
-//                    inventoryMapper.update(null, updateWrapper);
                     item.setSurplusQuantity(item.getSurplusQuantity() + differential);
                     inventoryMapper.updateById(item);
                     break;
                 } else {
                     differential -= (item.getTotalQuantity() - item.getSurplusQuantity());
-//                    updateWrapper.eq(Inventory::getProductModel, order.getProductModel())
-//                        .eq(Inventory::getSupplyCenter, staff.getSupplyCenter())
-//                        .set(Inventory::getSurplusQuantity, item.getTotalQuantity());
-//                    inventoryMapper.update(null, updateWrapper);
                     item.setSurplusQuantity(item.getTotalQuantity());
                     inventoryMapper.updateById(item);
                 }
@@ -161,7 +131,6 @@ public class OrderServiceImpl implements OrderService {
             }
             return true;
         }
-//        orderMapper.updateById(orderPrev);
         lambdaUpdateWrapper.eq(Order::getContractNumber, order.getContractNumber())
             .eq(Order::getProductModel, order.getProductModel())
             .eq(Order::getSalesmanNumber, order.getSalesmanNumber())
@@ -204,21 +173,12 @@ public class OrderServiceImpl implements OrderService {
         String center = selectEnterpriseCenterByName(order);
         int quantity = order.getQuantity();
         for (Inventory item : inventoryList) {
-//            LambdaUpdateWrapper<Inventory> updateWrapper = new LambdaUpdateWrapper<>();
             if (item.getTotalQuantity() - item.getSurplusQuantity() >= quantity) {
-//                updateWrapper.eq(Inventory::getProductModel, order.getProductModel())
-//                    .eq(Inventory::getSupplyCenter, center)
-//                    .set(Inventory::getSurplusQuantity,
-//                      item.getSurplusQuantity() + quantity);
-//                inventoryMapper.update(null, updateWrapper);
                 item.setSurplusQuantity(item.getSurplusQuantity() + quantity);
                 inventoryMapper.updateById(item);
                 break;
             } else {
                 quantity -= (item.getTotalQuantity() - item.getSurplusQuantity());
-//                  updateWrapper.eq(Inventory::getProductModel, order.getProductModel())
-//                    .eq(Inventory::getSupplyCenter, center)
-//                    .set(Inventory::getSurplusQuantity, item.getTotalQuantity());
                 item.setSurplusQuantity(item.getTotalQuantity());
                 inventoryMapper.updateById(item);
             }
@@ -454,13 +414,6 @@ public class OrderServiceImpl implements OrderService {
                 lodCheck = true;
             }
             if (isCon == conCheck && isEst == estCheck && isLod == lodCheck) {
-//                orderMapper.deleteById(new Order((String) map.get("contract_number"),
-//                    (String) map.get("enterprise"), (String) map.get("product_model"),
-//                    (Integer) map.get("quantity"),
-//                    (String) map.get("contract_manager"), (java.sql.Date) map.get("contract_date"),
-//                    (java.sql.Date) map.get("estimated_delivery_date"),
-//                    (java.sql.Date) map.get("lodgement_date"), (String) map.get("salesman_number"),
-//                    (String) map.get("contract_type")));
                 orderMapper.deleteByMap(map);
             }
         }
