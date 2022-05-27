@@ -255,7 +255,7 @@ public class OrderServiceImpl implements OrderService {
 
 **2>** Realize front-end and back-end design pattern in this project. The back-end is a tomcat server built using the **springboot framework**. Use **json format** for asynchronous data interaction. The database engine used is postgresql, and the use of **mybatisplus** persistence layer **ORM framework** to ensure scalability. The overall interface design follows the **restful style**.
 
-![server structure](graphs\server structure.png)
+![server structure](graphs\server_structure.png)
 
 **3>** Use Alibaba's druid as database connection pool.
 
@@ -283,6 +283,6 @@ public void test() {
 
 The following shows the report of the stress test.
 
-![pressure test](graphs\pressure test.png)
+![pressure test](graphs\pressure_test.png)
 
 ### Client Part 
