@@ -338,8 +338,11 @@ reader.onload = evt => {
             for (var i = 0; i < data.length; i++) {
               let parts = data[i]
               this.$axios
-                .post(" ")}}})}
-   
+                .post(" ")
+            }
+		}
+	})
+}
 ```
 
 #### Conclusion
