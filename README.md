@@ -285,4 +285,63 @@ The following shows the report of the stress test.
 
 ![pressure_test](graphs\pressure_test.png)
 
+5> The massive use of trigger will cause unnecessary pressure on the database, so we write the logical business in the service layer, and only data with validity will be written to the database, avoiding the prolonged reaction time of the database and the decrease of the efficiency of processing data.
+
 ### Client Part 
+
+The client part is based on [node](https://nodejs.org/zh-cn/) and [vue](https://github.com/vuejs/vue-cli/tree/v2#vue-cli--), using [router](https://router.vuejs.org/zh/), [axios](http://www.axios-js.com/), [element-ui](https://element.eleme.cn/?#/zh-CN) and [papaparse](https://www.papaparse.com/).
+
+![image-20220528014727516](graphs\content.png)
+
+#### UI
+
+The button triggers the script, the input box reads the data, and the form displays the data.
+
+```vue
+<el-button type="primary" plain @click=" "> </el-button>
+```
+
+![image-20220528020326381](graphs\image-20220528020326381.png)
+
+```vue
+<el-input v-model=" " placeholder=" "> </el-input>
+```
+
+![image-20220528020435634](graphs\image-20220528020435634.png)
+
+```vue
+<el-table :data=" " stripe border style="width: 100%" height="500">
+<el-table-column prop=" " label=" " width="150"> </el-table-column>
+</el-table>
+```
+
+![image-20220528020522154](graphs\image-20220528020522154.png)
+
+#### Request
+
+Request adheres to the restful style, sending a request to the server in json format and read the data.
+
+![image-20220528023351171](graphs\image-20220528023351171.png)
+
+#### Import
+
+When importing data, use papaparse to convert csv to json format data to send to the server.
+
+```vue
+reader.readAsDataURL(selectedFile)
+reader.onload = evt => {
+	Papa.parse(selectedFile, {
+		complete: res => {
+			let data = res.data
+            if (data[data.length - 1] === '') {
+				data.pop()}
+            for (var i = 0; i < data.length; i++) {
+              let parts = data[i]
+              this.$axios
+                .post(" ")}}})}
+   
+```
+
+#### Conclusion
+
+The client builds a clean interface with home page and sub-pages connected with router, sub-tables with buttons to trigger insert, delete, update and select functions and specific api and display them in a table.
