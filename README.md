@@ -285,7 +285,7 @@ The following shows the report of the stress test.
 
 ![pressure_test](graphs\pressure_test.png)
 
-5> The massive use of trigger will cause unnecessary pressure on the database, so we write the logical business in the service layer, and only data with validity will be written to the database, avoiding the prolonged reaction time of the database and the decrease of the efficiency of processing data.
+**5>** The massive use of trigger will cause unnecessary pressure on the database, so we write the logical business in the service layer, and only data with validity will be written to the database, avoiding the prolonged reaction time of the database and the decrease of the efficiency of processing data.
 
 ### Client Part 
 
